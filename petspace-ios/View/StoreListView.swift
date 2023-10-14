@@ -1,0 +1,128 @@
+//
+//  StoreListView.swift
+//  petspace-ios
+//
+//  Created by Hoeun Lee on 10/14/23.
+//
+
+import SwiftUI
+
+struct StoreListView: View {
+    @ObservedObject private var mapViewModel = MapViewModel()
+    
+    @State private var sortMode: Int = 0
+    @State private var viewHeight: CGFloat = UIScreen.main.bounds.height * 0.5
+    @State private var isFullScreen: Bool = false
+    @State private var startingOffsetY: CGFloat = UIScreen.main.bounds.height * 0.5
+    
+    var body: some View {
+        NavigationStack(root: {
+            VStack {
+                Rectangle()
+                  .foregroundColor(.clear)
+                  .frame(width: 36, height: 5)
+                  .background(Color.gray)
+                  .cornerRadius(2.5)
+                
+                HStack {
+                    Text("강남구 애견미용실")
+                        .font(.headline)
+                        .bold()
+                        .padding(.leading, 6)
+                    
+                    Spacer()
+                    
+                    Menu("\(sortMode == 0 ? "거리순" : sortMode == 1 ? "별점순" : "가격순")") {
+                        Button("거리순") {
+                            sortMode = 0
+                        }
+                        Button("별점순") {
+                            sortMode = 1
+                        }
+                        Button("가격순") {
+                            sortMode = 2
+                        }
+                    }
+                    .padding(.trailing, 6)
+                }
+                .padding(.top, 4)
+                .padding(.bottom, 10)
+                
+                ScrollView(showsIndicators: false, content: {
+                    // 거리순
+                    if sortMode == 0 {
+                        ForEach(storeDatas.sorted(by: { $0.name > $1.name })) { storeData in
+                            StoreItem(storeData: storeData)
+                                .padding(.bottom, 10)
+                        }
+                    }
+                    // 별점순
+                    else if sortMode == 1 {
+                        ForEach(storeDatas.sorted(by: { $0.rating > $1.rating })) { storeData in
+                            StoreItem(storeData: storeData)
+                                .padding(.bottom, 10)
+                        }
+                    }
+                    // 가격순
+                    else {
+                        ForEach(storeDatas.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeData in
+                            StoreItem(storeData: storeData)
+                                .padding(.bottom, 10)
+                        }
+                    }
+                })
+                .navigationTitle("강남구 애견미용실")
+                .navigationBarHidden(true)
+            }
+            .padding(10)
+        })
+        .cornerRadius(30)
+        .frame(height: viewHeight)
+        .gesture(
+            DragGesture()
+                .onChanged { value in
+                    // print(value.translation.height)
+                    if isFullScreen == false {
+                        if viewHeight > UIScreen.main.bounds.height * 0.5 - 30 {
+                            viewHeight -= value.translation.height
+                        }
+                    }
+                    // fullscreen
+                    else {
+                        if value.translation.height >= 0 {
+                            if viewHeight > UIScreen.main.bounds.height * 0.5 - 30 {
+                                viewHeight -= value.translation.height
+                            }
+                        }
+                    }
+                }
+                .onEnded { value in
+                    withAnimation(.spring()) {
+                        let minHeight: CGFloat = UIScreen.main.bounds.height * 0.5
+                        let maxHeight: CGFloat = UIScreen.main.bounds.height * 1.0
+                        let boundHeight: CGFloat = (minHeight + maxHeight) / 2
+
+                        // 최소 높이 미만으로 내려갔을 때
+                        if viewHeight < boundHeight {
+                            viewHeight = minHeight
+                            isFullScreen = false
+                        }
+                        // 최대 높이를 초과하면 최대 높이로 설정
+                        else if viewHeight > boundHeight {
+                            viewHeight = maxHeight
+                            isFullScreen = true
+                        }
+                    }
+                }
+        )
+    }
+}
+
+#Preview {
+    ZStack {
+        StoreListView()
+    }
+    .ignoresSafeArea(edges: .bottom)
+    .background(Color.green)
+}
+

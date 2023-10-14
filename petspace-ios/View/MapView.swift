@@ -16,7 +16,8 @@ struct MapView: View {
     @StateObject private var mapViewModel = MapViewModel()
     
     var body: some View {
-        Map(initialPosition: MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.509_902, longitude: 127.041_819), span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07)))) {
+        Map(initialPosition: MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.484_902, longitude: 127.041_819), span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07)))) {
+            
             ForEach(storeDatas) { storeData in
                 Annotation(storeData.name, coordinate: CLLocationCoordinate2D(latitude: storeData.coordinate.latitude, longitude: storeData.coordinate.longitude)) {
                     

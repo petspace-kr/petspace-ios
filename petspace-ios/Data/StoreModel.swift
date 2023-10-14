@@ -19,7 +19,9 @@ struct StoreModel: Hashable, Codable, Identifiable {
     var reviewCount: Int
     var description: String
     var images: [String]
-    var pricing: Pricing
+    
+    var distance: Double?
+    var isSaved: Bool?
     
     var coordinate: Coordinates
     var locationCoordinate: CLLocationCoordinate2D {
@@ -33,6 +35,7 @@ struct StoreModel: Hashable, Codable, Identifiable {
         var longitude: Double
     }
     
+    var pricing: Pricing
     struct Pricing: Hashable, Codable {
         var cut: Int
     }

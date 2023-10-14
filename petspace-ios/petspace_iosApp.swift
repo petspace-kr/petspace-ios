@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 @main
 struct petspace_iosApp: App {
@@ -13,9 +14,7 @@ struct petspace_iosApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            TestView()
+            MapAndStoreListView()
         }
     }
 }

@@ -17,6 +17,11 @@
 		0C5C8E242ADA9606003EF83E /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E232ADA9606003EF83E /* StoreModel.swift */; };
 		0C5C8E262ADAA8A8003EF83E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E252ADAA8A8003EF83E /* MapView.swift */; };
 		0C5C8E282ADAA8E1003EF83E /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E272ADAA8E1003EF83E /* MapViewModel.swift */; };
+		0C5C8E2A2ADABE8A003EF83E /* StoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E292ADABE8A003EF83E /* StoreListView.swift */; };
+		0C5C8E2C2ADAC35E003EF83E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E2B2ADAC35E003EF83E /* View.swift */; };
+		0C5C8E2E2ADAC37E003EF83E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E2D2ADAC37E003EF83E /* Extensions.swift */; };
+		0C5C8E302ADACF23003EF83E /* MapAndStoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E2F2ADACF23003EF83E /* MapAndStoreListView.swift */; };
+		0C5C8E322ADAD319003EF83E /* StoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E312ADAD319003EF83E /* StoreItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +37,11 @@
 		0C5C8E232ADA9606003EF83E /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
 		0C5C8E252ADAA8A8003EF83E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		0C5C8E272ADAA8E1003EF83E /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		0C5C8E292ADABE8A003EF83E /* StoreListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListView.swift; sourceTree = "<group>"; };
+		0C5C8E2B2ADAC35E003EF83E /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		0C5C8E2D2ADAC37E003EF83E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		0C5C8E2F2ADACF23003EF83E /* MapAndStoreListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAndStoreListView.swift; sourceTree = "<group>"; };
+		0C5C8E312ADAD319003EF83E /* StoreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,12 +74,11 @@
 		0C5C8E092ADA943B003EF83E /* petspace-ios */ = {
 			isa = PBXGroup;
 			children = (
+				0C5C8E0A2ADA943B003EF83E /* petspace_iosApp.swift */,
 				0C5C8E202ADA9547003EF83E /* Info.plist */,
 				0C5C8E1F2ADA94EA003EF83E /* Data */,
 				0C5C8E1E2ADA94E0003EF83E /* Model */,
 				0C5C8E1D2ADA94D8003EF83E /* View */,
-				0C5C8E0A2ADA943B003EF83E /* petspace_iosApp.swift */,
-				0C5C8E0C2ADA943B003EF83E /* ContentView.swift */,
 				0C5C8E0E2ADA943C003EF83E /* Assets.xcassets */,
 				0C5C8E132ADA943C003EF83E /* Persistence.swift */,
 				0C5C8E152ADA943C003EF83E /* petspace_ios.xcdatamodeld */,
@@ -89,7 +98,12 @@
 		0C5C8E1D2ADA94D8003EF83E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0C5C8E0C2ADA943B003EF83E /* ContentView.swift */,
 				0C5C8E252ADAA8A8003EF83E /* MapView.swift */,
+				0C5C8E292ADABE8A003EF83E /* StoreListView.swift */,
+				0C5C8E2B2ADAC35E003EF83E /* View.swift */,
+				0C5C8E2F2ADACF23003EF83E /* MapAndStoreListView.swift */,
+				0C5C8E312ADAD319003EF83E /* StoreItem.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -107,6 +121,7 @@
 			children = (
 				0C5C8E212ADA95E7003EF83E /* dummydata.json */,
 				0C5C8E232ADA9606003EF83E /* StoreModel.swift */,
+				0C5C8E2D2ADAC37E003EF83E /* Extensions.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -184,8 +199,13 @@
 			files = (
 				0C5C8E172ADA943C003EF83E /* petspace_ios.xcdatamodeld in Sources */,
 				0C5C8E262ADAA8A8003EF83E /* MapView.swift in Sources */,
+				0C5C8E302ADACF23003EF83E /* MapAndStoreListView.swift in Sources */,
+				0C5C8E2A2ADABE8A003EF83E /* StoreListView.swift in Sources */,
 				0C5C8E142ADA943C003EF83E /* Persistence.swift in Sources */,
 				0C5C8E0D2ADA943B003EF83E /* ContentView.swift in Sources */,
+				0C5C8E322ADAD319003EF83E /* StoreItem.swift in Sources */,
+				0C5C8E2E2ADAC37E003EF83E /* Extensions.swift in Sources */,
+				0C5C8E2C2ADAC35E003EF83E /* View.swift in Sources */,
 				0C5C8E282ADAA8E1003EF83E /* MapViewModel.swift in Sources */,
 				0C5C8E0B2ADA943B003EF83E /* petspace_iosApp.swift in Sources */,
 				0C5C8E242ADA9606003EF83E /* StoreModel.swift in Sources */,
