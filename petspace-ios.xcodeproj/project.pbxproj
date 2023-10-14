@@ -22,6 +22,8 @@
 		0C5C8E2E2ADAC37E003EF83E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E2D2ADAC37E003EF83E /* Extensions.swift */; };
 		0C5C8E302ADACF23003EF83E /* MapAndStoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E2F2ADACF23003EF83E /* MapAndStoreListView.swift */; };
 		0C5C8E322ADAD319003EF83E /* StoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E312ADAD319003EF83E /* StoreItem.swift */; };
+		0C5C8E342ADAE7DA003EF83E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */; };
+		0C5C8E362ADAF127003EF83E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E352ADAF127003EF83E /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		0C5C8E2D2ADAC37E003EF83E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		0C5C8E2F2ADACF23003EF83E /* MapAndStoreListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAndStoreListView.swift; sourceTree = "<group>"; };
 		0C5C8E312ADAD319003EF83E /* StoreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItem.swift; sourceTree = "<group>"; };
+		0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		0C5C8E352ADAF127003EF83E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 				0C5C8E2B2ADAC35E003EF83E /* View.swift */,
 				0C5C8E2F2ADACF23003EF83E /* MapAndStoreListView.swift */,
 				0C5C8E312ADAD319003EF83E /* StoreItem.swift */,
+				0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -112,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				0C5C8E272ADAA8E1003EF83E /* MapViewModel.swift */,
+				0C5C8E352ADAF127003EF83E /* ViewController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -201,9 +207,11 @@
 				0C5C8E262ADAA8A8003EF83E /* MapView.swift in Sources */,
 				0C5C8E302ADACF23003EF83E /* MapAndStoreListView.swift in Sources */,
 				0C5C8E2A2ADABE8A003EF83E /* StoreListView.swift in Sources */,
+				0C5C8E362ADAF127003EF83E /* ViewController.swift in Sources */,
 				0C5C8E142ADA943C003EF83E /* Persistence.swift in Sources */,
 				0C5C8E0D2ADA943B003EF83E /* ContentView.swift in Sources */,
 				0C5C8E322ADAD319003EF83E /* StoreItem.swift in Sources */,
+				0C5C8E342ADAE7DA003EF83E /* WelcomeView.swift in Sources */,
 				0C5C8E2E2ADAC37E003EF83E /* Extensions.swift in Sources */,
 				0C5C8E2C2ADAC35E003EF83E /* View.swift in Sources */,
 				0C5C8E282ADAA8E1003EF83E /* MapViewModel.swift in Sources */,

@@ -64,17 +64,39 @@ struct StoreItem: View {
                     .lineLimit(1) // 텍스트가 한 줄로 제한
                     .truncationMode(.tail) // 끝에 ... 추가
                 
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .frame(height: 35)
-                        .background(Color(red: 0.98, green: 0.98, blue: 0.98))
-                        .cornerRadius(17.5)
-                        .overlay(
-                    RoundedRectangle(cornerRadius: 17.5)
-                        .inset(by: 0.5)
-                        .stroke(Color(red: 0.96, green: 0.96, blue: 0.96), lineWidth: 1)
-                    )
+                Button {
+                    //
+                } label: {
+                    ZStack(alignment: .leading, content: {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(height: 35)
+                            .background(Color("SecondaryBackground"))
+                            .cornerRadius(17.5)
+                        
+                        HStack {
+                            Image("ProfileExample")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 35, height: 35)
+                                .clipShape(Circle())
+                            
+                            VStack(alignment: .leading, content: {
+                                Text("✲ 프로필 맞춤")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(Color(red: 0, green: 0.64, blue: 1))
+                                Text("커트 \(storeData.pricing.cut)원~")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(Color("PrimaryColor"))
+                            })
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
+                                .padding(.horizontal, 10)
+                        }
+                    })
                 }
             })
         })
@@ -84,7 +106,11 @@ struct StoreItem: View {
 #Preview {
     Group {
         StoreItem(storeData: storeDatas[0])
+            .border(Color.black)
         StoreItem(storeData: storeDatas[1])
+            .border(Color.black)
         StoreItem(storeData: storeDatas[2])
+            .border(Color.black)
     }
+    .padding(.horizontal, 10)
 }
