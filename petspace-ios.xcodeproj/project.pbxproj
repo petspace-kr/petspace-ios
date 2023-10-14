@@ -13,6 +13,10 @@
 		0C5C8E122ADA943C003EF83E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C5C8E112ADA943C003EF83E /* Preview Assets.xcassets */; };
 		0C5C8E142ADA943C003EF83E /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E132ADA943C003EF83E /* Persistence.swift */; };
 		0C5C8E172ADA943C003EF83E /* petspace_ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E152ADA943C003EF83E /* petspace_ios.xcdatamodeld */; };
+		0C5C8E222ADA95E7003EF83E /* dummydata.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C5C8E212ADA95E7003EF83E /* dummydata.json */; };
+		0C5C8E242ADA9606003EF83E /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E232ADA9606003EF83E /* StoreModel.swift */; };
+		0C5C8E262ADAA8A8003EF83E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E252ADAA8A8003EF83E /* MapView.swift */; };
+		0C5C8E282ADAA8E1003EF83E /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E272ADAA8E1003EF83E /* MapViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,11 @@
 		0C5C8E112ADA943C003EF83E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0C5C8E132ADA943C003EF83E /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		0C5C8E162ADA943C003EF83E /* petspace_ios.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = petspace_ios.xcdatamodel; sourceTree = "<group>"; };
+		0C5C8E202ADA9547003EF83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0C5C8E212ADA95E7003EF83E /* dummydata.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dummydata.json; sourceTree = "<group>"; };
+		0C5C8E232ADA9606003EF83E /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
+		0C5C8E252ADAA8A8003EF83E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		0C5C8E272ADAA8E1003EF83E /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +64,10 @@
 		0C5C8E092ADA943B003EF83E /* petspace-ios */ = {
 			isa = PBXGroup;
 			children = (
+				0C5C8E202ADA9547003EF83E /* Info.plist */,
+				0C5C8E1F2ADA94EA003EF83E /* Data */,
+				0C5C8E1E2ADA94E0003EF83E /* Model */,
+				0C5C8E1D2ADA94D8003EF83E /* View */,
 				0C5C8E0A2ADA943B003EF83E /* petspace_iosApp.swift */,
 				0C5C8E0C2ADA943B003EF83E /* ContentView.swift */,
 				0C5C8E0E2ADA943C003EF83E /* Assets.xcassets */,
@@ -71,6 +84,31 @@
 				0C5C8E112ADA943C003EF83E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0C5C8E1D2ADA94D8003EF83E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0C5C8E252ADAA8A8003EF83E /* MapView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0C5C8E1E2ADA94E0003EF83E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0C5C8E272ADAA8E1003EF83E /* MapViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0C5C8E1F2ADA94EA003EF83E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				0C5C8E212ADA95E7003EF83E /* dummydata.json */,
+				0C5C8E232ADA9606003EF83E /* StoreModel.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +171,7 @@
 			files = (
 				0C5C8E122ADA943C003EF83E /* Preview Assets.xcassets in Resources */,
 				0C5C8E0F2ADA943C003EF83E /* Assets.xcassets in Resources */,
+				0C5C8E222ADA95E7003EF83E /* dummydata.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,9 +183,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C5C8E172ADA943C003EF83E /* petspace_ios.xcdatamodeld in Sources */,
+				0C5C8E262ADAA8A8003EF83E /* MapView.swift in Sources */,
 				0C5C8E142ADA943C003EF83E /* Persistence.swift in Sources */,
 				0C5C8E0D2ADA943B003EF83E /* ContentView.swift in Sources */,
+				0C5C8E282ADAA8E1003EF83E /* MapViewModel.swift in Sources */,
 				0C5C8E0B2ADA943B003EF83E /* petspace_iosApp.swift in Sources */,
+				0C5C8E242ADA9606003EF83E /* StoreModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,11 +325,15 @@
 				DEVELOPMENT_TEAM = NCLJJYF4QS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "petspace-ios/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "펫스페이스(베타)";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 현재 위치 정보를 기반으로, 여러 장소까지의 거리를 계산하여 보여줍니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -312,11 +358,15 @@
 				DEVELOPMENT_TEAM = NCLJJYF4QS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "petspace-ios/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "펫스페이스(베타)";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 현재 위치 정보를 기반으로, 여러 장소까지의 거리를 계산하여 보여줍니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
