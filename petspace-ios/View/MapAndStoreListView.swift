@@ -16,7 +16,9 @@ struct MapAndStoreListView: View {
         GeometryReader { geometry in
             ZStack(alignment: .bottom) {
                 MapView(coordinate: CLLocationCoordinate2D(latitude: 37.489_902, longitude: 127.041_819))
-                    
+                
+                ButtonBarView()
+                
                 StoreListView()
             }
             .ignoresSafeArea(edges: .bottom)
@@ -24,7 +26,7 @@ struct MapAndStoreListView: View {
         .onAppear() {
             if !UserDefaults.standard.bool(forKey: "hasShownWelcomeView") {
                 isWelcomeViewPresented = true
-                UserDefaults.standard.set(true, forKey: "hasShownWelcomeView")
+                // UserDefaults.standard.set(true, forKey: "hasShownWelcomeView")
             }
         }
         .sheet(isPresented: $isWelcomeViewPresented, content: {

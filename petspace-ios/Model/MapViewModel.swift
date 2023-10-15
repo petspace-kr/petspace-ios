@@ -15,14 +15,18 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     @Published var currentRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.489_902, longitude: 127.041_819), span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07))
     var locationManager: CLLocationManager?
     
+    @Published var isLocationServiceEnabled: Bool = false
+    
     func checkIfLocationServicesIsEnabled() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager = CLLocationManager()
             locationManager!.delegate = self
+            isLocationServiceEnabled = true
             // locationManager?.desiredAccuracy = kCLLocationAccuracyBest
             // checkLocationAuthorization()
         } else {
             //
+            isLocationServiceEnabled = false
         }
     }
     

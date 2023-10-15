@@ -24,6 +24,8 @@
 		0C5C8E322ADAD319003EF83E /* StoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E312ADAD319003EF83E /* StoreItem.swift */; };
 		0C5C8E342ADAE7DA003EF83E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */; };
 		0C5C8E362ADAF127003EF83E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E352ADAF127003EF83E /* ViewController.swift */; };
+		0CCF1E262ADBA9D300519920 /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */; };
+		0CCF1E292ADBAA5300519920 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCF1E282ADBAA5300519920 /* Haptics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		0C5C8E312ADAD319003EF83E /* StoreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItem.swift; sourceTree = "<group>"; };
 		0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		0C5C8E352ADAF127003EF83E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
+		0CCF1E282ADBAA5300519920 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 				0C5C8E1F2ADA94EA003EF83E /* Data */,
 				0C5C8E1E2ADA94E0003EF83E /* Model */,
 				0C5C8E1D2ADA94D8003EF83E /* View */,
+				0CCF1E272ADBAA4200519920 /* Helpers */,
 				0C5C8E0E2ADA943C003EF83E /* Assets.xcassets */,
 				0C5C8E132ADA943C003EF83E /* Persistence.swift */,
 				0C5C8E152ADA943C003EF83E /* petspace_ios.xcdatamodeld */,
@@ -109,6 +114,7 @@
 				0C5C8E2F2ADACF23003EF83E /* MapAndStoreListView.swift */,
 				0C5C8E312ADAD319003EF83E /* StoreItem.swift */,
 				0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */,
+				0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -130,6 +136,14 @@
 				0C5C8E2D2ADAC37E003EF83E /* Extensions.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		0CCF1E272ADBAA4200519920 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0CCF1E282ADBAA5300519920 /* Haptics.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,12 +221,14 @@
 				0C5C8E262ADAA8A8003EF83E /* MapView.swift in Sources */,
 				0C5C8E302ADACF23003EF83E /* MapAndStoreListView.swift in Sources */,
 				0C5C8E2A2ADABE8A003EF83E /* StoreListView.swift in Sources */,
+				0CCF1E292ADBAA5300519920 /* Haptics.swift in Sources */,
 				0C5C8E362ADAF127003EF83E /* ViewController.swift in Sources */,
 				0C5C8E142ADA943C003EF83E /* Persistence.swift in Sources */,
 				0C5C8E0D2ADA943B003EF83E /* ContentView.swift in Sources */,
 				0C5C8E322ADAD319003EF83E /* StoreItem.swift in Sources */,
 				0C5C8E342ADAE7DA003EF83E /* WelcomeView.swift in Sources */,
 				0C5C8E2E2ADAC37E003EF83E /* Extensions.swift in Sources */,
+				0CCF1E262ADBA9D300519920 /* ButtonBarView.swift in Sources */,
 				0C5C8E2C2ADAC35E003EF83E /* View.swift in Sources */,
 				0C5C8E282ADAA8E1003EF83E /* MapViewModel.swift in Sources */,
 				0C5C8E0B2ADA943B003EF83E /* petspace_iosApp.swift in Sources */,
