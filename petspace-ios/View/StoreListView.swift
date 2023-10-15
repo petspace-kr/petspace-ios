@@ -11,6 +11,7 @@ struct StoreListView: View {
     @ObservedObject private var mapViewModel = MapViewModel()
     
     @State private var sortMode: Int = 0
+    @State private var sortModeString: String = "거리 순"
     @State private var viewHeight: CGFloat = UIScreen.main.bounds.height * 0.5
     @State private var isFullScreen: Bool = false
     @State private var startingOffsetY: CGFloat = UIScreen.main.bounds.height * 0.5
@@ -32,15 +33,22 @@ struct StoreListView: View {
                     
                     Spacer()
                     
-                    Menu("\(sortMode == 0 ? "거리순" : sortMode == 1 ? "별점순" : "가격순")") {
-                        Button("거리순") {
+                    Menu("\(sortModeString)") {
+                        Button("거리 순") {
                             sortMode = 0
+                            sortModeString = "거리 순"
                         }
-                        Button("별점순") {
+                        Button("별점 순") {
                             sortMode = 1
+                            sortModeString = "별점 순"
                         }
-                        Button("가격순") {
+                        Button("가격 낮은 순") {
                             sortMode = 2
+                            sortModeString = "가격 낮은 순"
+                        }
+                        Button("가격 높은 순") {
+                            sortMode = 3
+                            sortModeString = "가격 높은 순"
                         }
                     }
                     .padding(.trailing, 6)
@@ -49,21 +57,28 @@ struct StoreListView: View {
                 .padding(.bottom, 10)
                 
                 ScrollView(showsIndicators: false, content: {
-                    // 거리순
+                    // 거리순 (가까운 순)
                     if sortMode == 0 {
-                        ForEach(storeDatas.sorted(by: { $0.name > $1.name })) { storeData in
+                        ForEach(storeDatas.sorted(by: { $0.name < $1.name })) { storeData in
                             StoreItem(storeData: storeData)
                                 .padding(.bottom, 10)
                         }
                     }
-                    // 별점순
+                    // 별점순 (높은 순)
                     else if sortMode == 1 {
                         ForEach(storeDatas.sorted(by: { $0.rating > $1.rating })) { storeData in
                             StoreItem(storeData: storeData)
                                 .padding(.bottom, 10)
                         }
                     }
-                    // 가격순
+                    // 가격 낮은 순
+                    else if sortMode == 2 {
+                        ForEach(storeDatas.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeData in
+                            StoreItem(storeData: storeData)
+                                .padding(.bottom, 10)
+                        }
+                    }
+                    // 가격 높은 순
                     else {
                         ForEach(storeDatas.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeData in
                             StoreItem(storeData: storeData)
