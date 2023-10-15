@@ -52,9 +52,16 @@ struct StoreItem: View {
                         .font(.system(size: 10))
                         .bold()
                         .padding(0)
-                    Text("✦ \(String(format: "%.1f", storeData.rating)) ∙ 리뷰 \(storeData.reviewCount)개")
-                        .font(.system(size: 10))
-                        .padding(0)
+                    if storeData.rating < 0 {
+                        Text("리뷰 \(storeData.reviewCount)개")
+                            .font(.system(size: 10))
+                            .padding(0)
+                    }
+                    else {
+                        Text("✦ \(String(format: "%.1f", storeData.rating)) ∙ 리뷰 \(storeData.reviewCount)개")
+                            .font(.system(size: 10))
+                            .padding(0)
+                    }
                 }
                 
                 // Store Description

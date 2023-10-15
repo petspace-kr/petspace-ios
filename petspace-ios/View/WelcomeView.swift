@@ -69,10 +69,19 @@ struct WelcomeView: View {
                 })
                 .padding()
             } else {
-                Button("문의하기") {
-                    //
+                VStack {
+                    Button {
+                        //
+                    } label: {
+                        Text("개인정보처리방침")
+                            .foregroundStyle(.primary)
+                    }
+                    .padding(.bottom, 10)
+                    Button("문의하기") {
+                        //
+                    }
+                    .bigButton()
                 }
-                .bigButton()
                 .padding()
             }
             

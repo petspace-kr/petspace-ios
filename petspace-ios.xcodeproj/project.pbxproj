@@ -140,9 +140,9 @@
 			isa = PBXGroup;
 			children = (
 				0C5C8E212ADA95E7003EF83E /* dummydata.json */,
+				0C39212E2ADBCAED0095BDD9 /* dogbreed.json */,
 				0C5C8E232ADA9606003EF83E /* StoreModel.swift */,
 				0C5C8E2D2ADAC37E003EF83E /* Extensions.swift */,
-				0C39212E2ADBCAED0095BDD9 /* dogbreed.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";

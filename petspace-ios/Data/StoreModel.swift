@@ -23,6 +23,8 @@ struct StoreModel: Hashable, Codable, Identifiable {
     var distance: Double?
     var isSaved: Bool?
     
+    var pricingImage: String
+    
     var coordinate: Coordinates
     var locationCoordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(

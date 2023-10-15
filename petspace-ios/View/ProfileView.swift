@@ -38,7 +38,11 @@ struct ProfileView: View {
                 
                 Button(isEditing ? "저장" : "편집") {
                     if isEditing {
-                        isAlertShowing = true
+                        if dog_name == "" || dog_breed == "" || dog_weight == "" {
+                            isAlertShowing = true
+                        } else {
+                            isEditing = false
+                        }
                     }
                     else {
                         isEditing = true
@@ -55,7 +59,7 @@ struct ProfileView: View {
                 Image("ProfileExample")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 200, height: 200)
+                    .frame(width: 175, height: 175)
                     .clipShape(Circle())
                     .padding(.vertical, 30)
                 

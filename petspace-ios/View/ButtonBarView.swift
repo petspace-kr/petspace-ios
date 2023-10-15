@@ -13,7 +13,7 @@ struct ButtonBarView: View {
             HStack {
                 Spacer()
                 ButtonBar()
-                    .padding(.trailing, 20)
+                    .padding(.trailing, 16)
             }
             Spacer()
         }
@@ -28,6 +28,9 @@ struct ButtonBar: View {
     
     @State private var isExpaned: Bool = false
     @StateObject private var mapViewModel = MapViewModel()
+    
+    @State private var isProfileViewPresented: Bool = false
+    @State private var isInfoViewPresented: Bool = false
     
     var body: some View {
         
@@ -53,6 +56,9 @@ struct ButtonBar: View {
                     Image(systemName: mapViewModel.isLocationServiceEnabled ? "location" : "location.slash")
                         .frame(width: 48, height: 48)
                 }
+                .onAppear() {
+                    mapViewModel.checkIfLocationServicesIsEnabled()
+                }
                 
                 // 필터링
 //                Menu {
@@ -73,18 +79,27 @@ struct ButtonBar: View {
                 // 프로필 수정으로 이동
                 Button {
                     // to profile
+                    isProfileViewPresented = true
                 } label: {
                     Image(systemName: "dog.circle")
                         .frame(width: 48, height: 48)
                 }
+                .sheet(isPresented: $isProfileViewPresented, content: {
+                    ProfileView(isEditing: false, isFirstRegister: true)
+                        .padding(.top, 20)
+                })
                 
                 // 앱 정보
                 Button {
                     // information
+                    isInfoViewPresented = true
                 } label: {
                     Image(systemName: "info.circle")
                         .frame(width: 48, height: 48)
                 }
+                .sheet(isPresented: $isInfoViewPresented, content: {
+                    WelcomeView(isPresented: $isInfoViewPresented, isWelcome: false)
+                })
             }
         })
         .font(.system(size: 24))
