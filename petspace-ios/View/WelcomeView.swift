@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    
+    @Binding var isPresented: Bool
+    var isWelcome: Bool
+    
     var body: some View {
         VStack(alignment: .center, content: {
             Spacer()
@@ -18,9 +22,20 @@ struct WelcomeView: View {
                 .cornerRadius(30)
                 .padding(.bottom, 10)
             
-            Text("펫스페이스에 오신 것을 \n환영합니다!")
-                .font(.title)
-                .multilineTextAlignment(.center)
+            if isWelcome {
+                Text("펫스페이스에 오신 것을 \n환영합니다!")
+                    .font(.title)
+                    .multilineTextAlignment(.center)
+            } else {
+                Text("펫스페이스")
+                    .font(.title)
+                    .bold()
+                    .multilineTextAlignment(.center)
+                
+                Text("베타")
+                    .italic()
+                    .foregroundStyle(.secondary)
+            }
             
             
             VStack(alignment: .center, spacing: 10,content: {
@@ -32,11 +47,31 @@ struct WelcomeView: View {
             
             Spacer()
             
-            Button("확인") {
-                //
+            if isWelcome {
+                VStack(spacing: 10, content: {
+                    Text("프로필을 등록하면 맞춤형 가격 추천을 받을 수 있어요")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                    
+                    Button("프로필 등록하기") {
+                        //
+                    }
+                    .bigButton()
+                    Button("프로필 등록없이 시작") {
+                        //
+                    }
+                    .bigButton(backgroundColor: Color.secondary)
+                    
+                })
+                .padding()
+            } else {
+                Button("문의하기") {
+                    //
+                }
+                .bigButton()
+                .padding()
             }
-            .bigButton()
-            .padding()
+            
         })
     }
 }
@@ -44,7 +79,14 @@ struct WelcomeView: View {
 #Preview {
     Text("")
         .sheet(isPresented: .constant(true), content: {
-            WelcomeView()
+            WelcomeView(isPresented: .constant(true), isWelcome: true)
+        })
+}
+
+#Preview {
+    Text("")
+        .sheet(isPresented: .constant(true), content: {
+            WelcomeView(isPresented: .constant(true), isWelcome: false)
         })
 }
 

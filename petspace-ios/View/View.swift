@@ -51,4 +51,14 @@ extension View {
             .background(Color.accentColor)
             .cornerRadius(15)
     }
+    
+    func bigButton(backgroundColor: Color) -> some View {
+        self
+            .font(.body.bold())
+            .padding()
+            .horizontallyCentred()
+            .foregroundColor(.white)
+            .background(backgroundColor)
+            .cornerRadius(15)
+    }
 }

@@ -11,9 +11,9 @@ struct ButtonBarView: View {
     var body: some View {
         VStack {
             HStack {
-                Spacer()
                 ButtonBar()
                     .padding(18)
+                Spacer()
             }
             Spacer()
         }

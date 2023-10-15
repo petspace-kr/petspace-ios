@@ -26,6 +26,7 @@
 		0C5C8E362ADAF127003EF83E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E352ADAF127003EF83E /* ViewController.swift */; };
 		0CCF1E262ADBA9D300519920 /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */; };
 		0CCF1E292ADBAA5300519920 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCF1E282ADBAA5300519920 /* Haptics.swift */; };
+		0CCF1E2B2ADBB1F600519920 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCF1E2A2ADBB1F600519920 /* ProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		0C5C8E352ADAF127003EF83E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		0CCF1E282ADBAA5300519920 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		0CCF1E2A2ADBB1F600519920 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				0C5C8E312ADAD319003EF83E /* StoreItem.swift */,
 				0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */,
 				0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */,
+				0CCF1E2A2ADBB1F600519920 /* ProfileView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				0C5C8E142ADA943C003EF83E /* Persistence.swift in Sources */,
 				0C5C8E0D2ADA943B003EF83E /* ContentView.swift in Sources */,
 				0C5C8E322ADAD319003EF83E /* StoreItem.swift in Sources */,
+				0CCF1E2B2ADBB1F600519920 /* ProfileView.swift in Sources */,
 				0C5C8E342ADAE7DA003EF83E /* WelcomeView.swift in Sources */,
 				0C5C8E2E2ADAC37E003EF83E /* Extensions.swift in Sources */,
 				0CCF1E262ADBA9D300519920 /* ButtonBarView.swift in Sources */,

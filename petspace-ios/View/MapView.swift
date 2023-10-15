@@ -54,6 +54,12 @@ struct MapView: View {
         .onAppear() {
             mapViewModel.checkIfLocationServicesIsEnabled()
         }
+        .mapStyle(.standard)
+        .mapControls {
+//            MapCompass()
+//            MapPitchToggle()
+//            MapUserLocationButton()
+        }
     }
 }
 

@@ -30,7 +30,7 @@ struct MapAndStoreListView: View {
             }
         }
         .sheet(isPresented: $isWelcomeViewPresented, content: {
-            WelcomeView()
+            WelcomeView(isPresented: $isWelcomeViewPresented, isWelcome: true)
         })
     }
 }
