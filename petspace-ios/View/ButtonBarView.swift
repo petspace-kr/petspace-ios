@@ -84,10 +84,6 @@ struct ButtonBar: View {
                     Image(systemName: "dog.circle")
                         .frame(width: 48, height: 48)
                 }
-                .sheet(isPresented: $isProfileViewPresented, content: {
-                    ProfileView(isEditing: false, isFirstRegister: true)
-                        .padding(.top, 20)
-                })
                 
                 // 앱 정보
                 Button {
@@ -97,13 +93,18 @@ struct ButtonBar: View {
                     Image(systemName: "info.circle")
                         .frame(width: 48, height: 48)
                 }
-                .sheet(isPresented: $isInfoViewPresented, content: {
-                    WelcomeView(isPresented: $isInfoViewPresented, isWelcome: false)
-                })
+                
             }
         })
         .font(.system(size: 24))
         .materialBackground()
+        .sheet(isPresented: $isProfileViewPresented, content: {
+            ProfileView(isEditing: false, isFirstRegister: false)
+                .padding(.top, 20)
+        })
+        .sheet(isPresented: $isInfoViewPresented, content: {
+            WelcomeView(isPresented: $isInfoViewPresented, isWelcome: false)
+        })
     }
 }
 

@@ -26,6 +26,7 @@
 		0C5C8E322ADAD319003EF83E /* StoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E312ADAD319003EF83E /* StoreItem.swift */; };
 		0C5C8E342ADAE7DA003EF83E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */; };
 		0C5C8E362ADAF127003EF83E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E352ADAF127003EF83E /* ViewController.swift */; };
+		0CAD2EC92ADC2A3100BFE235 /* StoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAD2EC82ADC2A3100BFE235 /* StoreDetailView.swift */; };
 		0CCF1E262ADBA9D300519920 /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */; };
 		0CCF1E292ADBAA5300519920 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCF1E282ADBAA5300519920 /* Haptics.swift */; };
 		0CCF1E2B2ADBB1F600519920 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCF1E2A2ADBB1F600519920 /* ProfileView.swift */; };
@@ -53,6 +54,7 @@
 		0C5C8E312ADAD319003EF83E /* StoreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItem.swift; sourceTree = "<group>"; };
 		0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		0C5C8E352ADAF127003EF83E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0CAD2EC82ADC2A3100BFE235 /* StoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDetailView.swift; sourceTree = "<group>"; };
 		0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		0CCF1E282ADBAA5300519920 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		0CCF1E2A2ADBB1F600519920 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				0C5C8E332ADAE7DA003EF83E /* WelcomeView.swift */,
 				0CCF1E252ADBA9D300519920 /* ButtonBarView.swift */,
 				0CCF1E2A2ADBB1F600519920 /* ProfileView.swift */,
+				0CAD2EC82ADC2A3100BFE235 /* StoreDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				0CCF1E262ADBA9D300519920 /* ButtonBarView.swift in Sources */,
 				0C5C8E2C2ADAC35E003EF83E /* View.swift in Sources */,
 				0C5C8E282ADAA8E1003EF83E /* MapViewModel.swift in Sources */,
+				0CAD2EC92ADC2A3100BFE235 /* StoreDetailView.swift in Sources */,
 				0C5C8E0B2ADA943B003EF83E /* petspace_iosApp.swift in Sources */,
 				0C5C8E242ADA9606003EF83E /* StoreModel.swift in Sources */,
 			);
