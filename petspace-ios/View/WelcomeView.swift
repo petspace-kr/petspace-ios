@@ -10,16 +10,16 @@ import SwiftUI
 struct WelcomeView: View {
     
     @Binding var isPresented: Bool
+    @State var isProfileViewPresented: Bool = false
     var isWelcome: Bool
     
     var body: some View {
         VStack(alignment: .center, content: {
-            Spacer()
-            
             Image("AppLogo")
                 .resizable()
                 .frame(width: 100, height: 100)
                 .cornerRadius(30)
+                .padding(.top, 40)
                 .padding(.bottom, 10)
             
             if isWelcome {
@@ -54,13 +54,17 @@ struct WelcomeView: View {
                         .foregroundStyle(.secondary)
                     
                     Button("프로필 등록하기") {
-                        //
+                        isProfileViewPresented = true
                     }
                     .bigButton()
                     Button("프로필 등록없이 시작") {
-                        //
+                        isPresented = false
                     }
                     .bigButton(backgroundColor: Color.secondary)
+                    .sheet(isPresented: $isProfileViewPresented, content: {
+                        ProfileView(isEditing: false, isFirstRegister: true)
+                            .padding(.top, 20)
+                    })
                     
                 })
                 .padding()
