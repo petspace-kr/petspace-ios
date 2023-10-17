@@ -6,21 +6,35 @@
 //
 
 import SwiftUI
+import ConfettiSwiftUI
 
 struct WelcomeView: View {
     
     @Binding var isPresented: Bool
     @State var isProfileViewPresented: Bool = false
     var isWelcome: Bool
+    @State var counter:Int = 0
     
     var body: some View {
         VStack(alignment: .center, content: {
-            Image("AppLogo")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .cornerRadius(30)
-                .padding(.top, 40)
-                .padding(.bottom, 10)
+            
+            ZStack {
+                ConfettiCannon(counter: $counter, num: 50, repetitions: 5, repetitionInterval: 1.0)
+                    .onAppear() {
+                        counter += 1
+                    }
+                
+                Image("AppLogo")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(30)
+                    .padding(.top, 40)
+                    .padding(.bottom, 10)
+                    .onTapGesture {
+                        counter += 1
+                    }
+            }
+            
             
             if isWelcome {
                 Text("펫스페이스에 오신 것을 \n환영합니다!")

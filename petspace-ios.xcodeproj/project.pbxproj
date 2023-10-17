@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C100D052ADEEB4A00EDDA05 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0C100D042ADEEB4A00EDDA05 /* ConfettiSwiftUI */; };
 		0C39212D2ADBC51A0095BDD9 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C39212C2ADBC51A0095BDD9 /* ProfileViewModel.swift */; };
 		0C39212F2ADBCAED0095BDD9 /* dogbreed.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C39212E2ADBCAED0095BDD9 /* dogbreed.json */; };
 		0C5C8E0B2ADA943B003EF83E /* petspace_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C8E0A2ADA943B003EF83E /* petspace_iosApp.swift */; };
@@ -65,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C100D052ADEEB4A00EDDA05 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +176,9 @@
 			dependencies = (
 			);
 			name = "petspace-ios";
+			packageProductDependencies = (
+				0C100D042ADEEB4A00EDDA05 /* ConfettiSwiftUI */,
+			);
 			productName = "petspace-ios";
 			productReference = 0C5C8E072ADA943B003EF83E /* petspace-ios.app */;
 			productType = "com.apple.product-type.application";
@@ -202,6 +207,9 @@
 				Base,
 			);
 			mainGroup = 0C5C8DFE2ADA943B003EF83E;
+			packageReferences = (
+				0C100D032ADEEB4A00EDDA05 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+			);
 			productRefGroup = 0C5C8E082ADA943B003EF83E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -464,6 +472,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0C100D032ADEEB4A00EDDA05 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0C100D042ADEEB4A00EDDA05 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C100D032ADEEB4A00EDDA05 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		0C5C8E152ADA943C003EF83E /* petspace_ios.xcdatamodeld */ = {
