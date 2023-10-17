@@ -11,7 +11,7 @@ struct StoreListView: View {
     @ObservedObject private var mapViewModel = MapViewModel()
     
     @State private var sortMode: Int = 0
-    @State private var sortModeString: String = "거리 순"
+    @State private var sortModeString: String = "거리순"
     @State private var viewHeight: CGFloat = UIScreen.main.bounds.height * 0.5
     @State private var isFullScreen: Bool = false
     @State private var startingOffsetY: CGFloat = UIScreen.main.bounds.height * 0.5
@@ -34,21 +34,21 @@ struct StoreListView: View {
                     Spacer()
                     
                     Menu("\(sortModeString)") {
-                        Button("거리 순") {
+                        Button("거리순") {
                             sortMode = 0
-                            sortModeString = "거리 순"
+                            sortModeString = "거리순"
                         }
-                        Button("별점 순") {
+                        Button("별점순") {
                             sortMode = 1
-                            sortModeString = "별점 순"
+                            sortModeString = "별점순"
                         }
-                        Button("가격 낮은 순") {
+                        Button("가격낮은순") {
                             sortMode = 2
-                            sortModeString = "가격 낮은 순"
+                            sortModeString = "가격낮은순"
                         }
-                        Button("가격 높은 순") {
+                        Button("가격높은순") {
                             sortMode = 3
-                            sortModeString = "가격 높은 순"
+                            sortModeString = "가격높은순"
                         }
                     }
                     .padding(.trailing, 6)
