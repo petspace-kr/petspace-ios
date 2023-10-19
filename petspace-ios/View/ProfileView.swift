@@ -13,11 +13,12 @@ struct ProfileView: View {
     @State var isEditing: Bool
     @State var isFirstRegister: Bool
     @State var isAlertShowing: Bool = false
+    @Binding var isPresented: Bool
     
-    @State var dog_name: String = "NAME_EXAMPLE"
-    @State var dog_breed: String = "DOB_BREED_EXAMPLE"
-    @State var dog_weight: String = "0.0"
-    @State var dog_birthday: Date = Date()
+    @State var dog_name: String = ""
+    @State var dog_breed: String = ""
+    @State var dog_weight: String = ""
+    // @State var dog_birthday: Date = Date()
     
     var body: some View {
         VStack {
@@ -29,39 +30,45 @@ struct ProfileView: View {
                 
                 Spacer()
                 
-                if isEditing {
+                if isEditing && !isFirstRegister {
                     Button("취소") {
                         isEditing = false
                     }
                     .padding(.trailing, 10)
                 }
                 
-                Button(isEditing ? "저장" : "편집") {
-                    if isEditing {
-                        if dog_name == "" || dog_breed == "" || dog_weight == "" {
-                            isAlertShowing = true
-                        } else {
-                            isEditing = false
+                if !isFirstRegister {
+                    Button(isEditing ? "저장" : "편집") {
+                        if isEditing {
+                            if dog_name == "" || dog_breed == "" || dog_weight == "" {
+                                isAlertShowing = true
+                            } else {
+                                isEditing = false
+                            }
+                        }
+                        else {
+                            isEditing = true
                         }
                     }
-                    else {
-                        isEditing = true
+                    .padding(.trailing, 6)
+                    .alert("모든 정보를 입력해주세요!", isPresented: $isAlertShowing) {
+                        
                     }
                 }
-                .padding(.trailing, 6)
-                .alert("모든 정보를 입력해주세요!", isPresented: $isAlertShowing) {
-                    
-                }
+                
             }
             .padding()
             
             ScrollView {
-                Image("ProfileExample")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 175, height: 175)
-                    .clipShape(Circle())
-                    .padding(.vertical, 30)
+                ZStack {
+                    Image("ProfileExample")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 175, height: 175)
+                        .clipShape(Circle())
+                        .padding(.vertical, 30)
+                }
+                
                 
                 VStack(spacing: 20, content: {
                     
@@ -162,7 +169,7 @@ struct ProfileView: View {
                     })
                     
                     // 생일
-                    VStack(alignment: .leading, content: {
+                    /* VStack(alignment: .leading, content: {
                         Text("생일")
                         
                         GroupBox {
@@ -182,13 +189,20 @@ struct ProfileView: View {
                             }
                         }
                         .frame(height: 48)
-                    })
+                    })*/
                 })
                 
                 Text("프로필 정보는 기기에만 저장되어 앱 제거 시 함께 삭제됩니다")
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
                     .padding(.vertical, 24)
+                
+                if isFirstRegister {
+                    Button("저장") {
+                        self.isPresented = false
+                    }
+                    .bigButton()
+                }
             }
             .padding()
         }
@@ -197,5 +211,9 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(isEditing: false, isFirstRegister: false)
+    ProfileView(isEditing: false, isFirstRegister: false, isPresented: .constant(true))
+}
+
+#Preview {
+    ProfileView(isEditing: true, isFirstRegister: true, isPresented: .constant(true))
 }

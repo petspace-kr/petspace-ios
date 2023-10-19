@@ -33,7 +33,7 @@ struct WelcomeView: View {
                     .onTapGesture {
                         counter += 1
                     }
-            }
+            } 
             
             
             if isWelcome {
@@ -76,7 +76,7 @@ struct WelcomeView: View {
                     }
                     .bigButton(backgroundColor: Color.secondary)
                     .sheet(isPresented: $isProfileViewPresented, content: {
-                        ProfileView(isEditing: false, isFirstRegister: true)
+                        ProfileView(isEditing: true, isFirstRegister: true, isPresented: self.$isProfileViewPresented)
                             .padding(.top, 20)
                     })
                     

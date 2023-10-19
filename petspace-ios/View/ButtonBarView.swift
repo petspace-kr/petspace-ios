@@ -99,7 +99,7 @@ struct ButtonBar: View {
         .font(.system(size: 24))
         .materialBackground()
         .sheet(isPresented: $isProfileViewPresented, content: {
-            ProfileView(isEditing: false, isFirstRegister: false)
+            ProfileView(isEditing: false, isFirstRegister: false, isPresented: .constant(false))
                 .padding(.top, 20)
         })
         .sheet(isPresented: $isInfoViewPresented, content: {
