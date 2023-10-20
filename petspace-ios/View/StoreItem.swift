@@ -10,9 +10,17 @@ import CoreLocation
 
 struct StoreItem: View {
     @ObservedObject private var mapViewModel = MapViewModel()
+    // var storeData: StoreModel
+    @Environment(StoreDatas.self) var storeDatas
     var storeData: StoreModel
     
+    var storeIndex: Int {
+        storeDatas.items.firstIndex(where: { $0.id == storeData.id })!
+    }
+    
     var body: some View {
+        @Bindable var storeDatas = storeDatas
+        
         HStack(alignment: .center, content: {
             // Store Main Image
             AsyncImage(url: URL(string: storeData.iconImage)) { image in
@@ -45,7 +53,7 @@ struct StoreItem: View {
                 let coordinate1 = Coordinate(latitude: mapViewModel.currentRegion.center.latitude, longitude: mapViewModel.currentRegion.center.longitude)
                 let coordinate2 = Coordinate(latitude: storeData.coordinate.latitude, longitude: storeData.coordinate.longitude)
                 let distanceKm = coordinate1.distance(to: coordinate2)
-                
+            
                 // Store Score and Number of Reviews
                 HStack {
                     Text("\(String(format: "%.2f", distanceKm))km")
@@ -112,11 +120,11 @@ struct StoreItem: View {
 
 #Preview {
     Group {
-        StoreItem(storeData: storeDatas[0])
+        StoreItem(storeData: StoreDatas().items[0])
             .border(Color.black)
-        StoreItem(storeData: storeDatas[1])
+        StoreItem(storeData: StoreDatas().items[1])
             .border(Color.black)
-        StoreItem(storeData: storeDatas[2])
+        StoreItem(storeData: StoreDatas().items[2])
             .border(Color.black)
     }
     .padding(.horizontal, 10)

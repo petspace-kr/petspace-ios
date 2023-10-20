@@ -8,6 +8,11 @@
 import Foundation
 import CoreLocation
 
+@Observable
+class StoreDatas {
+    var items: [StoreModel] = jsonData.data.items
+}
+
 struct StoreModel: Hashable, Codable, Identifiable {
     var id: String
     var type: String
@@ -52,7 +57,8 @@ struct StoreData: Codable {
 }
 
 var jsonData: JSONData = load("dummydata.json")
-var storeDatas = jsonData.data.items
+// var tempDatas = jsonData.data.items
+
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data
@@ -114,16 +120,4 @@ func loadFromAPI<T: Decodable>(_ url: URL, completion: @escaping (Result<T, Erro
         }
     }
     task.resume()
-}
-
-import SwiftUI
-
-struct TestView: View {
-    var body: some View {
-        Text(storeDatas[0].name)
-    }
-}
-
-#Preview {
-    TestView()
 }

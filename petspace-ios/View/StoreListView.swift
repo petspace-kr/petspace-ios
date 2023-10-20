@@ -16,6 +16,8 @@ struct StoreListView: View {
     @State private var isFullScreen: Bool = false
     @State private var startingOffsetY: CGFloat = UIScreen.main.bounds.height * 0.5
     
+    @Environment(StoreDatas.self) var storeDatas
+    
     var body: some View {
         NavigationStack(root: {
             VStack {
@@ -59,28 +61,28 @@ struct StoreListView: View {
                 ScrollView(showsIndicators: false, content: {
                     // 거리순 (가까운 순)
                     if sortMode == 0 {
-                        ForEach(storeDatas.sorted(by: { $0.name < $1.name })) { storeData in
+                        ForEach(storeDatas.items.sorted(by: { $0.distance ?? 0.0 < $1.distance ?? 0.0 })) { storeData in
                             StoreItem(storeData: storeData)
                                 .padding(.bottom, 10)
                         }
                     }
                     // 별점순 (높은 순)
                     else if sortMode == 1 {
-                        ForEach(storeDatas.sorted(by: { $0.rating > $1.rating })) { storeData in
+                        ForEach(storeDatas.items.sorted(by: { $0.rating > $1.rating })) { storeData in
                             StoreItem(storeData: storeData)
                                 .padding(.bottom, 10)
                         }
                     }
                     // 가격 낮은 순
                     else if sortMode == 2 {
-                        ForEach(storeDatas.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeData in
+                        ForEach(storeDatas.items.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeData in
                             StoreItem(storeData: storeData)
                                 .padding(.bottom, 10)
                         }
                     }
                     // 가격 높은 순
                     else {
-                        ForEach(storeDatas.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeData in
+                        ForEach(storeDatas.items.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeData in
                             StoreItem(storeData: storeData)
                                 .padding(.bottom, 10)
                         }
@@ -136,6 +138,7 @@ struct StoreListView: View {
 #Preview {
     ZStack {
         StoreListView()
+            .environment(StoreDatas())
     }
     .ignoresSafeArea(edges: .bottom)
     .background(Color.green)

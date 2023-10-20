@@ -149,5 +149,5 @@ struct StoreDetailView: View {
 }
 
 #Preview {
-    StoreDetailView(storeData: storeDatas[1])
+    StoreDetailView(storeData: StoreDatas().items[1])
 }

@@ -19,11 +19,6 @@ struct WelcomeView: View {
         VStack(alignment: .center, content: {
             
             ZStack {
-                ConfettiCannon(counter: $counter, num: 50, repetitions: 5, repetitionInterval: 1.0)
-                    .onAppear() {
-                        counter += 1
-                    }
-                
                 Image("AppLogo")
                     .resizable()
                     .frame(width: 100, height: 100)
@@ -34,12 +29,19 @@ struct WelcomeView: View {
                         counter += 1
                     }
             } 
-            
-            
+        
             if isWelcome {
-                Text("펫스페이스에 오신 것을 \n환영합니다!")
-                    .font(.title)
-                    .multilineTextAlignment(.center)
+                ZStack {
+                    Text("펫스페이스에 오신 것을 \n환영합니다!")
+                        .font(.title)
+                        .multilineTextAlignment(.center)
+                    
+                    ConfettiCannon(counter: $counter, num: 20, repetitions: 3, repetitionInterval: 0.3)
+                        .onAppear() {
+                            counter += 1
+                        }
+                }
+                
             } else {
                 Text("펫스페이스")
                     .font(.title)

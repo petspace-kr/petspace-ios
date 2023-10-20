@@ -15,6 +15,7 @@ struct petspace_iosApp: App {
     var body: some Scene {
         WindowGroup {
             MapAndStoreListView()
+                .environment(StoreDatas())
             // ProfileView(isEditing: false)
         }
     }
