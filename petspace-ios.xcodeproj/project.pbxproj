@@ -8,21 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		0CB76C4D2AFA79AC009D7424 /* petspace_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */; };
-		0CB76C4F2AFA79AC009D7424 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C4E2AFA79AC009D7424 /* ContentView.swift */; };
 		0CB76C512AFA79AD009D7424 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB76C502AFA79AD009D7424 /* Assets.xcassets */; };
 		0CB76C542AFA79AD009D7424 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB76C532AFA79AD009D7424 /* Preview Assets.xcassets */; };
 		0CB76C562AFA79AD009D7424 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C552AFA79AD009D7424 /* Persistence.swift */; };
 		0CB76C592AFA79AD009D7424 /* petspace_ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C572AFA79AD009D7424 /* petspace_ios.xcdatamodeld */; };
+		0CB76C612AFA7A7A009D7424 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0CB76C602AFA7A7A009D7424 /* ConfettiSwiftUI */; };
+		0CB76C6C2AFA7CD9009D7424 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C6B2AFA7CD9009D7424 /* ProfileView.swift */; };
+		0CB76C6F2AFA8012009D7424 /* dummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 0CB76C6E2AFA8012009D7424 /* dummy.json */; };
+		0CB76C712AFA8026009D7424 /* dogbreed.json in Resources */ = {isa = PBXBuildFile; fileRef = 0CB76C702AFA8026009D7424 /* dogbreed.json */; };
+		0CB76C732AFA8054009D7424 /* StoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C722AFA8054009D7424 /* StoreViewModel.swift */; };
+		0CB76C752AFA805B009D7424 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C742AFA805B009D7424 /* MapViewModel.swift */; };
+		0CB76C772AFA809D009D7424 /* StoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C762AFA809D009D7424 /* StoreData.swift */; };
+		0CB76C792AFA80A4009D7424 /* DogBreedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C782AFA80A4009D7424 /* DogBreedData.swift */; };
+		0CB76C7D2AFA95E0009D7424 /* ServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C7C2AFA95E0009D7424 /* ServerInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0CB76C492AFA79AC009D7424 /* petspace-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "petspace-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = petspace_iosApp.swift; sourceTree = "<group>"; };
-		0CB76C4E2AFA79AC009D7424 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0CB76C502AFA79AD009D7424 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0CB76C532AFA79AD009D7424 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0CB76C552AFA79AD009D7424 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		0CB76C582AFA79AD009D7424 /* petspace_ios.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = petspace_ios.xcdatamodel; sourceTree = "<group>"; };
+		0CB76C6B2AFA7CD9009D7424 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		0CB76C6E2AFA8012009D7424 /* dummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dummy.json; sourceTree = "<group>"; };
+		0CB76C702AFA8026009D7424 /* dogbreed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dogbreed.json; sourceTree = "<group>"; };
+		0CB76C722AFA8054009D7424 /* StoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewModel.swift; sourceTree = "<group>"; };
+		0CB76C742AFA805B009D7424 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		0CB76C762AFA809D009D7424 /* StoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreData.swift; sourceTree = "<group>"; };
+		0CB76C782AFA80A4009D7424 /* DogBreedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedData.swift; sourceTree = "<group>"; };
+		0CB76C7C2AFA95E0009D7424 /* ServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB76C612AFA7A7A009D7424 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,10 +72,13 @@
 			isa = PBXGroup;
 			children = (
 				0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */,
-				0CB76C4E2AFA79AC009D7424 /* ContentView.swift */,
 				0CB76C502AFA79AD009D7424 /* Assets.xcassets */,
 				0CB76C552AFA79AD009D7424 /* Persistence.swift */,
 				0CB76C572AFA79AD009D7424 /* petspace_ios.xcdatamodeld */,
+				0CB76C622AFA7C5B009D7424 /* Models */,
+				0CB76C632AFA7C67009D7424 /* Views */,
+				0CB76C6D2AFA7F80009D7424 /* Data */,
+				0CB76C7A2AFA95B5009D7424 /* Extensions */,
 				0CB76C522AFA79AD009D7424 /* Preview Content */,
 			);
 			path = "petspace-ios";
@@ -71,6 +90,98 @@
 				0CB76C532AFA79AD009D7424 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0CB76C622AFA7C5B009D7424 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0CB76C722AFA8054009D7424 /* StoreViewModel.swift */,
+				0CB76C742AFA805B009D7424 /* MapViewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0CB76C632AFA7C67009D7424 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0CB76C682AFA7CA8009D7424 /* Profiles */,
+				0CB76C652AFA7C86009D7424 /* Controller */,
+				0CB76C642AFA7C73009D7424 /* Maps */,
+				0CB76C662AFA7C93009D7424 /* Stores */,
+				0CB76C6A2AFA7CBF009D7424 /* Welcome */,
+				0CB76C692AFA7CAF009D7424 /* Booking */,
+				0CB76C672AFA7C9D009D7424 /* Setting */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0CB76C642AFA7C73009D7424 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Maps;
+			sourceTree = "<group>";
+		};
+		0CB76C652AFA7C86009D7424 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0CB76C662AFA7C93009D7424 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		0CB76C672AFA7C9D009D7424 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		0CB76C682AFA7CA8009D7424 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				0CB76C6B2AFA7CD9009D7424 /* ProfileView.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		0CB76C692AFA7CAF009D7424 /* Booking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Booking;
+			sourceTree = "<group>";
+		};
+		0CB76C6A2AFA7CBF009D7424 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		0CB76C6D2AFA7F80009D7424 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				0CB76C6E2AFA8012009D7424 /* dummy.json */,
+				0CB76C702AFA8026009D7424 /* dogbreed.json */,
+				0CB76C762AFA809D009D7424 /* StoreData.swift */,
+				0CB76C782AFA80A4009D7424 /* DogBreedData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		0CB76C7A2AFA95B5009D7424 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0CB76C7C2AFA95E0009D7424 /* ServerInfo.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -89,6 +200,9 @@
 			dependencies = (
 			);
 			name = "petspace-ios";
+			packageProductDependencies = (
+				0CB76C602AFA7A7A009D7424 /* ConfettiSwiftUI */,
+			);
 			productName = "petspace-ios";
 			productReference = 0CB76C492AFA79AC009D7424 /* petspace-ios.app */;
 			productType = "com.apple.product-type.application";
@@ -117,6 +231,9 @@
 				Base,
 			);
 			mainGroup = 0CB76C402AFA79AC009D7424;
+			packageReferences = (
+				0CB76C5F2AFA7A7A009D7424 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+			);
 			productRefGroup = 0CB76C4A2AFA79AC009D7424 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -132,7 +249,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CB76C542AFA79AD009D7424 /* Preview Assets.xcassets in Resources */,
+				0CB76C712AFA8026009D7424 /* dogbreed.json in Resources */,
 				0CB76C512AFA79AD009D7424 /* Assets.xcassets in Resources */,
+				0CB76C6F2AFA8012009D7424 /* dummy.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,10 +262,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB76C6C2AFA7CD9009D7424 /* ProfileView.swift in Sources */,
 				0CB76C592AFA79AD009D7424 /* petspace_ios.xcdatamodeld in Sources */,
 				0CB76C562AFA79AD009D7424 /* Persistence.swift in Sources */,
-				0CB76C4F2AFA79AC009D7424 /* ContentView.swift in Sources */,
+				0CB76C792AFA80A4009D7424 /* DogBreedData.swift in Sources */,
+				0CB76C732AFA8054009D7424 /* StoreViewModel.swift in Sources */,
+				0CB76C7D2AFA95E0009D7424 /* ServerInfo.swift in Sources */,
 				0CB76C4D2AFA79AC009D7424 /* petspace_iosApp.swift in Sources */,
+				0CB76C752AFA805B009D7424 /* MapViewModel.swift in Sources */,
+				0CB76C772AFA809D009D7424 /* StoreData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,11 +407,13 @@
 				DEVELOPMENT_TEAM = NCLJJYF4QS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "펫스페이스2";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "펫스페이스는 사용자의 실제 위치를 기반으로 애견미용실과의 거리를 계산할 때 사용해요. 애견미용실을 거리 순으로 정렬하여 볼 수 있어요.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -312,11 +438,13 @@
 				DEVELOPMENT_TEAM = NCLJJYF4QS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "펫스페이스2";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "펫스페이스는 사용자의 실제 위치를 기반으로 애견미용실과의 거리를 계산할 때 사용해요. 애견미용실을 거리 순으로 정렬하여 볼 수 있어요.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -352,6 +480,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0CB76C5F2AFA7A7A009D7424 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0CB76C602AFA7A7A009D7424 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0CB76C5F2AFA7A7A009D7424 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		0CB76C572AFA79AD009D7424 /* petspace_ios.xcdatamodeld */ = {
