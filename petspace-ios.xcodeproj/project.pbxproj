@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C0D3B362AFA9FA400AC4FAC /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0D3B352AFA9FA400AC4FAC /* ControlView.swift */; };
+		0C3CBC942AFB7EFB000862C3 /* dummy2.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C3CBC932AFB7EFB000862C3 /* dummy2.json */; };
 		0CB76C4D2AFA79AC009D7424 /* petspace_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */; };
 		0CB76C512AFA79AD009D7424 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB76C502AFA79AD009D7424 /* Assets.xcassets */; };
 		0CB76C542AFA79AD009D7424 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB76C532AFA79AD009D7424 /* Preview Assets.xcassets */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C0D3B352AFA9FA400AC4FAC /* ControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
+		0C3CBC932AFB7EFB000862C3 /* dummy2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dummy2.json; sourceTree = "<group>"; };
 		0CB76C492AFA79AC009D7424 /* petspace-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "petspace-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = petspace_iosApp.swift; sourceTree = "<group>"; };
 		0CB76C502AFA79AD009D7424 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 		0CB76C652AFA7C86009D7424 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0C0D3B352AFA9FA400AC4FAC /* ControlView.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				0CB76C702AFA8026009D7424 /* dogbreed.json */,
 				0CB76C762AFA809D009D7424 /* StoreData.swift */,
 				0CB76C782AFA80A4009D7424 /* DogBreedData.swift */,
+				0C3CBC932AFB7EFB000862C3 /* dummy2.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -252,6 +258,7 @@
 				0CB76C712AFA8026009D7424 /* dogbreed.json in Resources */,
 				0CB76C512AFA79AD009D7424 /* Assets.xcassets in Resources */,
 				0CB76C6F2AFA8012009D7424 /* dummy.json in Resources */,
+				0C3CBC942AFB7EFB000862C3 /* dummy2.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +273,7 @@
 				0CB76C592AFA79AD009D7424 /* petspace_ios.xcdatamodeld in Sources */,
 				0CB76C562AFA79AD009D7424 /* Persistence.swift in Sources */,
 				0CB76C792AFA80A4009D7424 /* DogBreedData.swift in Sources */,
+				0C0D3B362AFA9FA400AC4FAC /* ControlView.swift in Sources */,
 				0CB76C732AFA8054009D7424 /* StoreViewModel.swift in Sources */,
 				0CB76C7D2AFA95E0009D7424 /* ServerInfo.swift in Sources */,
 				0CB76C4D2AFA79AC009D7424 /* petspace_iosApp.swift in Sources */,

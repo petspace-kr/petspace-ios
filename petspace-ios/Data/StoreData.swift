@@ -15,9 +15,7 @@ struct Store: Codable {
         var items: [StoreItem]
         
         struct StoreItem: Codable, Identifiable {
-            
             var id: String
-            var type: String
             var name: String
             var tel: String
             var description: String
@@ -29,6 +27,14 @@ struct Store: Codable {
             var coordinate: Coordinate
             var pricing: Pricing
             var pricingImage: String
+            
+            // var createdAt: String
+            // var updatedAt: String
+            
+            // deleted attribute
+            var type: String
+            // var _id: String
+            // var __v: String
             
             struct Coordinate: Codable {
                 var longitude: Double

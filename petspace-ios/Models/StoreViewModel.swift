@@ -14,12 +14,14 @@ class StoreViewModel: ObservableObject {
     @Published var store: [Store.Data.StoreItem] = []
     private var cancellables = Set<AnyCancellable>()
     
+    // 데이터를 불러오는 방식 선택
     init() {
         loadData()
         // loadDataFromAPI()
         // loadDataFromPostAPI()
     }
     
+    // 내부 local 파일에서 데이터를 불러옴
     func loadData() {
         if let url = Bundle.main.url(forResource: "dummy", withExtension: "json") {
             do {
@@ -33,6 +35,7 @@ class StoreViewModel: ObservableObject {
         }
     }
     
+    // GET API로 서버에서부터 static 파일을 받아옴
     func loadDataFromAPI() {
         print("LoadDataFromAPI")
         guard let url = URL(string: ServerURLCollection.getTestStoreList.rawValue) else { return }
@@ -50,14 +53,17 @@ class StoreViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    // POST API로 서버에서 dynamic 데이터를 받아옴
     func loadDataFromPostAPI() {
         print("LoadDataFromPostAPI")
         guard let url = URL(string: ServerURLCollection.getStoreList.rawValue) else { return }
         
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)
+        // POST
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        // 견종 및 무게 데이터 추가
         let bodyData: [String: Any] = [
             "breed": "시고르자브",
             "kg": 7.3
@@ -80,8 +86,10 @@ class StoreViewModel: ObservableObject {
             }
             .store(in: &cancellables)*/
         
+        // 데이터 전송
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
+                // 오류 발생 시
                 print("Error while get data from server: \(error)")
                 return
             }
@@ -110,9 +118,11 @@ class StoreViewModel: ObservableObject {
         }
         .resume()
         
+        // 실패 시 local 데이터 받아옴
         loadData()
     }
     
+    // 요청이 성공했는지 검사 (http response 200 ~ 299)
     private func validate(data: Data, response: URLResponse) throws -> Data {
         guard let httpResponse = response as? HTTPURLResponse,
               200...299 ~= httpResponse.statusCode else {
@@ -122,6 +132,7 @@ class StoreViewModel: ObservableObject {
     }
 }
 
+// ViewModel을 테스트하기 위한 View
 struct ViewModelTestView: View {
     
     @StateObject var viewModel = StoreViewModel()
@@ -141,6 +152,7 @@ struct ViewModelTestView: View {
     }
 }
 
+// SubView
 struct ViewModelTestSubView: View {
     
     @Environment(\.dismiss) var dismiss
