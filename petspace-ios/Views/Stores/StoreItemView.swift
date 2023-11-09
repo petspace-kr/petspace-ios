@@ -10,7 +10,7 @@ import SwiftUI
 struct StoreItemView: View {
     
     @ObservedObject var mapViewModel: MapViewModel
-    @Binding var storeItem: Store.Data.StoreItem
+    @State var storeItem: Store.Data.StoreItem
     
     // 프로필 등록 여부
     @State private var isProfile: Bool = false
@@ -173,11 +173,11 @@ struct StoreItemView: View {
     
     return Group {
         VStack(spacing: 10) {
-            StoreItemView(mapViewModel: mapViewModel, storeItem: $storeViewModel.store[0])
-            StoreItemView(mapViewModel: mapViewModel, storeItem: $storeViewModel.store[1])
-            StoreItemView(mapViewModel: mapViewModel, storeItem: $storeViewModel.store[2])
-            StoreItemView(mapViewModel: mapViewModel, storeItem: $storeViewModel.store[3])
-            StoreItemView(mapViewModel: mapViewModel, storeItem: $storeViewModel.store[4])
+            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[0])
+            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[1])
+            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[2])
+            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[3])
+            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[4])
         }
         .padding()
     }
