@@ -21,7 +21,6 @@ struct MapStoreListView: View {
         ZStack(alignment: .bottom) {
             // 지도 뷰
             MapView()
-                .background(.green)
             
             // 버튼 Bar
             ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing)

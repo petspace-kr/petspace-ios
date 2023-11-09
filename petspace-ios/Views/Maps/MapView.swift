@@ -11,13 +11,13 @@ import MapKit
 
 struct MapView: View {
     var body: some View {
-        Text("MapView")
+        Map()
     }
 }
 
 struct MapOneView: View {
     var body: some View {
-        Text("MapOneView")
+        Map()
     }
 }
 
