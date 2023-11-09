@@ -27,9 +27,11 @@ struct ButtonBar: View {
     
     @State private var isExpaned: Bool = false
     
+    // 뷰 Presented
     @State private var isProfileViewPresented: Bool = false
     @State private var isInfoViewPresented: Bool = false
     @State private var isHistoryViewPresented: Bool = false
+    @State private var isSettingViewPresented: Bool = false
     
     @Binding var isSavedStoreShowing: Bool
     
@@ -67,21 +69,20 @@ struct ButtonBar: View {
                 }
                 
                 // 저장된 매장 버튼
-//                Button {
-//                    isSavedStoreShowing.toggle()
-//                } label: {
-//                    Image(systemName: isSavedStoreShowing ? "heart.fill" : "heart")
-//                        .frame(width: 48, height: 48)
-//                }
+                Button {
+                    isSavedStoreShowing.toggle()
+                } label: {
+                    Image(systemName: isSavedStoreShowing ? "heart.fill" : "heart")
+                        .frame(width: 48, height: 48)
+                }
                 
                 // 설정
-//                Button {
-//
-//                } label: {
-//                    Image(systemName: "gearshape.circle")
-//                        .frame(width: 48, height: 48)
-//                }
-//                .disabled(true)
+                Button {
+                    isSettingViewPresented = true
+                } label: {
+                    Image(systemName: "gearshape.circle")
+                        .frame(width: 48, height: 48)
+                }
                 
                 // 예약 페이지로 이동
                 Button {
@@ -90,7 +91,7 @@ struct ButtonBar: View {
                     Image(systemName: "book.circle")
                         .frame(width: 48, height: 48)
                 }
-                
+        
                 // 앱 정보
                 Button {
                     // information
@@ -103,19 +104,33 @@ struct ButtonBar: View {
             }
         })
         .font(.system(size: 24))
-        // .materialBackground()
+        .materialBackground()
+        
+        // 프로필 뷰 보이기
         .sheet(isPresented: $isProfileViewPresented, onDismiss: {
              
         }, content: {
-//            ProfileView(isEditing: false, isFirstRegister: false, isPresented: .constant(false), isRedraw: $isRedraw)
-//                .padding(.top, 20)
-//                .presentationDragIndicator(.visible)
+            ProfileView(isPresented: $isProfileViewPresented)
+                .padding()
+                .padding(.top, 20)
+                .presentationDragIndicator(.visible)
         })
-        .sheet(isPresented: $isInfoViewPresented, onDismiss: {
-             // self.isRedraw.toggle()
+        
+        // 설정 뷰 보이기
+        .sheet(isPresented: $isSettingViewPresented, onDismiss: {
+             
         }, content: {
-//            WelcomeView(isPresented: $isInfoViewPresented, isRedraw: $isRedraw, isWelcome: false)
-//                .presentationDragIndicator(.visible)
+            SettingView()
+                .padding()
+                .padding(.top, 20)
+                .presentationDragIndicator(.visible)
+        })
+        
+        // Info 뷰 보이기
+        .sheet(isPresented: $isInfoViewPresented, onDismiss: {
+             
+        }, content: {
+            WelcomeView(isPresented: $isInfoViewPresented, isWelcome: false)
         })
         .sheet(isPresented: $isHistoryViewPresented, content: {
             HistoryView()
@@ -127,5 +142,9 @@ struct ButtonBar: View {
 }
 
 #Preview {
-    ButtonBarView(isSavedStoreShowing: .constant(false))
+    @State var isSavedStoreShowing: Bool = false
+    
+    return Group {
+        ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing)
+    }
 }
