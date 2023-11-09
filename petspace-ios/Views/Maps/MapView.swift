@@ -9,3 +9,12 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
+struct MapView: View {
+    var body: some View {
+        Text("MapView")
+    }
+}
+
+#Preview {
+    MapView()
+}

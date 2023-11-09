@@ -7,3 +7,13 @@
 
 import SwiftUI
 import CoreLocation
+
+struct MapStoreListView: View {
+    var body: some View {
+        Text("MapStoreListView")
+    }
+}
+
+#Preview {
+    MapStoreListView()
+}

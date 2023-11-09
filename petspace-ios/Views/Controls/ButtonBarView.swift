@@ -24,10 +24,6 @@ struct ButtonBarView: View {
     }
 }
 
-#Preview {
-    ButtonBarView(isRedraw: .constant(false), isSavedStoreShowing: .constant(false))
-}
-
 struct ButtonBar: View {
     
     @State private var isExpaned: Bool = false
@@ -133,5 +129,5 @@ struct ButtonBar: View {
 }
 
 #Preview {
-    ButtonBar(isRedraw: .constant(false), isSavedStoreShowing: .constant(false))
+    ButtonBarView(isRedraw: .constant(false), isSavedStoreShowing: .constant(false))
 }

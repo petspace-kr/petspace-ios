@@ -6,3 +6,13 @@
 //
 
 import SwiftUI
+
+struct StoreListView: View {
+    var body: some View {
+        Text("StoreListView")
+    }
+}
+
+#Preview {
+    StoreListView()
+}

@@ -7,3 +7,12 @@
 
 import SwiftUI
 
+struct ImageView: View {
+    var body: some View {
+        Text("ImageView")
+    }
+}
+
+#Preview {
+    ImageView()
+}

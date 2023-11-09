@@ -47,7 +47,7 @@ struct ServerLogger {
             return
         }
         
-        var request = URLRequest(url: url, timeoutInterval: Double.infinity)
+        /*var request = URLRequest(url: url, timeoutInterval: Double.infinity)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -74,7 +74,7 @@ struct ServerLogger {
                 }
             }
         }
-        .resume()
+        .resume()*/
     }
     
     static func getTimestamp() -> String {
