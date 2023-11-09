@@ -9,6 +9,8 @@ import SwiftUI
 
 struct BetaInfoView: View {
     
+    // Environment
+    @Environment(\.dismiss) var dismiss
     @Binding var isPresented: Bool
     
     var body: some View {
@@ -145,10 +147,14 @@ struct BetaInfoView: View {
                 .foregroundStyle(.secondary)
                 .padding(.bottom, 10)
             
-            Button("완료했어요") {
-                self.isPresented = false
+            Button {
+                // self.isPresented = false
+                dismiss() 
+            } label: {
+                Text("완료했어요")
+                    .standardButtonText()
             }
-            // .bigButton()
+            .standardButton()
         }
     }
 }

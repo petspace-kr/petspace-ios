@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NetworkErrorView: View {
     
+    // Environment
+    @Environment(\.dismiss) var dismiss
     @State var isServerError: Bool = false
     
     var body: some View {

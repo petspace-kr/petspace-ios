@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PermissionView: View {
     
+    // Environment
+    @Environment(\.dismiss) var dismiss
     @Binding var isPresented: Bool
     
     var body: some View {
@@ -16,6 +18,10 @@ struct PermissionView: View {
         
         Button("close") {
             isPresented = false
+        }
+        
+        Button("dismiss") {
+            dismiss()
         }
     }
 }

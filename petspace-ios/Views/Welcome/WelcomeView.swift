@@ -169,7 +169,8 @@ struct WelcomeView: View {
                     
                     // Beta Info View
                     .fullScreenCover(isPresented: $isBetaInfoViewPresented, onDismiss: {
-                        isPresented = false
+                        // isPresented = false
+                        dismiss()
                         
                         UserDefaults.standard.set(true, forKey: "hasShownWelcomeView")
                         ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_FINISH")
