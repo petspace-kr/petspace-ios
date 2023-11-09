@@ -11,7 +11,7 @@ import CoreLocation
 struct ControlView: View {
     
     // ViewModels
-    @StateObject var viewModel = StoreViewModel()
+    @StateObject var storeViewModel = StoreViewModel()
     @StateObject var mapViewModel = MapViewModel()
     @StateObject var profileViewModel = ProfileViewModel()
     
@@ -40,48 +40,32 @@ struct ControlView: View {
             }
             .buttonStyle(.borderedProminent)
         } else {
-            Group {
-                // 첫 접속이라면
-                if isFirst {
-                    LoadingView()
+            if isFirst {
+                AppLoadingView()
+                    .onAppear() {
+                        checkNetwork()
+                        isWelcomeViewPresented = true
+                        ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_FIRST_APP_OPEN")
+                    }
+                    .fullScreenCover(isPresented: $isWelcomeViewPresented, onDismiss: {
+                        checkNetwork()
+                    }, content: {
+                        WelcomeView(isPresented: $isWelcomeViewPresented, isWelcome: true)
+                    })
+            }
+            
+            // 첫 접속이 아니라면
+            else {
+                if isLoading {
+                    AppLoadingView()
                         .onAppear() {
                             checkNetwork()
-                            isWelcomeViewPresented = true
-                            ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_FIRST_APP_OPEN")
                         }
                 }
-                
-                // 첫 접속이 아니라면
                 else {
-                    if isLoading {
-                        LoadingView()
-                            .onAppear() {
-                                checkNetwork()
-                            }
-                    }
-                    else {
-                        // if redraw
-//                        MapStoreListView(isRedraw: $isRedraw)
-//                            .environment(staticModelData)
-//                            .onAppear() {
-//                                staticMapViewModel.checkLocationServiceEnabled()
-//                                staticMapViewModel.startTimer()
-//                            }
-//                            .onDisappear() {
-//                                staticMapViewModel.fireTimer()
-//                            }
-                        
-                        Text("MapStoreListView")
-                        
-                    }
+                    MapStoreListView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                 }
             }
-            .fullScreenCover(isPresented: $isWelcomeViewPresented, onDismiss: {
-                checkNetwork()
-            }, content: {
-                // WelcomeView(isPresented: $isWelcomeViewPresented, isRedraw: $isRedraw, isWelcome: true)
-                Text("WelcomeView")
-            })
         }
     }
     

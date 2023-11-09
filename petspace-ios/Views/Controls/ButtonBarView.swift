@@ -9,14 +9,13 @@ import SwiftUI
 
 struct ButtonBarView: View {
     
-    @Binding var isRedraw: Bool
     @Binding var isSavedStoreShowing: Bool
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                ButtonBar(isRedraw: $isRedraw, isSavedStoreShowing: $isSavedStoreShowing)
+                ButtonBar(isSavedStoreShowing: $isSavedStoreShowing)
                     .padding(.trailing, 16)
             }
             Spacer()
@@ -32,7 +31,6 @@ struct ButtonBar: View {
     @State private var isInfoViewPresented: Bool = false
     @State private var isHistoryViewPresented: Bool = false
     
-    @Binding var isRedraw: Bool
     @Binding var isSavedStoreShowing: Bool
     
     var body: some View {
@@ -107,7 +105,7 @@ struct ButtonBar: View {
         .font(.system(size: 24))
         // .materialBackground()
         .sheet(isPresented: $isProfileViewPresented, onDismiss: {
-             self.isRedraw.toggle()
+             
         }, content: {
 //            ProfileView(isEditing: false, isFirstRegister: false, isPresented: .constant(false), isRedraw: $isRedraw)
 //                .padding(.top, 20)
@@ -129,5 +127,5 @@ struct ButtonBar: View {
 }
 
 #Preview {
-    ButtonBarView(isRedraw: .constant(false), isSavedStoreShowing: .constant(false))
+    ButtonBarView(isSavedStoreShowing: .constant(false))
 }

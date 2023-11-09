@@ -28,7 +28,7 @@
 		0C3CBCBB2AFB85B0000862C3 /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCBA2AFB85B0000862C3 /* ButtonBarView.swift */; };
 		0C3CBCBD2AFB85C4000862C3 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCBC2AFB85C4000862C3 /* SettingView.swift */; };
 		0C3CBCBF2AFB85D4000862C3 /* ErrorDeclarationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCBE2AFB85D4000862C3 /* ErrorDeclarationView.swift */; };
-		0C3CBCC12AFB85EB000862C3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC02AFB85EB000862C3 /* LoadingView.swift */; };
+		0C3CBCC12AFB85EB000862C3 /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC02AFB85EB000862C3 /* AppLoadingView.swift */; };
 		0C3CBCC32AFB8616000862C3 /* SimpleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC22AFB8616000862C3 /* SimpleTextView.swift */; };
 		0C3CBCC62AFB863D000862C3 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC52AFB863D000862C3 /* SearchBar.swift */; };
 		0C3CBCC82AFB865D000862C3 /* CloseKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */; };
@@ -73,7 +73,7 @@
 		0C3CBCBA2AFB85B0000862C3 /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		0C3CBCBC2AFB85C4000862C3 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		0C3CBCBE2AFB85D4000862C3 /* ErrorDeclarationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDeclarationView.swift; sourceTree = "<group>"; };
-		0C3CBCC02AFB85EB000862C3 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		0C3CBCC02AFB85EB000862C3 /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
 		0C3CBCC22AFB8616000862C3 /* SimpleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextView.swift; sourceTree = "<group>"; };
 		0C3CBCC52AFB863D000862C3 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseKeyboardButton.swift; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 				0C3CBCA42AFB8468000862C3 /* BetaInfoView.swift */,
 				0C3CBCA62AFB8496000862C3 /* PermissionView.swift */,
 				0C3CBCA82AFB84C1000862C3 /* WelcomeView.swift */,
-				0C3CBCC02AFB85EB000862C3 /* LoadingView.swift */,
+				0C3CBCC02AFB85EB000862C3 /* AppLoadingView.swift */,
 				0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */,
 			);
 			path = Welcome;
@@ -396,7 +396,7 @@
 				0C3CBCBF2AFB85D4000862C3 /* ErrorDeclarationView.swift in Sources */,
 				0CB76C772AFA809D009D7424 /* StoreData.swift in Sources */,
 				0C3CBCBD2AFB85C4000862C3 /* SettingView.swift in Sources */,
-				0C3CBCC12AFB85EB000862C3 /* LoadingView.swift in Sources */,
+				0C3CBCC12AFB85EB000862C3 /* AppLoadingView.swift in Sources */,
 				0C3CBCA92AFB84C1000862C3 /* WelcomeView.swift in Sources */,
 				0C3CBCCA2AFB897D000862C3 /* ProfileViewModel.swift in Sources */,
 			);
