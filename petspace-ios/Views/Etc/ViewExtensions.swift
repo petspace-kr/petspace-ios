@@ -61,4 +61,31 @@ extension View {
             .background(backgroundColor)
             .cornerRadius(15)
     }
+    
+    func standardButtonText() -> some View {
+        self
+            .horizontallyCentred()
+            .frame(height: 36)
+    }
+    
+    func standardButtonText(foregroundColor: Color) -> some View {
+        self
+            .horizontallyCentred()
+            .frame(height: 36)
+            .foregroundColor(foregroundColor)
+    }
+    
+    func standardButton() -> some View {
+        self
+            .buttonBorderShape(.roundedRectangle(radius: 20))
+            .buttonStyle(.borderedProminent)
+            .tint(Color.accentColor)
+    }
+    
+    func standardButton(backgroundColor: Color) -> some View {
+        self
+            .buttonBorderShape(.roundedRectangle(radius: 20))
+            .buttonStyle(.borderedProminent)
+            .tint(backgroundColor)
+    }
 }
