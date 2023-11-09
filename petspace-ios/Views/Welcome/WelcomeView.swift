@@ -130,7 +130,7 @@ struct WelcomeView: View {
                     .fullScreenCover(isPresented: $isProfileViewPresented, onDismiss: {
                         isPermissionViewPresented = true
                     }, content: {
-                        ProfileView()
+                        ProfileView(isPresented: $isProfileViewPresented)
                     })
                     
                     // 프로필 등록없이 시작 경고 모달
@@ -163,7 +163,7 @@ struct WelcomeView: View {
                     .fullScreenCover(isPresented: $isPermissionViewPresented, onDismiss: {
                         isBetaInfoViewPresented = true
                     }, content: {
-                        PermissionView()
+                        PermissionView(isPresented: $isPermissionViewPresented)
                             .padding()
                     })
                     

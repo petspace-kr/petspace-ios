@@ -21,6 +21,7 @@ struct MapStoreListView: View {
         ZStack(alignment: .bottom) {
             // 지도 뷰
             MapView()
+                .background(.green)
             
             // 버튼 Bar
             ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing)
@@ -29,7 +30,7 @@ struct MapStoreListView: View {
             StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
             
         }
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 

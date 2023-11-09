@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct PermissionView: View {
+    
+    @Binding var isPresented: Bool
+    
     var body: some View {
         Text("PermissionView")
+        
+        Button("close") {
+            isPresented = false
+        }
     }
 }
 
 #Preview {
-    PermissionView()
+    PermissionView(isPresented: .constant(true))
         .padding()
 }

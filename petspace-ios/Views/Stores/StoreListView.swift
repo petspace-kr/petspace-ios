@@ -139,7 +139,7 @@ struct StoreListView: View {
                             .padding(.leading, -2)
                     }
                     .sheet(isPresented: $isProfileViewPresented, content: {
-                        ProfileView()
+                        ProfileView(isPresented: $isProfileViewPresented)
                     })
                 }
                 
