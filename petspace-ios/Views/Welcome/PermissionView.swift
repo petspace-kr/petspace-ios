@@ -7,3 +7,13 @@
 
 import SwiftUI
 
+struct PermissionView: View {
+    var body: some View {
+        Text("PermissionView")
+    }
+}
+
+#Preview {
+    PermissionView()
+        .padding()
+}

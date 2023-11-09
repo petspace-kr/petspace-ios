@@ -47,6 +47,7 @@
 		0CB76C772AFA809D009D7424 /* StoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C762AFA809D009D7424 /* StoreData.swift */; };
 		0CB76C792AFA80A4009D7424 /* DogBreedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C782AFA80A4009D7424 /* DogBreedData.swift */; };
 		0CB76C7D2AFA95E0009D7424 /* ServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C7C2AFA95E0009D7424 /* ServerInfo.swift */; };
+		0CE5B5A72AFD22E3007BD3BB /* WelcomeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +91,7 @@
 		0CB76C762AFA809D009D7424 /* StoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreData.swift; sourceTree = "<group>"; };
 		0CB76C782AFA80A4009D7424 /* DogBreedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedData.swift; sourceTree = "<group>"; };
 		0CB76C7C2AFA95E0009D7424 /* ServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfo.swift; sourceTree = "<group>"; };
+		0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +252,7 @@
 				0C3CBCA62AFB8496000862C3 /* PermissionView.swift */,
 				0C3CBCA82AFB84C1000862C3 /* WelcomeView.swift */,
 				0C3CBCC02AFB85EB000862C3 /* LoadingView.swift */,
+				0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 			files = (
 				0C3CBC9F2AFB83CA000862C3 /* Haptics.swift in Sources */,
 				0C3CBCB72AFB8589000862C3 /* MapStoreListView.swift in Sources */,
+				0CE5B5A72AFD22E3007BD3BB /* WelcomeRowView.swift in Sources */,
 				0C3CBCB32AFB855D000862C3 /* HistoryView.swift in Sources */,
 				0C3CBC992AFB823E000862C3 /* NetworkErrorView.swift in Sources */,
 				0C3CBCB12AFB8520000862C3 /* StoreItemView.swift in Sources */,
