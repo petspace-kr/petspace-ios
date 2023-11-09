@@ -104,28 +104,33 @@ struct WelcomeView: View {
                         .foregroundStyle(.secondary)
                     
                     // 프로필 등록 버튼
-                    Button("프로필 등록하기") {
+                    Button {
                         isProfileViewPresented = true
                         isRegisterStarted = true
                         ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PAGE_PROFILE_ADD_BUTTON")
+                    } label: {
+                        Text("프로필 등록하기")
+                            .standardButtonText()
                     }
+                    .standardButton()
                     .disabled(isRegisterStarted)
                     
                     // 나중에 등록 버튼
-                    Button("나중에 등록할래요") {
-                        // isPresented = false
+                    Button {
                         isAlert1Presented = true
                         ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PAGE_PROFILE_PASS_BUTTON")
+                    } label: {
+                        Text("나중에 등록할래요")
+                            .standardButtonText()
                     }
+                    .standardButton(backgroundColor: .gray)
                     .disabled(isRegisterStarted)
                     
                     // Profile View
                     .fullScreenCover(isPresented: $isProfileViewPresented, onDismiss: {
-                        // STEP 3 Present Permission View
                         isPermissionViewPresented = true
                     }, content: {
-                        /* ProfileView(isEditing: true, isFirstRegister: true, isPresented: self.$isProfileViewPresented, isRedraw: $isRedraw)
-                            .padding(.top, 20)*/
+                        ProfileView()
                     })
                     
                     // 프로필 등록없이 시작 경고 모달
@@ -190,18 +195,23 @@ struct WelcomeView: View {
                     .padding(.bottom, 10)
                     
                     // 권한 허가 수정 버튼 -> 설정으로 연결
-                    Button("권한 허가 수정") {
+                    Button {
                         //
                         isPermissionAlertPresented = true
+                    } label: {
+                        Text("권한 허가 수정")
+                            .standardButtonText(foregroundColor: Color("Background1"))
                     }
+                    .standardButton(backgroundColor: Color("Foreground1"))
                     
                     // 기능 오류 신고 버튼
                     Button {
                         isErrorDeclarationViewPresented = true
                     } label: {
                         Text("기능 오류 신고하기")
-                            .foregroundStyle(Color("FirstBackground"))
+                            .standardButtonText()
                     }
+                    .standardButton()
                 }
                 .padding()
                 
