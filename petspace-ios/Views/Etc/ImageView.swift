@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct ImageView: View {
+    
+    @State var storeItem: Store.Data.StoreItem
+    
     var body: some View {
         Text("ImageView")
     }
 }
 
 #Preview {
-    ImageView()
+    @ObservedObject var storeViewModel = StoreViewModel()
+    
+    return Group {
+        ImageView(storeItem: storeViewModel.store[0])
+    }
+    
 }

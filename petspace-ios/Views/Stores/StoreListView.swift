@@ -11,6 +11,7 @@ struct StoreListView: View {
     
     @ObservedObject var mapViewModel: MapViewModel
     @ObservedObject var storeViewModel: StoreViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
     
     // 정렬 방식
     private enum SortMode: String {
@@ -163,7 +164,7 @@ struct StoreListView: View {
                         // 거리 순 정렬
                         else if sortMode == .distance {
                             ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
                                     .padding(.bottom, 10)
                             }
                         }
@@ -171,21 +172,21 @@ struct StoreListView: View {
                         // 별점 순 정렬
                         else if sortMode == .rating {
                             ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
                             }
                         }
                         
                         // 가격 낮은 순
                         else if sortMode == .priceIncrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
                             }
                         }
                         
                         // 가격 높은 순
                         else if sortMode == .priceDecrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
                             }
                         }
                     }
@@ -203,7 +204,7 @@ struct StoreListView: View {
                         // 거리 순 정렬
                         else if sortMode == .distance {
                             ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
                                     .padding(.bottom, 10)
                             }
                         }
@@ -211,21 +212,21 @@ struct StoreListView: View {
                         // 별점 순 정렬
                         else if sortMode == .rating {
                             ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
                             }
                         }
                         
                         // 가격 낮은 순
                         else if sortMode == .priceIncrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
                             }
                         }
                         
                         // 가격 높은 순
                         else if sortMode == .priceDecrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
                             }
                         }
                     }
@@ -320,6 +321,7 @@ struct StoreListView: View {
 #Preview {
     @ObservedObject var mapViewModel = MapViewModel()
     @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
     
     return Group {
         ZStack(alignment: .bottom) {
@@ -329,7 +331,7 @@ struct StoreListView: View {
                 Spacer()
             }
             
-            StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel)
+            StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
         }
         .ignoresSafeArea()
         .background(.green)

@@ -15,6 +15,16 @@ struct MapView: View {
     }
 }
 
+struct MapOneView: View {
+    var body: some View {
+        Text("MapOneView")
+    }
+}
+
 #Preview {
     MapView()
+}
+
+#Preview {
+    MapOneView()
 }

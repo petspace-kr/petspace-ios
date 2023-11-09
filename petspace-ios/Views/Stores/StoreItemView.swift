@@ -10,6 +10,7 @@ import SwiftUI
 struct StoreItemView: View {
     
     @ObservedObject var mapViewModel: MapViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
     @State var storeItem: Store.Data.StoreItem
     
     // 프로필 등록 여부
@@ -139,7 +140,7 @@ struct StoreItemView: View {
         
         // Detail View
         .sheet(isPresented: $isDetailViewPresented, content: {
-            DetailView()
+            DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel)
         })
         
         // 시작할 때 타이머 시작
@@ -170,14 +171,15 @@ struct StoreItemView: View {
 #Preview {
     @ObservedObject var mapViewModel = MapViewModel()
     @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
     
     return Group {
         VStack(spacing: 10) {
-            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[0])
-            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[1])
-            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[2])
-            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[3])
-            StoreItemView(mapViewModel: mapViewModel, storeItem: storeViewModel.store[4])
+            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[0])
+            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[1])
+            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[2])
+            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[3])
+            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[4])
         }
         .padding()
     }
