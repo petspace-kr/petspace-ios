@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct LoadingView: View {
-    
+struct AppLoadingView: View {
     var body: some View {
         VStack {
             Spacer()
@@ -38,5 +37,5 @@ struct LoadingView: View {
 }
 
 #Preview {
-    LoadingView()
+    AppLoadingView()
 }
