@@ -48,6 +48,7 @@
 		0CB76C792AFA80A4009D7424 /* DogBreedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C782AFA80A4009D7424 /* DogBreedData.swift */; };
 		0CB76C7D2AFA95E0009D7424 /* ServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C7C2AFA95E0009D7424 /* ServerInfo.swift */; };
 		0CE5B5A72AFD22E3007BD3BB /* WelcomeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */; };
+		0CE5B5A92AFD266E007BD3BB /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5B5A82AFD266E007BD3BB /* ViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		0CB76C782AFA80A4009D7424 /* DogBreedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedData.swift; sourceTree = "<group>"; };
 		0CB76C7C2AFA95E0009D7424 /* ServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfo.swift; sourceTree = "<group>"; };
 		0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeRowView.swift; sourceTree = "<group>"; };
+		0CE5B5A82AFD266E007BD3BB /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				0C3CBCC52AFB863D000862C3 /* SearchBar.swift */,
 				0C3CBCAC2AFB84F5000862C3 /* ImageView.swift */,
 				0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */,
+				0CE5B5A82AFD266E007BD3BB /* ViewExtensions.swift */,
 			);
 			path = Etc;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 				0C3CBC992AFB823E000862C3 /* NetworkErrorView.swift in Sources */,
 				0C3CBCB12AFB8520000862C3 /* StoreItemView.swift in Sources */,
 				0C3CBCB52AFB856A000862C3 /* BookingView.swift in Sources */,
+				0CE5B5A92AFD266E007BD3BB /* ViewExtensions.swift in Sources */,
 				0CB76C6C2AFA7CD9009D7424 /* ProfileView.swift in Sources */,
 				0C3CBCC82AFB865D000862C3 /* CloseKeyboardButton.swift in Sources */,
 				0C3CBCB92AFB8597000862C3 /* MapView.swift in Sources */,
