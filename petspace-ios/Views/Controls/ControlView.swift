@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import Network
 
 struct ControlView: View {
     
@@ -26,6 +27,7 @@ struct ControlView: View {
     var body: some View {
         if isError {
             NetworkErrorView()
+                .padding()
             
             Spacer()
                 .frame(height: 20)
@@ -50,7 +52,7 @@ struct ControlView: View {
                     .fullScreenCover(isPresented: $isWelcomeViewPresented, onDismiss: {
                         checkNetwork()
                     }, content: {
-                        WelcomeView(isPresented: $isWelcomeViewPresented, isWelcome: true)
+                        WelcomeView(isPresented: $isWelcomeViewPresented, mapViewModel: mapViewModel, isWelcome: true)
                     })
             }
             
@@ -72,11 +74,15 @@ struct ControlView: View {
     func checkNetwork() {
         isFirst = !UserDefaults.standard.bool(forKey: "hasShownWelcomeView")
         
+        // 서버 접속 가능 여부 체크 API 주소
         let url = URL(string: ServerURLCollection.healthCheck.rawValue)!
+        
+        // Timeout Interval 설정 Request 인스턴스
+        let request = URLRequest(url: url, timeoutInterval: 3000.0)
         
         sleep(1)
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error: \(error)")
                 isError = true
@@ -107,10 +113,6 @@ struct ControlView: View {
             isLoading = false
         }
         .resume()
-    }
-    
-    func firstLoading() {
-        // download data
     }
 }
 

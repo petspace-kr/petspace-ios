@@ -22,6 +22,9 @@ struct StoreItemView: View {
     // 거리 업데이트 타이머
     @State private var timer: Timer? = nil
     
+    // 계산된 거리 저장 변수
+    @State private var distanceKM: Double = 0.0
+    
     var body: some View {
         
         HStack(alignment: .center, content: {
@@ -56,12 +59,12 @@ struct StoreItemView: View {
                 // Store Score and Number of Reviews
                 HStack {
                     // 위치 정보 허용된 경우 거리 표시
-                    /* if staticMapViewModel.isAuthorized == .authorizedAlways || staticMapViewModel.isAuthorized ==  .authorizedWhenInUse {
+                    if mapViewModel.isAuthorized == .authorizedAlways || mapViewModel.isAuthorized ==  .authorizedWhenInUse {
                         Text("\(String(format: "%.2f", distanceKM))km")
                             .font(.system(size: 10))
                             .bold()
                             .padding(0)
-                    }*/
+                    }
                     
                     if storeItem.rating < 0 {
                         Text("리뷰 \(storeItem.reviewCount)개")
@@ -155,16 +158,16 @@ struct StoreItemView: View {
     }
     
     func startUpdateLocation() {
-        /*distanceKM = calculateDistance(itemCoord: storeData.locationCoordinate, mvCoord: staticMapViewModel.currentRegion.center)
+        distanceKM = calculateDistance(itemCoord: storeItem.locationCoordinate, mvCoord: mapViewModel.currentRegion.center)
         
         // 5초마다 거리 계산해서 업데이트
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
-            distanceKM = calculateDistance(itemCoord: storeData.locationCoordinate, mvCoord: staticMapViewModel.currentRegion.center)
-        }*/
+            distanceKM = calculateDistance(itemCoord: storeItem.locationCoordinate, mvCoord: mapViewModel.currentRegion.center)
+        }
     }
     
     func stopUpdateLocation() {
-        // timer?.fire()
+        timer?.fire()
     }
 }
 

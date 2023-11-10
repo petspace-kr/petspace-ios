@@ -24,7 +24,7 @@ struct MapStoreListView: View {
                 MapView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                 
                 // 버튼 Bar
-                ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing)
+                ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing, mapViewModel: mapViewModel)
                 
                 // Store List View
                 StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)

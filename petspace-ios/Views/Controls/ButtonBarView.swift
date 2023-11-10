@@ -11,11 +11,14 @@ struct ButtonBarView: View {
     
     @Binding var isSavedStoreShowing: Bool
     
+    // MapViewModel
+    @ObservedObject var mapViewModel: MapViewModel
+    
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                ButtonBar(isSavedStoreShowing: $isSavedStoreShowing)
+                ButtonBar(mapViewModel: mapViewModel, isSavedStoreShowing: $isSavedStoreShowing)
                     .padding(.trailing, 16)
             }
             Spacer()
@@ -26,6 +29,9 @@ struct ButtonBarView: View {
 struct ButtonBar: View {
     
     @State private var isExpaned: Bool = false
+    
+    // MapViewModel
+    @ObservedObject var mapViewModel: MapViewModel
     
     // 뷰 Presented
     @State private var isProfileViewPresented: Bool = false
@@ -130,7 +136,7 @@ struct ButtonBar: View {
         .sheet(isPresented: $isInfoViewPresented, onDismiss: {
              
         }, content: {
-            WelcomeView(isPresented: $isInfoViewPresented, isWelcome: false)
+            WelcomeView(isPresented: $isInfoViewPresented, mapViewModel: mapViewModel, isWelcome: false)
         })
         .sheet(isPresented: $isHistoryViewPresented, content: {
             HistoryView()
@@ -142,9 +148,10 @@ struct ButtonBar: View {
 }
 
 #Preview {
+    @ObservedObject var mapViewModel = MapViewModel()
     @State var isSavedStoreShowing: Bool = false
     
     return Group {
-        ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing)
+        ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing, mapViewModel: mapViewModel)
     }
 }
