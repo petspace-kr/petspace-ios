@@ -14,11 +14,14 @@ struct ButtonBarView: View {
     // MapViewModel
     @ObservedObject var mapViewModel: MapViewModel
     
+    // Profile View Model
+    @ObservedObject var profileViewModel: ProfileViewModel
+    
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                ButtonBar(mapViewModel: mapViewModel, isSavedStoreShowing: $isSavedStoreShowing)
+                ButtonBar(mapViewModel: mapViewModel, profileViewModel: profileViewModel, isSavedStoreShowing: $isSavedStoreShowing)
                     .padding(.trailing, 16)
             }
             Spacer()
@@ -32,6 +35,9 @@ struct ButtonBar: View {
     
     // MapViewModel
     @ObservedObject var mapViewModel: MapViewModel
+    
+    // Profile View Model
+    @ObservedObject var profileViewModel: ProfileViewModel
     
     // 뷰 Presented
     @State private var isProfileViewPresented: Bool = false
@@ -116,7 +122,7 @@ struct ButtonBar: View {
         .sheet(isPresented: $isProfileViewPresented, onDismiss: {
              
         }, content: {
-            ProfileView(isPresented: $isProfileViewPresented)
+            ProfileView(isPresented: $isProfileViewPresented, isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel)
                 .padding()
                 .padding(.top, 20)
                 .presentationDragIndicator(.visible)
@@ -136,7 +142,7 @@ struct ButtonBar: View {
         .sheet(isPresented: $isInfoViewPresented, onDismiss: {
              
         }, content: {
-            WelcomeView(isPresented: $isInfoViewPresented, mapViewModel: mapViewModel, isWelcome: false)
+            WelcomeView(isPresented: $isInfoViewPresented, mapViewModel: mapViewModel, profileViewModel: profileViewModel, isWelcome: false)
         })
         .sheet(isPresented: $isHistoryViewPresented, content: {
             HistoryView()
@@ -149,9 +155,10 @@ struct ButtonBar: View {
 
 #Preview {
     @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
     @State var isSavedStoreShowing: Bool = false
     
     return Group {
-        ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing, mapViewModel: mapViewModel)
+        ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
     }
 }

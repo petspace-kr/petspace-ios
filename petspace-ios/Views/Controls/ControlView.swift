@@ -52,7 +52,7 @@ struct ControlView: View {
                     .fullScreenCover(isPresented: $isWelcomeViewPresented, onDismiss: {
                         checkNetwork()
                     }, content: {
-                        WelcomeView(isPresented: $isWelcomeViewPresented, mapViewModel: mapViewModel, isWelcome: true)
+                        WelcomeView(isPresented: $isWelcomeViewPresented, mapViewModel: mapViewModel, profileViewModel: profileViewModel, isWelcome: true)
                     })
             }
             
@@ -66,6 +66,13 @@ struct ControlView: View {
                 }
                 else {
                     MapStoreListView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+                        .onAppear() {
+                            mapViewModel.checkLocationServiceEnabled()
+                            mapViewModel.startTimer()
+                        }
+                        .onDisappear() {
+                            mapViewModel.fireTimer()
+                        }
                 }
             }
         }

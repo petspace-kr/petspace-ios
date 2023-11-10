@@ -17,6 +17,9 @@ struct WelcomeView: View {
     // MapViewModel
     @ObservedObject var mapViewModel: MapViewModel
     
+    // ProfileViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
+    
     // 첫 접속인지 여부
     var isWelcome: Bool
     
@@ -133,7 +136,7 @@ struct WelcomeView: View {
                     .fullScreenCover(isPresented: $isProfileViewPresented, onDismiss: {
                         isPermissionViewPresented = true
                     }, content: {
-                        ProfileView(isPresented: $isProfileViewPresented)
+                        ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: true, profileViewModel: profileViewModel)
                     })
                     
                     // 프로필 등록없이 시작 경고 모달
@@ -257,17 +260,19 @@ struct WelcomeView: View {
 
 #Preview {
     @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
     
     return Group {
-        WelcomeView(isPresented: .constant(true), mapViewModel: mapViewModel, isWelcome: true)
+        WelcomeView(isPresented: .constant(true), mapViewModel: mapViewModel, profileViewModel: profileViewModel, isWelcome: true)
     }
     
 }
 
 #Preview {
     @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
     
     return Group {
-        WelcomeView(isPresented: .constant(true), mapViewModel: mapViewModel, isWelcome: false)
+        WelcomeView(isPresented: .constant(true), mapViewModel: mapViewModel, profileViewModel: profileViewModel, isWelcome: false)
     }
 }

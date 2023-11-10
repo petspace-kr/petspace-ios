@@ -325,6 +325,18 @@ struct StoreAnnotation: View {
                                 .animation(.spring, value: 0.1)
                         }
                         
+                        // 바로 예약
+                        Button {
+                            print("booking button pressed")
+                            // 예약 페이지로
+                        } label: {
+                            Image(systemName: "book.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                        }
+                        .disabled(true)
+                        
                         // 자세히
                         Button {
                             print("detail button pressed")

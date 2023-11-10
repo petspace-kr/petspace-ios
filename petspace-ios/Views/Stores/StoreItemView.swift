@@ -163,6 +163,7 @@ struct StoreItemView: View {
         // 5초마다 거리 계산해서 업데이트
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             distanceKM = calculateDistance(itemCoord: storeItem.locationCoordinate, mvCoord: mapViewModel.currentRegion.center)
+            print("storeItem \(storeItem.id) updated: \(distanceKM)")
         }
     }
     
