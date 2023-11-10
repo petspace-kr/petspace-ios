@@ -333,7 +333,7 @@ struct StoreListView: View {
             
             StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
         }
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: .bottom)
         .background(.green)
     }
 }

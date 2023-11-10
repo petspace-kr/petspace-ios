@@ -197,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				0C3CBCB82AFB8597000862C3 /* MapView.swift */,
+				0C3CBCB62AFB8589000862C3 /* MapStoreListView.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -205,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				0C0D3B352AFA9FA400AC4FAC /* ControlView.swift */,
-				0C3CBCB62AFB8589000862C3 /* MapStoreListView.swift */,
 				0C3CBCBA2AFB85B0000862C3 /* ButtonBarView.swift */,
 			);
 			path = Controls;

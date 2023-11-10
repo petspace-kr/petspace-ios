@@ -140,7 +140,7 @@ struct StoreItemView: View {
         
         // Detail View
         .sheet(isPresented: $isDetailViewPresented, content: {
-            DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel)
+            DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
         })
         
         // 시작할 때 타이머 시작

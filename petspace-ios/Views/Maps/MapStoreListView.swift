@@ -18,18 +18,20 @@ struct MapStoreListView: View {
     @State private var isSavedStoreShowing: Bool = false
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            // 지도 뷰
-            MapView()
-            
-            // 버튼 Bar
-            ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing)
-            
-            // Store List View
-            StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
-            
+        GeometryReader { geometry in
+            ZStack(alignment: .bottom) {
+                // 지도 뷰
+                MapView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+                
+                // 버튼 Bar
+                ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing)
+                
+                // Store List View
+                StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
+                
+            }
+            .ignoresSafeArea(edges: .bottom)
         }
-        .ignoresSafeArea(edges: .bottom)
     }
 }
 

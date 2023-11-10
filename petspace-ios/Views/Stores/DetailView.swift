@@ -22,6 +22,9 @@ struct DetailView: View {
     // 프로필 뷰 모델
     @ObservedObject var profileViewModel: ProfileViewModel
     
+    // Map View Model
+    @ObservedObject var mapViewModel: MapViewModel
+    
     // 세부 정보 표시 여부
     @State private var isPriceTableShowing: Bool = false
     @State private var isMapShowing: Bool = false
@@ -257,7 +260,7 @@ struct DetailView: View {
                         
                         if isMapShowing {
                             GroupBox {
-                                MapOneView()
+                                MapOneView(storeItem: storeItem, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                                     .frame(height: 250)
                                     .cornerRadius(10)
                             }
@@ -419,14 +422,14 @@ struct DetailTitleImageView: View {
 }
 
 #Preview {
-    
+    @ObservedObject var mapViewModel = MapViewModel()
     @ObservedObject var storeViewModel = StoreViewModel()
     @ObservedObject var profileViewModel = ProfileViewModel()
     
     return Group {
         Text("")
             .sheet(isPresented: .constant(true), content: {
-                DetailView(storeItem: storeViewModel.store[2], isPresented: .constant(true), profileViewModel: profileViewModel)
+                DetailView(storeItem: storeViewModel.store[2], isPresented: .constant(true), profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                     .background(Color("Background2"))
             })
     }
