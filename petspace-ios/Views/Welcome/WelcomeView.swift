@@ -14,6 +14,9 @@ struct WelcomeView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var isPresented: Bool
     
+    // MapViewModel
+    @ObservedObject var mapViewModel: MapViewModel
+    
     // 첫 접속인지 여부
     var isWelcome: Bool
     
@@ -163,7 +166,7 @@ struct WelcomeView: View {
                     .fullScreenCover(isPresented: $isPermissionViewPresented, onDismiss: {
                         isBetaInfoViewPresented = true
                     }, content: {
-                        PermissionView(isPresented: $isPermissionViewPresented)
+                        PermissionView(isPresented: $isPermissionViewPresented, mapViewModel: mapViewModel)
                             .padding()
                     })
                     
@@ -253,9 +256,18 @@ struct WelcomeView: View {
 }
 
 #Preview {
-    WelcomeView(isPresented: .constant(true), isWelcome: true)
+    @ObservedObject var mapViewModel = MapViewModel()
+    
+    return Group {
+        WelcomeView(isPresented: .constant(true), mapViewModel: mapViewModel, isWelcome: true)
+    }
+    
 }
 
 #Preview {
-    WelcomeView(isPresented: .constant(true), isWelcome: false)
+    @ObservedObject var mapViewModel = MapViewModel()
+    
+    return Group {
+        WelcomeView(isPresented: .constant(true), mapViewModel: mapViewModel, isWelcome: false)
+    }
 }
