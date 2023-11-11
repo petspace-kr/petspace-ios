@@ -23,6 +23,9 @@ struct ProfileView: View {
     // View Models
     @ObservedObject var profileViewModel: ProfileViewModel
     
+    // MapViewModel
+    @ObservedObject var mapViewModel: MapViewModel
+    
     // 프로필 경고 모달
     @State var isAlertShowing: Bool = false // 빈칸
     @State var isAlert1Presented: Bool = false // 프로필 등록 패스 모달
@@ -40,11 +43,12 @@ struct ProfileView: View {
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
     @State private var dogSize: DogSize = .small
-    @State private var dogWeight: String = "0.0"
-    @State private var dogBreedIndex: Int = -999
+    @State private var dogWeight: String = ""
+    @State private var dogBreedIndex: Int = -1
     
     // 견종
     @State private var dogBreedData: DogBreed = load("dogbreed.json")
+    private let dogSizeString: [String] = ["소형견", "중형견", "대형견"]
     
     var body: some View {
         VStack {
@@ -283,6 +287,9 @@ struct ProfileView: View {
                                         // Text(dog_breed == "" ? "선택하세요" : (dog_breed_index == -999 ? dog_size_text[dog_size] : dog_breed))
                                         
                                         // Text(dogBreedIndex == -999 ? DogSize(rawValue: dogSize.rawValue)?.rawValue : (dogBreed == "" ? "선택하세요" : dogBreed))
+                                        
+                                        Text(dogBreedIndex == -999 ? dogSizeString[dogSize.rawValue] : (dogBreed == "" ? "선택하세요" : dogBreed))
+                                        
                                     } // End of Menu
                                     .frame(height: 24)
                                     Spacer()
@@ -462,7 +469,6 @@ struct ProfileView: View {
                     }
                 }
             }
-            .padding()
         }
         .onAppear() {
             // initProfileData()
@@ -476,26 +482,30 @@ struct ProfileView: View {
     }
     
     private func loadProfileData() {
-        
+        mapViewModel.fireTimer()
     }
     
     private func saveProfileData() {
-        
+        mapViewModel.startTimer()
     }
 }
 
 #Preview {
     @ObservedObject var profileViewModel = ProfileViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
     
     return Group {
-        ProfileView(isPresented: .constant(true), isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel)
+        ProfileView(isPresented: .constant(true), isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+            .padding()
     }
 }
 
 #Preview {
     @ObservedObject var profileViewModel = ProfileViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
     
     return Group {
-        ProfileView(isPresented: .constant(true), isEditing: true, isFirstRegister: true, profileViewModel: profileViewModel)
+        ProfileView(isPresented: .constant(true), isEditing: true, isFirstRegister: true, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+            .padding()
     }
 }

@@ -122,7 +122,7 @@ struct ButtonBar: View {
         .sheet(isPresented: $isProfileViewPresented, onDismiss: {
              
         }, content: {
-            ProfileView(isPresented: $isProfileViewPresented, isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel)
+            ProfileView(isPresented: $isProfileViewPresented, isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                 .padding()
                 .padding(.top, 20)
                 .presentationDragIndicator(.visible)

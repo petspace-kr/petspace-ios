@@ -139,7 +139,7 @@ struct StoreListView: View {
                             .padding(.leading, -2)
                     }
                     .sheet(isPresented: $isProfileViewPresented, content: {
-                        ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: false, profileViewModel: profileViewModel)
+                        ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                     })
                 }
                 
@@ -237,7 +237,7 @@ struct StoreListView: View {
             }
             .padding(10)
         })
-        .cornerRadius(30)
+        .cornerRadius(30, corners: [.topLeft, .topRight])
         
         // frame 높이 설정
         .frame(height: viewHeight)

@@ -259,11 +259,7 @@ struct DetailView: View {
                         }
                         
                         if isMapShowing {
-                            GroupBox {
-                                MapOneView(storeItem: storeItem, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
-                                    .frame(height: 250)
-                                    .cornerRadius(10)
-                            }
+                            MapOneView(storeItem: storeItem, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                         }
                         
                         Spacer()

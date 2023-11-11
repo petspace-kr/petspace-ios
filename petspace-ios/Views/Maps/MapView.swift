@@ -15,6 +15,9 @@ struct MapView: View {
     @ObservedObject var mapViewModel: MapViewModel
     @ObservedObject var profileViewModel: ProfileViewModel
     
+    // map span
+    // @State private var mapSpan: CLLocationDegrees
+    
     // Map 카메라 Position
     @State var mapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.484_902, longitude: 127.041_819), span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07)))
     
@@ -32,11 +35,12 @@ struct MapView: View {
             Map(initialPosition: mapCameraPosition) {
                 ForEach(storeViewModel.store.filter( { selectedAnnotationId == "" ? true : ($0.id == selectedAnnotationId) } )) { storeItem in
                     Annotation(storeItem.name, coordinate: CLLocationCoordinate2D(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude)) {
+                        
                         StoreAnnotation(profileViewModel: profileViewModel,
                                         mapViewModel: mapViewModel,
                                         storeItem: storeItem,
                                         routeDisplaying: $routeDisplaying,
-                                        route: $route, 
+                                        route: $route,
                                         mapCameraPosition: $mapCameraPosition,
                                         etaResult: $etaResult,
                                         selectedAnnotationId: $selectedAnnotationId
@@ -59,6 +63,9 @@ struct MapView: View {
             }
             .mapStyle(.standard)
         }
+        .onAppear() {
+            
+        }
     }
 }
 
@@ -79,6 +86,9 @@ struct MapOneView: View {
     // 결과가 나왔는지
     @State private var isLoading: Bool = false
     @State private var isResult: Bool = false
+    
+    // 확대 여부
+    @State private var isExpanded: Bool = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -117,16 +127,22 @@ struct MapOneView: View {
                     }
                     // 경로 탐색 시작
                 } label: {
-                    if isLoading {
-                        ProgressView()
-                            .frame(width: 16, height: 16)
-                    } else {
-                        Image(systemName: isResult ? "goforward" : "arrow.triangle.turn.up.right.circle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 16, height: 16)
+                    VStack {
+                        if isLoading {
+                            ProgressView()
+                                .frame(width: 16, height: 16)
+                        } else {
+                            Image(systemName: isResult ? "goforward" : "arrow.triangle.turn.up.right.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 16, height: 16)
+                        }
+                        Text(isResult ? "새로고침" : "경로")
+                            .font(.system(size: 8))
+                            .foregroundStyle(.primary)
                     }
                 }
+                .padding(.horizontal, isResult ? 0 : 6)
                 
                 if isResult {
                     if let etaResult = etaResult {
@@ -146,19 +162,43 @@ struct MapOneView: View {
                             // route = nil
                             // routeDestination = nil
                         } label: {
-                            Image(systemName: "xmark.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 16, height: 16)
+                            VStack {
+                                Image(systemName: "xmark.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 16, height: 16)
+                                Text("삭제")
+                                    .font(.system(size: 8))
+                                    .foregroundStyle(.primary)
+                            }
                         }
                     }
                 }
+                
+                Button {
+                    withAnimation(.spring()) {
+                        isExpanded.toggle()
+                    }
+                } label: {
+                    VStack {
+                        Image(systemName: isExpanded ? "arrow.up.right.and.arrow.down.left.circle" : "arrow.down.left.and.arrow.up.right.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 16, height: 16)
+                        Text(isExpanded ? "축소" : "확대")
+                            .font(.system(size: 8))
+                            .foregroundStyle(.primary)
+                    }
+                }
+                .padding(.horizontal, 6)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 10)
             .materialBackground()
             .padding(.bottom, 8)
         }
+        .cornerRadius(10)
+        .frame(height: isExpanded ? 600 : 300)
     }
     
     func fetchRoute() {
@@ -211,8 +251,6 @@ struct MapOneView: View {
     
     return Group {
         MapOneView(storeItem: storeViewModel.store[0], mapViewModel: mapViewModel, profileViewModel: profileViewModel)
-            .frame(height: 200)
-            .cornerRadius(10)
             .padding(10)
     }
 }
@@ -239,6 +277,10 @@ struct StoreAnnotation: View {
     
     // 선택된 Annotation 이름
     @Binding var selectedAnnotationId: String
+    
+    // 로딩중
+    @State private var isLoading: Bool = false
+    @State private var isResult: Bool = false
     
     var body: some View {
         VStack(spacing: 5) {
@@ -270,14 +312,17 @@ struct StoreAnnotation: View {
                 if isExpandedShowing {
                     // 닫기 버튼
                     Button {
-                        withAnimation(.spring()) {
-                            // 경로 삭제
+                        if resetSelectedID(selectedID: storeItem.id) {
                             routeDisplaying = false
                             route = nil
                             routeDestination = nil
                             etaResult = nil
-                            
-                            selectedAnnotationId = ""
+                        }
+                        
+                        isLoading = false
+                        isResult = false
+                        
+                        withAnimation(.spring()) {
                             isExpandedShowing = false
                         }
                     } label: {
@@ -302,38 +347,68 @@ struct StoreAnnotation: View {
                         Button {
                             
                         } label: {
-                            Image(systemName: "heart")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
+                            VStack {
+                                Image(systemName: "heart")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("저장")
+                                    .font(.system(size: 8))
+                                    .foregroundStyle(.primary)
+                            }
                         }
                         
                         // 경로
                         Button {
-                            fetchRoute()
-                            selectedAnnotationId = storeItem.id
+                            if updateSelectedID(selectedID: storeItem.id) {
+                                isLoading = true
+                                fetchRoute()
+                            }
+                            // selectedAnnotationId = storeItem.id
                         } label: {
-                            Image(systemName: "arrow.triangle.turn.up.right.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
+                            VStack {
+                                if isLoading {
+                                    ProgressView()
+                                        .frame(width: 16, height: 16)
+                                } else {
+                                    Image(systemName: isResult ? "goforward" : "arrow.triangle.turn.up.right.circle")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                }
+                                Text(isResult ? "새로고침" : "경로")
+                                    .font(.system(size: 8))
+                                    .foregroundStyle(.primary)
+                            }
+                            
                         }
                         
                         if let etaResult = etaResult {
-                            Text("\(String(format: "%.1f", (etaResult.distance / 1000)))km ∙ \(String(format: "%.0f", (etaResult.expectedTravelTime / 60)))분 예정")
-                                .font(.system(size: 12))
-                                .animation(.spring, value: 0.1)
+                            VStack {
+                                Text("\(String(format: "%.1f", (etaResult.distance / 1000)))km")
+                                    .font(.system(size: 12))
+                                Text("\(String(format: "%.0f", (etaResult.expectedTravelTime / 60)))분 예정")
+                                    .font(.system(size: 12))
+                            }
+                            .padding(.horizontal, 1)
                         }
+                        
                         
                         // 바로 예약
                         Button {
                             print("booking button pressed")
                             // 예약 페이지로
                         } label: {
-                            Image(systemName: "book.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
+                            VStack {
+                                Image(systemName: "book.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("바로예약")
+                                    .font(.system(size: 8))
+                                    .foregroundStyle(.gray)
+                            }
+                            
                         }
                         .disabled(true)
                         
@@ -342,10 +417,16 @@ struct StoreAnnotation: View {
                             print("detail button pressed")
                             isDetailViewPresented = true
                         } label: {
-                            Image(systemName: "info.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
+                            VStack {
+                                Image(systemName: "info.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("자세히")
+                                    .font(.system(size: 8))
+                                    .foregroundStyle(.primary)
+                            }
+                            
                         }
                         
                         // 닫기
@@ -362,6 +443,7 @@ struct StoreAnnotation: View {
                         } */
                     }
                     .padding()
+                    .padding(.horizontal, 2)
                 }
                 else {
                     if storeItem.rating < 0 {
@@ -379,12 +461,11 @@ struct StoreAnnotation: View {
                     }
                 }
             }
-            .frame(height: isExpandedShowing ? 48 : 20)
+            .frame(height: isExpandedShowing ? 52 : 20)
             .background(isExpandedShowing ? .clear : Color(red: 0, green: 0.64, blue: 1).opacity(0.6))
             .materialBackground()
             .cornerRadius(.infinity)
         }
-        .padding(.bottom, isExpandedShowing ? 10 : 0)
     }
     
     func fetchRoute() {
@@ -414,7 +495,31 @@ struct StoreAnnotation: View {
                 if let rect = route?.polyline.boundingMapRect, routeDisplaying {
                     mapCameraPosition = .rect(rect)
                 }
+                isLoading = false
+                isResult = true
             }
+        }
+    }
+    
+    private func updateSelectedID(selectedID: String) -> Bool {
+        if selectedAnnotationId == "" || selectedAnnotationId == selectedID {
+            selectedAnnotationId = selectedID
+            print("selected Annotation Saved: \(selectedAnnotationId)")
+            return true
+        } else {
+            print("selected: \(selectedAnnotationId) but queried by: \(selectedID)")
+            return false
+        }
+    }
+    
+    private func resetSelectedID(selectedID: String) -> Bool {
+        if selectedAnnotationId == selectedID {
+            selectedAnnotationId = ""
+            print("selected Annotation Reseted: \(selectedAnnotationId)")
+            return true
+        } else {
+            print("selected: \(selectedAnnotationId) but queried by: \(selectedID)")
+            return false
         }
     }
 }

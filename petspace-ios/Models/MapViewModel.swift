@@ -20,6 +20,9 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     @Published var startRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.489_902, longitude: 127.041_819), span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07))
     @Published var currentRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.489_902, longitude: 127.041_819), span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07))
     
+    // Span
+    @Published var mapSpan: CLLocationDegrees = 0.07
+    
     @Published var isTimerRunning: Bool = false
     
     func checkLocationServiceEnabled() {
