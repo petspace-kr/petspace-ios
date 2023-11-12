@@ -56,7 +56,6 @@ struct ProfileView: View {
                 Text(isFirstRegister ? "프로필을 등록해주세요" : (isEditing ? "프로필 수정" : "프로필"))
                     .font(.title)
                     .bold()
-                    .padding(.leading, 6)
                     // .animation(.easeInOut(duration: 0.2))
                     .animation(.easeInOut, value: 0.2)
                 
@@ -64,11 +63,13 @@ struct ProfileView: View {
                 
                 if isEditing && !isFirstRegister {
                     Button("취소") {
-                        isEditing = false
+                        withAnimation(.easeInOut) {
+                            isEditing = false
+                        }
                         loadProfileData()
                     }
-                    .padding(.trailing, 10)
                     .disabled(isFirstEditing)
+                    .padding(.trailing, 6)
                 }
                 
                 if !isFirstRegister {
@@ -85,22 +86,25 @@ struct ProfileView: View {
                                 } else {
                                     // 프로필 저장
                                     
-                                    isEditing = false
+                                    withAnimation(.easeInOut) {
+                                        isEditing = false
+                                    }
+                                    
                                 }
                             }
                         }
                         else {
-                            isEditing = true
+                            withAnimation(.easeInOut) {
+                                isEditing = true
+                            }
                         }
                     }
-                    .padding(.trailing, 6)
                     .alert("모든 정보를 올바르게 입력해주세요", isPresented: $isAlertShowing) {
                         
                     }
                 }
                 
             }
-            .padding()
             
             VStack {
                 VStack(spacing: 20, content: {
@@ -131,7 +135,7 @@ struct ProfileView: View {
                     if isEditing {
                         ZStack {
                             Circle()
-                                .fill(Color("SecondaryBackground"))
+                                .fill(Color("Background2"))
                                 .frame(width: 120, height: 120)
                             
                             if let image = selectedImage {
@@ -482,11 +486,11 @@ struct ProfileView: View {
     }
     
     private func loadProfileData() {
-        mapViewModel.fireTimer()
+        
     }
     
     private func saveProfileData() {
-        mapViewModel.startTimer()
+        
     }
 }
 

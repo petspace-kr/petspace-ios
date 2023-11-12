@@ -13,9 +13,6 @@ struct StoreItemView: View {
     @ObservedObject var profileViewModel: ProfileViewModel
     @State var storeItem: Store.Data.StoreItem
     
-    // 프로필 등록 여부
-    @State private var isProfile: Bool = false
-    
     // 디테일 뷰
     @State private var isDetailViewPresented: Bool = false
     
@@ -83,17 +80,17 @@ struct StoreItemView: View {
                 Text(storeItem.description)
                     .font(.system(size: 10))
                     .foregroundStyle(.gray)
-                    .lineLimit(isProfile ? 1 : 3) // 텍스트가 한 줄로 제한
+                    .lineLimit(profileViewModel.isProfileRegistered ? 1 : 3) // 텍스트가 한 줄로 제한
                     .truncationMode(.tail) // 끝에 ... 추가
                 
                 Spacer()
                     .frame(height: 1)
                 
                 // 프로필이 등록된 경우
-                if isProfile {
+                if profileViewModel.isProfileRegistered {
                     Menu {
                         Section("프로필을 선택하세요") {
-                            Button("\("dog_name") - \("dog_breed")") {
+                            Button("\(profileViewModel.dogProfile.dogName) - \(profileViewModel.dogProfile.dogBreed)") {
                                 // 프로필 변경 코드 작성
                             }
                         }

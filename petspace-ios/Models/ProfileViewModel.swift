@@ -10,16 +10,16 @@ import SwiftUI
 
 class ProfileViewModel: ObservableObject {
     @Published var dogProfile: DogProfile
-    @Published var isProfile: Bool
+    @Published var isProfileRegistered: Bool
     
     init(dogName: String, dogBreed: String, dogSize: DogSize, dogWeight: Double) {
         dogProfile = DogProfile(dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: dogWeight)
-        isProfile = true
+        isProfileRegistered = true
     }
     
     init() {
         dogProfile = DogProfile(dogName: "", dogBreed: "", dogSize: .unknown, dogWeight: 0.0)
-        isProfile = false
+        isProfileRegistered = false
     }
     
     func updateProfile(dogName: String, dogBreed: String, dogSize: DogSize, dogWeight: Double) {
@@ -29,7 +29,7 @@ class ProfileViewModel: ObservableObject {
         dogProfile.dogSize = dogSize
         dogProfile.dogWeight = dogWeight
         
-        isProfile = true
+        isProfileRegistered = true
         saveProfile()
     }
     

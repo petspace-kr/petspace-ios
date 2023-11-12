@@ -33,9 +33,6 @@ struct StoreListView: View {
     }
     @State private var screenMode: ScreenMode = .half
     
-    // 프로필 등록 여부
-    @State private var isProfile: Bool = false
-    
     // 프로필 뷰 Presented
     @State private var isProfileViewPresented: Bool = false
     
@@ -103,13 +100,13 @@ struct StoreListView: View {
                             Button(SortMode.priceIncrease.rawValue, systemImage: "line.3.horizontal.decrease") {
                                 sortMode = .priceIncrease
                             }
-                            .disabled(!isProfile)
+                            .disabled(!profileViewModel.isProfileRegistered)
                             
                             // 가격 높은 순
                             Button(SortMode.priceDecrease.rawValue, systemImage: "line.3.horizontal.decrease") {
                                 sortMode = .priceDecrease
                             }
-                            .disabled(!isProfile)
+                            .disabled(!profileViewModel.isProfileRegistered)
                         }
                     }
                     .padding(.trailing, 6)
@@ -118,7 +115,7 @@ struct StoreListView: View {
                 .padding(.bottom, 10)
                 
                 // 프로필 등록된 경우
-                if !isProfile {
+                if !profileViewModel.isProfileRegistered {
                     HStack {
                         Button {
                             isProfileViewPresented = true

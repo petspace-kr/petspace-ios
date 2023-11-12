@@ -66,7 +66,7 @@ struct DetailView: View {
                         Spacer()
                             .frame(height: 10)
                         
-                        if profileViewModel.isProfile {
+                        if profileViewModel.isProfileRegistered {
                             ZStack {
                                 RoundedRectangle(cornerRadius: .infinity)
                                     .fill(Color("Background1"))
