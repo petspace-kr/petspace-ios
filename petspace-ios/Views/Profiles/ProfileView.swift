@@ -46,6 +46,9 @@ struct ProfileView: View {
     @State private var dogWeight: String = ""
     @State private var dogBreedIndex: Int = -1
     
+    // 현재 선택된 프로필 인덱스
+    @State private var currentProfileIndex: Int = 0
+    
     // 견종
     @State private var dogBreedData: DogBreed = load("dogbreed.json")
     private let dogSizeString: [String] = ["소형견", "중형견", "대형견"]
@@ -75,23 +78,23 @@ struct ProfileView: View {
                 if !isFirstRegister {
                     Button(isEditing ? "저장" : "편집") {
                         if isEditing {
-                            if (dogName == "" || dogBreed == "" || dogWeight == "") {
+                            /* if (dogName == "" || dogBreed == "" || dogWeight == "") {
                                 isAlertShowing = true
-                            }
-                            else {
-                                let doubleWeight = Double(dogWeight)
+                            }*/
+                            //else {
+                            let doubleWeight = Double(dogWeight)
+                            
+                            if doubleWeight == nil || doubleWeight! <= 0 {
+                                isAlertShowing = true
+                            } else {
+                                // 프로필 저장
                                 
-                                if doubleWeight == nil || doubleWeight! <= 0 {
-                                    isAlertShowing = true
-                                } else {
-                                    // 프로필 저장
-                                    
-                                    withAnimation(.easeInOut) {
-                                        isEditing = false
-                                    }
-                                    
+                                withAnimation(.easeInOut) {
+                                    isEditing = false
                                 }
+                                
                             }
+                            // }
                         }
                         else {
                             withAnimation(.easeInOut) {
@@ -99,9 +102,10 @@ struct ProfileView: View {
                             }
                         }
                     }
-                    .alert("모든 정보를 올바르게 입력해주세요", isPresented: $isAlertShowing) {
+                    .disabled(isEditing && (dogName == "" || dogBreed == "" || dogWeight == ""))
+                    /* .alert("모든 정보를 올바르게 입력해주세요", isPresented: $isAlertShowing) {
                         
-                    }
+                    }*/
                 }
                 
             }
@@ -152,7 +156,9 @@ struct ProfileView: View {
                                     showImagePicker = true
                                 }
                                 else {
-                                    selectedImage = nil
+                                    withAnimation(.easeInOut) {
+                                        selectedImage = nil
+                                    }
                                 }
                                 
                             } label: {
@@ -167,7 +173,7 @@ struct ProfileView: View {
                         .sheet(isPresented: $showImagePicker) {
                             ImagePicker(selectedImage: $selectedImage)
                         }
-                        .padding(.bottom, 10)
+                        // .padding(.bottom, 10)
                     } else {
                         ZStack {
                             if let image = selectedImage {
@@ -417,18 +423,7 @@ struct ProfileView: View {
                             if doubleWeight == nil || doubleWeight! <= 0 {
                                 isAlertShowing = true
                             } else {
-                                
                                 // 프로필 저장
-                                
-                                if let image = selectedImage {
-                                    if let jpegData = image.jpegData(compressionQuality: 1.0) {
-                                        UserDefaults.standard.set(jpegData, forKey: "profile_image")
-                                    }
-                                }
-                                else {
-                                    UserDefaults.standard.removeObject(forKey: "profile_image")
-                                }
-                        
                                 self.isPresented = false
                                 
                                 ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PROFILE_PAGE_REGISTERED")
@@ -436,10 +431,11 @@ struct ProfileView: View {
                             }
                         }
                     } label: {
-                        Text("완료헀어요")
+                        Text((dogName == "" || dogBreed == "" || dogWeight == "") ? "모두 입력해주세요" : "완료헀어요")
                             .standardButtonText()
                     }
                     .standardButton()
+                    .disabled(dogName == "" || dogBreed == "" || dogWeight == "")
                     
                     // .disabled(dog_name == "" || dog_breed == "" || Double(dog_weight)! <= 0)
                     
@@ -475,22 +471,24 @@ struct ProfileView: View {
             }
         }
         .onAppear() {
-            // initProfileData()
-            
-            // mapViewModel.fireTimer()
+            loadProfileData()
             
         } // End of VStack
-        .onDisappear() {
-            // mapViewModel.startTimer()
-        }
     }
     
     private func loadProfileData() {
-        
-    }
-    
-    private func saveProfileData() {
-        
+        if !profileViewModel.dogProfile.isEmpty {
+            dogName = profileViewModel.dogProfile[0].dogName
+            dogSize = profileViewModel.dogProfile[0].dogSize
+            dogBreed = profileViewModel.dogProfile[0].dogBreed
+            dogWeight = "\(profileViewModel.dogProfile[0].dogWeight)"
+            
+            if let profileImageData = profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].profileImageData {
+                if let imageData = profileImageData.decodeToImage() {
+                    selectedImage = imageData
+                }
+            }
+        }
     }
 }
 

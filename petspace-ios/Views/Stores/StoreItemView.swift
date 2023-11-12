@@ -80,18 +80,21 @@ struct StoreItemView: View {
                 Text(storeItem.description)
                     .font(.system(size: 10))
                     .foregroundStyle(.gray)
-                    .lineLimit(profileViewModel.isProfileRegistered ? 1 : 3) // 텍스트가 한 줄로 제한
+                    .lineLimit(profileViewModel.dogProfile.isEmpty ? 3 : 1) // 텍스트가 한 줄로 제한
                     .truncationMode(.tail) // 끝에 ... 추가
                 
                 Spacer()
                     .frame(height: 1)
                 
                 // 프로필이 등록된 경우
-                if profileViewModel.isProfileRegistered {
+                if !profileViewModel.dogProfile.isEmpty {
                     Menu {
                         Section("프로필을 선택하세요") {
-                            Button("\(profileViewModel.dogProfile.dogName) - \(profileViewModel.dogProfile.dogBreed)") {
-                                // 프로필 변경 코드 작성
+                            ForEach (Array(profileViewModel.dogProfile.enumerated()), id: \.offset) { index, profile in
+                                Button("\(profile.dogName) - \(profile.dogBreed)") {
+                                    // 프로필 변경 코드 작성
+                                    profileViewModel.selectedProfileIndex = index
+                                }
                             }
                         }
                         
@@ -110,6 +113,16 @@ struct StoreItemView: View {
                                     .frame(width: 35, height: 35)
                                     .clipShape(Circle()) */
                                 
+                                if let imageData = profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].profileImageData {
+                                    if let image = imageData.decodeToImage() {
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 35, height: 35)
+                                            .clipShape(Circle())
+                                    }
+                                }
+                                
                                 Spacer()
                                     .frame(width: 16)
                                 
@@ -117,9 +130,11 @@ struct StoreItemView: View {
                                     Text("✲ 프로필 맞춤")
                                         .font(.system(size: 10))
                                         .foregroundColor(Color(red: 0, green: 0.64, blue: 1))
+                                        .fixedSize(horizontal: true, vertical: true)
                                     Text("커트 \(storeItem.pricing.cut)원~")
                                         .font(.system(size: 10))
-                                        .foregroundColor(Color("MainForeground"))
+                                        .foregroundColor(.primary)
+                                        .fixedSize(horizontal: true, vertical: true)
                                 })
                                 
                                 Spacer()

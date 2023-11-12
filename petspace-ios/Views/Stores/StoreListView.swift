@@ -100,13 +100,13 @@ struct StoreListView: View {
                             Button(SortMode.priceIncrease.rawValue, systemImage: "line.3.horizontal.decrease") {
                                 sortMode = .priceIncrease
                             }
-                            .disabled(!profileViewModel.isProfileRegistered)
+                            .disabled(profileViewModel.dogProfile.isEmpty)
                             
                             // 가격 높은 순
                             Button(SortMode.priceDecrease.rawValue, systemImage: "line.3.horizontal.decrease") {
                                 sortMode = .priceDecrease
                             }
-                            .disabled(!profileViewModel.isProfileRegistered)
+                            .disabled(profileViewModel.dogProfile.isEmpty)
                         }
                     }
                     .padding(.trailing, 6)
@@ -115,7 +115,7 @@ struct StoreListView: View {
                 .padding(.bottom, 10)
                 
                 // 프로필 등록된 경우
-                if !profileViewModel.isProfileRegistered {
+                if !profileViewModel.dogProfile.isEmpty {
                     HStack {
                         Button {
                             isProfileViewPresented = true

@@ -29,9 +29,6 @@ struct DetailView: View {
     @State private var isPriceTableShowing: Bool = false
     @State private var isMapShowing: Bool = false
     
-    // 프로필 뷰 등록 여부
-    @State private var isProfile: Bool = false
-    
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -66,7 +63,7 @@ struct DetailView: View {
                         Spacer()
                             .frame(height: 10)
                         
-                        if profileViewModel.isProfileRegistered {
+                        if profileViewModel.dogProfile.count > 0 {
                             ZStack {
                                 RoundedRectangle(cornerRadius: .infinity)
                                     .fill(Color("Background1"))
@@ -74,35 +71,46 @@ struct DetailView: View {
                                 
                                 Menu {
                                     Section("프로필을 선택하세요") {
-                                        Button("\(profileViewModel.dogProfile.dogName) - \(profileViewModel.dogProfile.dogBreed)") {
-                                            //
+                                        ForEach (Array(profileViewModel.dogProfile.enumerated()), id: \.offset) { index, profile in
+                                            Button("\(profile.dogName) - \(profile.dogBreed)") {
+                                                // 프로필 변경 코드 작성
+                                                profileViewModel.selectedProfileIndex = index
+                                            }
                                         }
                                     }
                                 } label: {
                                     HStack {
-                                        
-                                        if let image = profileViewModel.dogProfile.profileImage {
-                                            Spacer()
-                                                .frame(width: 8)
-                                            
-                                            Image(uiImage: image)
-                                                .resizable()
-                                                .scaledToFill()
-                                                .frame(width: 36, height: 36)
-                                                .clipShape(Circle())
-                                            
-                                            Spacer()
-                                                .frame(width: 12)
-                                            
-                                        } else {
+                                        if let imageData = profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].profileImageData {
+                                            if let image = imageData.decodeToImage() {
+                                                Spacer()
+                                                    .frame(width: 8)
+                                                
+                                                Image(uiImage: image)
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 36, height: 36)
+                                                    .clipShape(Circle())
+                                                
+                                                Spacer()
+                                                    .frame(width: 12)
+                                            } else {
+                                                Spacer()
+                                                    .frame(width: 20)
+                                            }
+                                        }
+                                         else {
                                             Spacer()
                                                 .frame(width: 20)
                                         }
                                         
-                                        Text("\(profileViewModel.dogProfile.dogName)")
+                                        Text("\(profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].dogName)")
                                             .font(.system(size: 18))
                                             .bold()
-                                        Text("\(profileViewModel.dogProfile.dogBreed) ∙ \(profileViewModel.dogProfile.dogWeight)kg")
+                                            .fixedSize(horizontal: true, vertical: true)
+                                            .foregroundStyle(Color("Foreground1"))
+                                        Text("\(profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].dogBreed) ∙ \(String(format: "%.1f", profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].dogWeight))kg")
+                                            .fixedSize(horizontal: true, vertical: true)
+                                            .foregroundStyle(Color("Foreground1"))
                                         Spacer()
                                         Image(systemName: "chevron.right")
                                     }
