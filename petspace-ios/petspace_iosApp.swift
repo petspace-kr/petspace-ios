@@ -13,8 +13,8 @@ struct petspace_iosApp: App {
 
     var body: some Scene {
         WindowGroup {
-            // ControlView()
-            ProfileTestView()
+            ControlView()
+            // ProfileTestView()
         }
     }
 }

@@ -518,8 +518,9 @@ struct StoreAnnotation: View {
             withAnimation(.snappy) {
                 routeDisplaying = true
                 
-                if let rect = route?.polyline.boundingMapRect, routeDisplaying {
+                if let rect = route?.polyline.boundingMapRect {
                     mapCameraPosition = .rect(rect)
+                    print("rect: \(mapCameraPosition)")
                 }
                 isLoading = false
                 isResult = true

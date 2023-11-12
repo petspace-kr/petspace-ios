@@ -89,12 +89,12 @@ struct ButtonBar: View {
                 }
                 
                 // 설정
-                Button {
+                /* Button {
                     isSettingViewPresented = true
                 } label: {
                     Image(systemName: "gearshape.circle")
                         .frame(width: 48, height: 48)
-                }
+                } */
                 
                 // 예약 페이지로 이동
                 Button {

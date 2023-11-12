@@ -78,10 +78,6 @@ struct ProfileView: View {
                 if !isFirstRegister {
                     Button(isEditing ? "저장" : "편집") {
                         if isEditing {
-                            /* if (dogName == "" || dogBreed == "" || dogWeight == "") {
-                                isAlertShowing = true
-                            }*/
-                            //else {
                             let doubleWeight = Double(dogWeight)
                             
                             if doubleWeight == nil || doubleWeight! <= 0 {
@@ -89,12 +85,20 @@ struct ProfileView: View {
                             } else {
                                 // 프로필 저장
                                 
+                                // 비어 있다면 추가
+                                if profileViewModel.dogProfile.isEmpty {
+                                    profileViewModel.addProfile(dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: doubleWeight!, profileImage: selectedImage)
+                                }
+                                // 비어 있지 않다면 업데이트
+                                else {
+                                    profileViewModel.updateProfile(index: currentProfileIndex, dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: doubleWeight!, profileImage: selectedImage)
+                                }
+                                
                                 withAnimation(.easeInOut) {
                                     isEditing = false
                                 }
                                 
                             }
-                            // }
                         }
                         else {
                             withAnimation(.easeInOut) {
@@ -179,12 +183,12 @@ struct ProfileView: View {
                             if let image = selectedImage {
                                 Circle()
                                     .fill(Color("SecondaryBackground"))
-                                    .frame(width: 150, height: 150)
+                                    .frame(width: 120, height: 120)
                                 
                                 Image(uiImage: image)
                                     .resizable()
                                     .scaledToFill()
-                                    .frame(width: 150, height: 150)
+                                    .frame(width: 120, height: 120)
                                     .clipShape(Circle())
                                     .animation(.spring, value: 0.1)
                             }
@@ -413,6 +417,7 @@ struct ProfileView: View {
                     .padding(.vertical, 10)
                 
                 if isFirstRegister {
+                    // 등록 버튼
                     Button {
                         if (dogName == "" || dogBreed == "" || dogWeight == "") {
                             print("모든 정보를 올바르게 입력해주세요")
@@ -424,10 +429,30 @@ struct ProfileView: View {
                                 isAlertShowing = true
                             } else {
                                 // 프로필 저장
-                                self.isPresented = false
+                                let doubleWeight = Double(dogWeight)
                                 
-                                ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PROFILE_PAGE_REGISTERED")
-                                ServerLogger.sendLog(group: "TEST_LOG", message: "PROFILE_FIRST_REGISTERED_INFO_size:\(dogSize)_breed:\(dogBreed)_weight:\(dogWeight)kg")
+                                if doubleWeight == nil || doubleWeight! <= 0 {
+                                    isAlertShowing = true
+                                } else {
+                                    // 프로필 저장
+                                    
+                                    // 비어 있다면 추가
+                                    if profileViewModel.dogProfile.isEmpty {
+                                        profileViewModel.addProfile(dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: doubleWeight!, profileImage: selectedImage)
+                                    }
+                                    // 비어 있지 않다면 업데이트
+                                    else {
+                                        profileViewModel.updateProfile(index: currentProfileIndex, dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: doubleWeight!, profileImage: selectedImage)
+                                    }
+                                    
+                                    withAnimation(.easeInOut) {
+                                        self.isPresented = false
+                                        
+                                        ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PROFILE_PAGE_REGISTERED")
+                                        ServerLogger.sendLog(group: "TEST_LOG", message: "PROFILE_FIRST_REGISTERED_INFO_size:\(dogSize)_breed:\(dogBreed)_weight:\(dogWeight)kg")
+                                    }
+                                    
+                                }
                             }
                         }
                     } label: {
@@ -437,8 +462,7 @@ struct ProfileView: View {
                     .standardButton()
                     .disabled(dogName == "" || dogBreed == "" || dogWeight == "")
                     
-                    // .disabled(dog_name == "" || dog_breed == "" || Double(dog_weight)! <= 0)
-                    
+                    // 나중에 등록 버튼
                     Button {
                         isAlert1Presented = true
                     } label: {
@@ -446,6 +470,8 @@ struct ProfileView: View {
                             .standardButtonText()
                     }
                     .standardButton(backgroundColor: .gray)
+                    
+                    // 프로필 등록 패스 모달
                     .alert("프로필 등록없이 시작할까요?", isPresented: $isAlert1Presented, actions: {
                         Button("프로필 등록하기", role: nil) {
                             // alert 닫음
@@ -457,6 +483,8 @@ struct ProfileView: View {
                     }, message: {
                         Text("프로필을 등록하면 우리 아이의 맞춤형 미용 가격을 바로 확인할 수 있어요.")
                     })
+                    
+                    // 프로필 등록 안내 모달
                     .alert("프로필 등록", isPresented: $isAlert2Presented, actions: {
                         Button("알겠어요") {
                             self.isPresented = false
@@ -464,6 +492,8 @@ struct ProfileView: View {
                     }, message: {
                         Text("프로필 등록은 언제든지 앱 내 프로필 페이지에서 가능해요")
                     })
+                    
+                    // 모든 정보 올바르게 입력 경고 모달
                     .alert("모든 정보를 올바르게 입력해주세요", isPresented: $isAlertShowing) {
                         
                     }
@@ -478,16 +508,23 @@ struct ProfileView: View {
     
     private func loadProfileData() {
         if !profileViewModel.dogProfile.isEmpty {
-            dogName = profileViewModel.dogProfile[0].dogName
-            dogSize = profileViewModel.dogProfile[0].dogSize
-            dogBreed = profileViewModel.dogProfile[0].dogBreed
-            dogWeight = "\(profileViewModel.dogProfile[0].dogWeight)"
+            dogName = profileViewModel.dogProfile[currentProfileIndex].dogName
+            dogSize = profileViewModel.dogProfile[currentProfileIndex].dogSize
+            dogBreed = profileViewModel.dogProfile[currentProfileIndex].dogBreed
+            dogWeight = "\(profileViewModel.dogProfile[currentProfileIndex].dogWeight)"
             
-            if let profileImageData = profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].profileImageData {
+            if let profileImageData = profileViewModel.dogProfile[currentProfileIndex].profileImageData {
                 if let imageData = profileImageData.decodeToImage() {
                     selectedImage = imageData
+                } else {
+                    selectedImage = nil
                 }
+            } else {
+                selectedImage = nil
             }
+            isEditing = false
+        } else {
+            isEditing = true
         }
     }
 }

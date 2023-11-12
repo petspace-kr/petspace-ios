@@ -115,7 +115,7 @@ struct StoreListView: View {
                 .padding(.bottom, 10)
                 
                 // 프로필 등록된 경우
-                if !profileViewModel.dogProfile.isEmpty {
+                if profileViewModel.dogProfile.isEmpty {
                     HStack {
                         Button {
                             isProfileViewPresented = true

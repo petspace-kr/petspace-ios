@@ -22,7 +22,7 @@ struct SettingView: View {
                 .frame(height: 30)
             
             ScrollView {
-                Text(" 설정 ")
+                Text("설정")
             }
         }
     }

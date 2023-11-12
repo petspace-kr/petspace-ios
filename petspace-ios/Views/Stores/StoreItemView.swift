@@ -101,18 +101,12 @@ struct StoreItemView: View {
                     } label: {
                         ZStack(alignment: .leading, content: {
                             RoundedRectangle(cornerRadius: .infinity)
-                                .fill(Color("FirstBackground"))
-                                .stroke(Color("StrokeColor1"), lineWidth: 1)
+                                .fill(Color("Background2"))
+                                .stroke(Color("Stroke1"), lineWidth: 1)
                                 .frame(height: 35)
                             
                             HStack {
-                                // 프로필 이미지 (일단 제거)
-                                /* Image("ProfileExample")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 35, height: 35)
-                                    .clipShape(Circle()) */
-                                
+                                // 프로필 이미지
                                 if let imageData = profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].profileImageData {
                                     if let image = imageData.decodeToImage() {
                                         Image(uiImage: image)
@@ -120,11 +114,14 @@ struct StoreItemView: View {
                                             .scaledToFill()
                                             .frame(width: 35, height: 35)
                                             .clipShape(Circle())
+                                    } else {
+                                        Spacer()
+                                            .frame(width: 16)
                                     }
+                                } else {
+                                    Spacer()
+                                        .frame(width: 16)
                                 }
-                                
-                                Spacer()
-                                    .frame(width: 16)
                                 
                                 VStack(alignment: .leading, content: {
                                     Text("✲ 프로필 맞춤")
