@@ -39,3 +39,5 @@ func calculateDistance(itemCoord: CLLocationCoordinate2D, mvCoord: CLLocationCoo
     let distanceKm = coordinate1.distance(to: coordinate2)
     return distanceKm
 }
+
+

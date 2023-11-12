@@ -68,10 +68,6 @@ struct ControlView: View {
                     MapStoreListView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                         .onAppear() {
                             mapViewModel.checkLocationServiceEnabled()
-                            mapViewModel.startTimer()
-                        }
-                        .onDisappear() {
-                            mapViewModel.fireTimer()
                         }
                 }
             }

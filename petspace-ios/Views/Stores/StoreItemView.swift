@@ -59,8 +59,9 @@ struct StoreItemView: View {
                 // Store Score and Number of Reviews
                 HStack {
                     // 위치 정보 허용된 경우 거리 표시
-                    if mapViewModel.isAuthorized == .authorizedAlways || mapViewModel.isAuthorized ==  .authorizedWhenInUse {
-                        Text("\(String(format: "%.2f", distanceKM))km")
+                    if (mapViewModel.isAuthorized == .authorizedAlways || mapViewModel.isAuthorized == .authorizedWhenInUse) && (mapViewModel.userLatitude != 0.0 && mapViewModel.userLongitude != 0.0) {
+                        // Text("\(String(format: "%.2f", distanceKM))km")
+                        Text("\(String(format: "%.2f", Coordinate(latitude: mapViewModel.userLatitude, longitude: mapViewModel.userLongitude).distance(to: Coordinate(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude))))km")
                             .font(.system(size: 10))
                             .bold()
                             .padding(0)
@@ -148,12 +149,12 @@ struct StoreItemView: View {
         
         // 시작할 때 타이머 시작
         .onAppear() {
-            startUpdateLocation()
+            // startUpdateLocation()
         }
         
         // 사라질 때 타이머 중지
         .onDisappear() {
-            stopUpdateLocation()
+            // stopUpdateLocation()
         }
     }
     

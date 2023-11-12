@@ -28,7 +28,6 @@ struct MapStoreListView: View {
                 
                 // Store List View
                 StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
-                
             }
             .ignoresSafeArea(edges: .bottom)
         }

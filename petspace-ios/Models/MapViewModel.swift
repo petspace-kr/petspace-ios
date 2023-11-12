@@ -7,6 +7,8 @@
 
 import CoreLocation
 import MapKit
+import Combine
+import Foundation
 
 final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
@@ -25,6 +27,10 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     
     @Published var isTimerRunning: Bool = false
     
+     // Test
+    @Published var userLatitude: Double = 0
+    @Published var userLongitude: Double = 0
+    
     func checkLocationServiceEnabled() {
         
         print("CLLocationManager.locationServiceEnabled: \(CLLocationManager.locationServicesEnabled())")
@@ -33,6 +39,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
             locationManager = CLLocationManager()
             locationManager!.delegate = self
             isLocationServiceEnabled = true
+            locationManager!.startUpdatingLocation()
         }
         
         // now allowed
@@ -74,7 +81,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         checkLocationAuthorization()
     }
     
-    func startTimer() {
+    /* func startTimer() {
         if !isTimerRunning {
             print("timer started")
             self.updateUserLocation()
@@ -114,5 +121,22 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         else {
             print("locationManager is nil")
         }
+    }*/
+    
+    func startUpdatingLocation() {
+        self.locationManager?.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        
+        userLatitude = location.coordinate.latitude
+        userLongitude = location.coordinate.longitude
     }
 }
+
+//extension MapViewModel: CLLocationManagerDelegate {
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        
+//    }
+//}
