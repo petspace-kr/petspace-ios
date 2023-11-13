@@ -137,6 +137,8 @@ struct StoreListView: View {
                     }
                     .sheet(isPresented: $isProfileViewPresented, content: {
                         ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                            .padding()
+                            .padding(.top, 20)
                     })
                 }
                 
@@ -162,7 +164,7 @@ struct StoreListView: View {
                         else if sortMode == .distance {
                             ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
                                 StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 10)
+                                    .padding(.bottom, 4)
                             }
                         }
                         
@@ -170,6 +172,7 @@ struct StoreListView: View {
                         else if sortMode == .rating {
                             ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
                                 StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
                             }
                         }
                         
@@ -177,6 +180,7 @@ struct StoreListView: View {
                         else if sortMode == .priceIncrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
                                 StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
                             }
                         }
                         
@@ -184,6 +188,7 @@ struct StoreListView: View {
                         else if sortMode == .priceDecrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
                                 StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
                             }
                         }
                     }
@@ -202,7 +207,7 @@ struct StoreListView: View {
                         else if sortMode == .distance {
                             ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
                                 StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 10)
+                                    .padding(.bottom, 4)
                             }
                         }
                         
@@ -210,6 +215,7 @@ struct StoreListView: View {
                         else if sortMode == .rating {
                             ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
                                 StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
                             }
                         }
                         
@@ -217,6 +223,7 @@ struct StoreListView: View {
                         else if sortMode == .priceIncrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
                                 StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
                             }
                         }
                         
@@ -224,6 +231,7 @@ struct StoreListView: View {
                         else if sortMode == .priceDecrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
                                 StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
                             }
                         }
                     }

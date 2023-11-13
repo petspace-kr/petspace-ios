@@ -25,7 +25,7 @@ struct StoreItemView: View {
     var body: some View {
         
         ZStack {
-            RoundedRectangle(cornerRadius: 10.0)
+            RoundedRectangle(cornerRadius: 28)
                 .fill(Color("Background1"))
                 .stroke(Color("Stroke1"), lineWidth: 1)
             
@@ -150,6 +150,7 @@ struct StoreItemView: View {
                     }
                 })
             })
+            .padding(10)
             
             // 클릭 시 Detail View 열기
             .onTapGesture {

@@ -55,55 +55,58 @@ struct DetailView: View {
                         Spacer()
                             .frame(height: 30)
                         
-                        Text("연락처")
-                            .font(.headline)
-                            .bold()
-                        
-                        Spacer()
-                            .frame(height: 10)
-                        
-                        Button {
-                            // 전화 걸기
-                            let formattedString = "tel://" + storeItem.tel
-                            print(formattedString)
-                            guard let phoneUrl = URL(string: formattedString) else { return }
-                            UIApplication.shared.open(phoneUrl)
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10.0)
-                                    .fill(Color("Background1"))
-                                    .stroke(Color("Stroke1"), lineWidth: 1)
-                                
-                                HStack {
-                                    Spacer()
-                                        .frame(width: 15)
+                        // 연락처 있는 경우
+                        if storeItem.tel != "" {
+                            Text("연락처")
+                                .font(.headline)
+                                .bold()
+                            
+                            Spacer()
+                                .frame(height: 10)
+                            
+                            Button {
+                                // 전화 걸기
+                                let formattedString = "tel://" + storeItem.tel
+                                print(formattedString)
+                                guard let phoneUrl = URL(string: formattedString) else { return }
+                                UIApplication.shared.open(phoneUrl)
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10.0)
+                                        .fill(Color("Background1"))
+                                        .stroke(Color("Stroke1"), lineWidth: 1)
                                     
-                                    Image(systemName: "phone.circle")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 24, height: 24)
-                                        .foregroundStyle(Color("Foreground1"))
-                                    
-                                    Spacer()
-                                        .frame(width: 10)
-                                    
-                                    Text(storeItem.tel.prettyPhoneNumber())
-                                        .foregroundStyle(Color("Foreground1"))
-                                    
-                                    Spacer()
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .foregroundStyle(Color("Foreground1"))
-                                    
-                                    Spacer()
-                                        .frame(width: 10)
+                                    HStack {
+                                        Spacer()
+                                            .frame(width: 15)
+                                        
+                                        Image(systemName: "phone.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 24, height: 24)
+                                            .foregroundStyle(Color("Foreground1"))
+                                        
+                                        Spacer()
+                                            .frame(width: 10)
+                                        
+                                        Text(storeItem.tel.prettyPhoneNumber())
+                                            .foregroundStyle(Color("Foreground1"))
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .foregroundStyle(Color("Foreground1"))
+                                        
+                                        Spacer()
+                                            .frame(width: 10)
+                                    }
                                 }
+                                .frame(height: 48)
                             }
-                            .frame(height: 48)
+                            
+                            Spacer()
+                                .frame(height: 30)
                         }
-                        
-                        Spacer()
-                            .frame(height: 30)
                         
                         Text("✲ 프로필 맞춤 가격")
                             .font(.headline)

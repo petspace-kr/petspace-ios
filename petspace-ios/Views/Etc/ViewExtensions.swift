@@ -66,6 +66,7 @@ extension View {
         self
             .horizontallyCentred()
             .frame(height: 36)
+            .bold()
     }
     
     func standardButtonText(foregroundColor: Color) -> some View {
@@ -73,6 +74,7 @@ extension View {
             .horizontallyCentred()
             .frame(height: 36)
             .foregroundColor(foregroundColor)
+            .bold()
     }
     
     func standardButton() -> some View {

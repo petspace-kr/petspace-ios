@@ -19,7 +19,7 @@ struct PermissionView: View {
     // 권한 허용 여부 변수
     @State private var isLocationPermission: Int = 0
     @State private var isPreciseLocationPermission: Int = 0
-    @State private var isPhotoPermission: Int = 0
+    @State private var isPhotoPermission: Int = 1
     
     // 위치 권한 허용 타이머 및 관련 변수
     @State private var timer: Timer?
@@ -186,12 +186,12 @@ struct PermissionView: View {
                             }
                             
                             VStack(alignment: .leading) {
-                                Text("사진 접근 허용")
+                                Text("일부 사진 비공개 접근 허용")
                                     .bold()
                                     .font(.system(size: 15))
                                     .padding(.bottom, 1)
                                 
-                                Text("프로필 이미지 등록, 애견미용실 후기 작성 시 사진을 추가할 수 있어요.")
+                                Text("프로필 이미지 등록, 애견미용실 후기 작성 시 사진을 추가할 수 있어요. 펫스페이스는 사용자의 사진에 접근하지 않으며, 사용자가 선택한 이미지 데이터만 앱에 저장해요.")
                                     .font(.system(size: 12))
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom, 1)
