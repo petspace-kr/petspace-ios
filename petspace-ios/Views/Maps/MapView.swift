@@ -411,6 +411,25 @@ struct StoreAnnotation: View {
                                 .padding(.horizontal, 1)
                             }
                             
+                            // 전화 걸기
+                            Button {
+                                let formattedString = "tel://" + storeItem.tel
+                                print(formattedString)
+                                guard let phoneUrl = URL(string: formattedString) else { return }
+                                UIApplication.shared.open(phoneUrl)
+                            } label: {
+                                VStack {
+                                    Image(systemName: "phone.circle")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("전화")
+                                        .font(.system(size: 8))
+                                        .foregroundStyle(.blue)
+                                        .fixedSize(horizontal: true, vertical: true)
+                                }
+                            }
+                            .disabled(storeItem.tel == "")
                             
                             // 바로 예약
                             Button {

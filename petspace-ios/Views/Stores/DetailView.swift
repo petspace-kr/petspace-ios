@@ -55,6 +55,56 @@ struct DetailView: View {
                         Spacer()
                             .frame(height: 30)
                         
+                        Text("연락처")
+                            .font(.headline)
+                            .bold()
+                        
+                        Spacer()
+                            .frame(height: 10)
+                        
+                        Button {
+                            // 전화 걸기
+                            let formattedString = "tel://" + storeItem.tel
+                            print(formattedString)
+                            guard let phoneUrl = URL(string: formattedString) else { return }
+                            UIApplication.shared.open(phoneUrl)
+                        } label: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .fill(Color("Background1"))
+                                    .stroke(Color("Stroke1"), lineWidth: 1)
+                                
+                                HStack {
+                                    Spacer()
+                                        .frame(width: 15)
+                                    
+                                    Image(systemName: "phone.circle")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundStyle(Color("Foreground1"))
+                                    
+                                    Spacer()
+                                        .frame(width: 10)
+                                    
+                                    Text(storeItem.tel.prettyPhoneNumber())
+                                        .foregroundStyle(Color("Foreground1"))
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .foregroundStyle(Color("Foreground1"))
+                                    
+                                    Spacer()
+                                        .frame(width: 10)
+                                }
+                            }
+                            .frame(height: 48)
+                        }
+                        
+                        Spacer()
+                            .frame(height: 30)
+                        
                         Text("✲ 프로필 맞춤 가격")
                             .font(.headline)
                             .foregroundColor(Color(red: 0, green: 0.64, blue: 1))
@@ -108,13 +158,19 @@ struct DetailView: View {
                                             .bold()
                                             .fixedSize(horizontal: true, vertical: true)
                                             .foregroundStyle(Color("Foreground1"))
+                                        
                                         Text("\(profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].dogBreed) ∙ \(String(format: "%.1f", profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].dogWeight))kg")
                                             .fixedSize(horizontal: true, vertical: true)
                                             .foregroundStyle(Color("Foreground1"))
+                                        
                                         Spacer()
+                                        
                                         Image(systemName: "chevron.right")
+                                            .foregroundStyle(Color("Foreground1"))
+                                        
+                                        Spacer()
+                                            .frame(width: 10)
                                     }
-                                    .foregroundStyle(Color("MainForeground"))
                                     .padding(.leading, 0)
                                     .padding(.trailing, 10)
                                 }

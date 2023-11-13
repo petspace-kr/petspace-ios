@@ -137,6 +137,7 @@ struct WelcomeView: View {
                         isPermissionViewPresented = true
                     }, content: {
                         ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: true, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                            .padding()
                     })
                     
                     // 프로필 등록없이 시작 경고 모달
