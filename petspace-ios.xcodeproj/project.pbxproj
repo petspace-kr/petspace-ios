@@ -33,6 +33,14 @@
 		0C3CBCC62AFB863D000862C3 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC52AFB863D000862C3 /* SearchBar.swift */; };
 		0C3CBCC82AFB865D000862C3 /* CloseKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */; };
 		0C3CBCCA2AFB897D000862C3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */; };
+		0CAE0FFB2B023EAE00A83BF3 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE0FFA2B023EAE00A83BF3 /* DetailViewModel.swift */; };
+		0CAE0FFD2B02436D00A83BF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CAE0FFC2B02436D00A83BF3 /* GoogleService-Info.plist */; };
+		0CAE10002B02460300A83BF3 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE0FFF2B02460300A83BF3 /* FirebaseAnalytics */; };
+		0CAE10022B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE10012B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion */; };
+		0CAE10042B02460300A83BF3 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE10032B02460300A83BF3 /* FirebaseAnalyticsSwift */; };
+		0CAE10062B02460300A83BF3 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE10052B02460300A83BF3 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		0CAE10082B02460300A83BF3 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE10072B02460300A83BF3 /* FirebaseAppCheck */; };
+		0CAE100A2B02481200A83BF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE10092B02481200A83BF3 /* AppDelegate.swift */; };
 		0CB76C4D2AFA79AC009D7424 /* petspace_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */; };
 		0CB76C512AFA79AD009D7424 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB76C502AFA79AD009D7424 /* Assets.xcassets */; };
 		0CB76C542AFA79AD009D7424 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB76C532AFA79AD009D7424 /* Preview Assets.xcassets */; };
@@ -78,6 +86,9 @@
 		0C3CBCC52AFB863D000862C3 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseKeyboardButton.swift; sourceTree = "<group>"; };
 		0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		0CAE0FFA2B023EAE00A83BF3 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		0CAE0FFC2B02436D00A83BF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0CAE10092B02481200A83BF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CB76C492AFA79AC009D7424 /* petspace-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "petspace-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = petspace_iosApp.swift; sourceTree = "<group>"; };
 		0CB76C502AFA79AD009D7424 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -101,6 +112,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CAE10042B02460300A83BF3 /* FirebaseAnalyticsSwift in Frameworks */,
+				0CAE10062B02460300A83BF3 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				0CAE10002B02460300A83BF3 /* FirebaseAnalytics in Frameworks */,
+				0CAE10022B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				0CAE10082B02460300A83BF3 /* FirebaseAppCheck in Frameworks */,
 				0CB76C612AFA7A7A009D7424 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,6 +139,7 @@
 				0C3CBCAC2AFB84F5000862C3 /* ImageView.swift */,
 				0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */,
 				0CE5B5A82AFD266E007BD3BB /* ViewExtensions.swift */,
+				0CAE10092B02481200A83BF3 /* AppDelegate.swift */,
 			);
 			path = Etc;
 			sourceTree = "<group>";
@@ -146,6 +163,7 @@
 		0CB76C4B2AFA79AC009D7424 /* petspace-ios */ = {
 			isa = PBXGroup;
 			children = (
+				0CAE0FFC2B02436D00A83BF3 /* GoogleService-Info.plist */,
 				0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */,
 				0CB76C502AFA79AD009D7424 /* Assets.xcassets */,
 				0CB76C552AFA79AD009D7424 /* Persistence.swift */,
@@ -171,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				0CB76C722AFA8054009D7424 /* StoreViewModel.swift */,
+				0CAE0FFA2B023EAE00A83BF3 /* DetailViewModel.swift */,
 				0CB76C742AFA805B009D7424 /* MapViewModel.swift */,
 				0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */,
 			);
@@ -302,6 +321,11 @@
 			name = "petspace-ios";
 			packageProductDependencies = (
 				0CB76C602AFA7A7A009D7424 /* ConfettiSwiftUI */,
+				0CAE0FFF2B02460300A83BF3 /* FirebaseAnalytics */,
+				0CAE10012B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion */,
+				0CAE10032B02460300A83BF3 /* FirebaseAnalyticsSwift */,
+				0CAE10052B02460300A83BF3 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				0CAE10072B02460300A83BF3 /* FirebaseAppCheck */,
 			);
 			productName = "petspace-ios";
 			productReference = 0CB76C492AFA79AC009D7424 /* petspace-ios.app */;
@@ -333,6 +357,7 @@
 			mainGroup = 0CB76C402AFA79AC009D7424;
 			packageReferences = (
 				0CB76C5F2AFA7A7A009D7424 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+				0CAE0FFE2B02460300A83BF3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 0CB76C4A2AFA79AC009D7424 /* Products */;
 			projectDirPath = "";
@@ -350,6 +375,7 @@
 			files = (
 				0CB76C542AFA79AD009D7424 /* Preview Assets.xcassets in Resources */,
 				0CB76C712AFA8026009D7424 /* dogbreed.json in Resources */,
+				0CAE0FFD2B02436D00A83BF3 /* GoogleService-Info.plist in Resources */,
 				0CB76C512AFA79AD009D7424 /* Assets.xcassets in Resources */,
 				0CB76C6F2AFA8012009D7424 /* dummy.json in Resources */,
 			);
@@ -369,6 +395,7 @@
 				0C3CBC992AFB823E000862C3 /* NetworkErrorView.swift in Sources */,
 				0C3CBCB12AFB8520000862C3 /* StoreItemView.swift in Sources */,
 				0C3CBCB52AFB856A000862C3 /* BookingView.swift in Sources */,
+				0CAE0FFB2B023EAE00A83BF3 /* DetailViewModel.swift in Sources */,
 				0CE5B5A92AFD266E007BD3BB /* ViewExtensions.swift in Sources */,
 				0CB76C6C2AFA7CD9009D7424 /* ProfileView.swift in Sources */,
 				0C3CBCC82AFB865D000862C3 /* CloseKeyboardButton.swift in Sources */,
@@ -382,6 +409,7 @@
 				0CB76C732AFA8054009D7424 /* StoreViewModel.swift in Sources */,
 				0C3CBCA32AFB843D000862C3 /* Crypto.swift in Sources */,
 				0C3CBCA12AFB83FA000862C3 /* ConstantText.swift in Sources */,
+				0CAE100A2B02481200A83BF3 /* AppDelegate.swift in Sources */,
 				0CB76C7D2AFA95E0009D7424 /* ServerInfo.swift in Sources */,
 				0C3CBCAD2AFB84F5000862C3 /* ImageView.swift in Sources */,
 				0C3CBC9D2AFB83AE000862C3 /* Extensions.swift in Sources */,
@@ -610,6 +638,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0CAE0FFE2B02460300A83BF3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.17.0;
+			};
+		};
 		0CB76C5F2AFA7A7A009D7424 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
@@ -621,6 +657,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0CAE0FFF2B02460300A83BF3 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0CAE0FFE2B02460300A83BF3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		0CAE10012B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0CAE0FFE2B02460300A83BF3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsOnDeviceConversion;
+		};
+		0CAE10032B02460300A83BF3 /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0CAE0FFE2B02460300A83BF3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		0CAE10052B02460300A83BF3 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0CAE0FFE2B02460300A83BF3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		0CAE10072B02460300A83BF3 /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0CAE0FFE2B02460300A83BF3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
 		0CB76C602AFA7A7A009D7424 /* ConfettiSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0CB76C5F2AFA7A7A009D7424 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
