@@ -87,6 +87,10 @@ struct NetworkErrorView: View {
         monitor?.pathUpdateHandler = { path in
             DispatchQueue.main.async {
                 isNetworkAvailable = path.status == .satisfied
+                
+                if isNetworkAvailable {
+                    GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.CANNOT_ACCESS_SERVER_ERROR, params: nil)
+                }
             }
         }
     }

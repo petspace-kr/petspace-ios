@@ -78,7 +78,6 @@ struct ErrorDeclarationView: View {
                     let newContent = content.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
                     
                     let message: String = "{\"title\": \"\(newTitle)\", \"content\": \"\(newContent)\"}"
-                    ServerLogger.sendLog(group: "BETA_USER_MESSAGE_LOG", message: message)
                     
                     isOkPresented = true
                 }

@@ -148,8 +148,8 @@ struct BetaInfoView: View {
                 .padding(.bottom, 10)
             
             Button {
-                // self.isPresented = false
-                dismiss() 
+                GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_BETA_INFO_PAGE_FINISH, params: nil)
+                dismiss()
             } label: {
                 Text("완료했어요")
                     .standardButtonText()

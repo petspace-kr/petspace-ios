@@ -64,17 +64,19 @@ struct ButtonBar: View {
             if isExpaned {
                 // 지도 방향 전환 및 내 위치
                 Button {
-                    
+                    // 현재 위치로
+                    // 기본 위치로
                 } label: {
-//                    Image(systemName: mapViewModel.isAuthorized == .authorizedWhenInUse ? "location" : "location.slash")
-//                        .frame(width: 48, height: 48)
+                    Image(systemName: (mapViewModel.userLatitude == 0 || mapViewModel.userLongitude == 0) ? "location.slash" : "location")
+                        .frame(width: 48, height: 48)
                 }
-                // .disabled(mapViewModel.isAuthorized != .authorizedWhenInUse)
+                .disabled(mapViewModel.userLatitude == 0 || mapViewModel.userLongitude == 0)
                 
                 // 프로필 수정으로 이동
                 Button {
                     // to profile
                     isProfileViewPresented = true
+                    GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_PROFILE_PAGE_OPEN, params: nil)
                 } label: {
                     Image(systemName: "dog.circle")
                         .frame(width: 48, height: 48)
@@ -82,7 +84,14 @@ struct ButtonBar: View {
                 
                 // 저장된 매장 버튼
                 Button {
-                    isSavedStoreShowing.toggle()
+                    if isSavedStoreShowing {
+                        GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_SAVED_SHOWING_OFF, params: nil)
+                        isSavedStoreShowing = false
+                    }
+                    else {
+                        GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_SAVED_SHOWING_ON, params: nil)
+                        isSavedStoreShowing = true
+                    }
                 } label: {
                     Image(systemName: isSavedStoreShowing ? "heart.fill" : "heart")
                         .frame(width: 48, height: 48)
@@ -91,6 +100,7 @@ struct ButtonBar: View {
                 // 설정
                 /* Button {
                     isSettingViewPresented = true
+                    GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_SETTING_PAGE_OPEN, params: nil)
                 } label: {
                     Image(systemName: "gearshape.circle")
                         .frame(width: 48, height: 48)
@@ -99,6 +109,7 @@ struct ButtonBar: View {
                 // 예약 페이지로 이동
                 Button {
                     isHistoryViewPresented = true
+                    GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_BOOKING_PAGE_OPEN, params: nil)
                 } label: {
                     Image(systemName: "book.circle")
                         .frame(width: 48, height: 48)
@@ -108,6 +119,7 @@ struct ButtonBar: View {
                 Button {
                     // information
                     isInfoViewPresented = true
+                    GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_INFO_PAGE_OPEN, params: nil)
                 } label: {
                     Image(systemName: "info.circle")
                         .frame(width: 48, height: 48)
@@ -120,7 +132,7 @@ struct ButtonBar: View {
         
         // 프로필 뷰 보이기
         .sheet(isPresented: $isProfileViewPresented, onDismiss: {
-             
+            GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_PROFILE_PAGE_CLOSE, params: nil)
         }, content: {
             ProfileView(isPresented: $isProfileViewPresented, isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                 .padding()
@@ -130,7 +142,7 @@ struct ButtonBar: View {
         
         // 설정 뷰 보이기
         .sheet(isPresented: $isSettingViewPresented, onDismiss: {
-             
+            GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_SETTING_PAGE_CLOSE, params: nil)
         }, content: {
             SettingView()
                 .padding()
@@ -140,7 +152,7 @@ struct ButtonBar: View {
         
         // Info 뷰 보이기
         .sheet(isPresented: $isInfoViewPresented, onDismiss: {
-             
+            GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_INFO_PAGE_CLOSE, params: nil)
         }, content: {
             WelcomeView(isPresented: $isInfoViewPresented, mapViewModel: mapViewModel, profileViewModel: profileViewModel, isWelcome: false)
         })

@@ -57,7 +57,7 @@ struct SearchBar: View {
                 })
                 self.text = ""
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-
+                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SEARCH_CANCEL, params: nil)
             }) {
                 Text("취소")
             }

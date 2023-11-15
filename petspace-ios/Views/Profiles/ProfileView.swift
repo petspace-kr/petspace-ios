@@ -70,6 +70,7 @@ struct ProfileView: View {
                             isEditing = false
                         }
                         loadProfileData()
+                        GATracking.sendLogEvent(eventName: GATracking.ProfileViewMessage.PROFILE_PAGE_EDIT_CANCEL_BUTTON, params: nil)
                     }
                     .disabled(isFirstEditing)
                     .padding(.trailing, 6)
@@ -88,10 +89,29 @@ struct ProfileView: View {
                                 // 비어 있다면 추가
                                 if profileViewModel.dogProfile.isEmpty {
                                     profileViewModel.addProfile(dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: doubleWeight!, profileImage: selectedImage)
+                                    GATracking.sendLogEvent(eventName: GATracking.ProfileViewMessage.PROFILE_PAGE_SAVE, params: nil)
+                                    
+                                    let params = [
+                                        "breed" : dogBreed,
+                                        "size" : "\(dogSize.rawValue)",
+                                        "weight" : dogWeight
+                                    ]
+                                    GATracking.sendLogEvent(eventName: GATracking.ProfileViewMessage.PROFILE_PAGE_SAVE_INFO, params: params)
+                                    
+                                    if selectedImage != nil {
+                                        GATracking.sendLogEvent(eventName: GATracking.ProfileViewMessage.PROFILE_FIRST_IS_IMAGE_REGISTERED, params: nil)
+                                    }
                                 }
                                 // 비어 있지 않다면 업데이트
                                 else {
                                     profileViewModel.updateProfile(index: currentProfileIndex, dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: doubleWeight!, profileImage: selectedImage)
+                                    
+                                    let params = [
+                                        "breed" : dogBreed,
+                                        "size" : "\(dogSize.rawValue)",
+                                        "weight" : dogWeight
+                                    ]
+                                    GATracking.sendLogEvent(eventName: GATracking.ProfileViewMessage.PROFILE_PAGE_EDIT_INFO, params: params)
                                 }
                                 
                                 withAnimation(.easeInOut) {
@@ -104,6 +124,8 @@ struct ProfileView: View {
                             withAnimation(.easeInOut) {
                                 isEditing = true
                             }
+                            // 편집 시작
+                            GATracking.sendLogEvent(eventName: GATracking.ProfileViewMessage.PROFILE_PAGE_EDIT_BUTTON, params: nil)
                         }
                     }
                     .disabled(isEditing && (dogName == "" || dogBreed == "" || dogWeight == ""))
@@ -447,11 +469,20 @@ struct ProfileView: View {
                                     
                                     withAnimation(.easeInOut) {
                                         self.isPresented = false
-                                        
-                                        ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PROFILE_PAGE_REGISTERED")
-                                        ServerLogger.sendLog(group: "TEST_LOG", message: "PROFILE_FIRST_REGISTERED_INFO_size:\(dogSize)_breed:\(dogBreed)_weight:\(dogWeight)kg")
                                     }
                                     
+                                    GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PROFILE_PAGE_REGISTERED, params: nil)
+                                    
+                                    let params = [
+                                        "breed" : dogBreed,
+                                        "size" : "\(dogSize.rawValue)",
+                                        "weight" : dogWeight
+                                    ]
+                                    GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.PROFILE_FIRST_REGISTERED_INFO, params: params)
+                                    
+                                    if selectedImage != nil {
+                                        GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.PROFILE_FIRST_IS_IMAGE_REGISTERED, params: nil)
+                                    }
                                 }
                             }
                         }
@@ -478,7 +509,7 @@ struct ProfileView: View {
                         }
                         Button("나중에 등록할래요", role: nil) {
                             isAlert2Presented = true
-                            ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PROFILE_PAGE_PASSED")
+                            GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PROFILE_PASS, params: nil)
                         }
                     }, message: {
                         Text("프로필을 등록하면 우리 아이의 맞춤형 미용 가격을 바로 확인할 수 있어요.")

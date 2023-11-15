@@ -313,6 +313,7 @@ struct StoreAnnotation: View {
                     if allowExpand && !isExpandedShowing {
                         withAnimation(.spring()) {
                             isExpandedShowing = true
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CLICKED, params: nil)
                         }
                     }
                 }
@@ -336,6 +337,7 @@ struct StoreAnnotation: View {
                         
                         withAnimation(.spring()) {
                             isExpandedShowing = false
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CLOSE, params: nil)
                         }
                     } label: {
                         Image(systemName: "xmark.circle")
@@ -377,6 +379,14 @@ struct StoreAnnotation: View {
                                 if updateSelectedID(selectedID: storeItem.id) {
                                     isLoading = true
                                     fetchRoute()
+                                    
+                                    if isResult {
+                                        // 새고로침
+                                        GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_ROUTE_REFRESH, params: nil)
+                                    } else {
+                                        // 경로 생성
+                                        GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_ROUTE_START, params: nil)
+                                    }
                                 }
                                 // selectedAnnotationId = storeItem.id
                             } label: {
@@ -417,6 +427,7 @@ struct StoreAnnotation: View {
                                 print(formattedString)
                                 guard let phoneUrl = URL(string: formattedString) else { return }
                                 UIApplication.shared.open(phoneUrl)
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CALL, params: nil)
                             } label: {
                                 VStack {
                                     Image(systemName: "phone.circle")
@@ -454,6 +465,7 @@ struct StoreAnnotation: View {
                             Button {
                                 print("detail button pressed")
                                 isDetailViewPresented = true
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_DETAIL_OPEN, params: nil)
                             } label: {
                                 VStack {
                                     Image(systemName: "info.circle")

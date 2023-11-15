@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import FirebaseCore
+import FirebaseAnalytics
 
 // 2023. 11. 15. 23:20
 struct GATracking {
@@ -21,7 +23,7 @@ struct GATracking {
         // Profile View
         static let WELCOME_PROFILE_PAGE_REGISTERED = "WELCOME_PROFILE_PAGE_REGISTERED"
         static let WELCOME_PROFILE_PASS = "WELCOME_PROFILE_PASS"
-        static let PROFILE_FIRST_REGISTERED_INFO_ = "PROFILE_FIRST_SAVE_INFO_" // + 견종, 무게, 사이즈, 무게
+        static let PROFILE_FIRST_REGISTERED_INFO = "PROFILE_FIRST_SAVE_INFO_" // + 견종, 무게, 사이즈, 무게
         static let PROFILE_FIRST_IS_IMAGE_REGISTERED = "PROFILE_FIRST_IS_IMAGE_REGISTERED" // 사진 등록 여부
         
         // Permission Page
@@ -86,8 +88,8 @@ struct GATracking {
     // Button Bar View (ETC)
     struct EtcViewMessage {
         // 프로필 뷰
-        static let BAR_PROFILE_PAGE_OPEN = ""
-        static let BAR_PROFILE_PAGE_CLOSE = ""
+        static let BAR_PROFILE_PAGE_OPEN = "BAR_PROFILE_PAGE_OPEN"
+        static let BAR_PROFILE_PAGE_CLOSE = "BAR_PROFILE_PAGE_CLOSE"
         
         // 예약 뷰
         static let BAR_BOOKING_PAGE_OPEN = "BAR_BOOKING_PAGE_OPEN"
@@ -116,7 +118,7 @@ struct GATracking {
         static let PROFILE_PAGE_EDIT_CANCEL_BUTTON = "PROFILE_PAGE_EDIT_CANCEL_BUTTON"
         
         // 프로필 저장
-        static let PROFILE_PAGE_SAVE_INFO_ = "PROFILE_PAGE_SAVE_INFO_" // + 견종, 무게, 사이즈, 무게
+        static let PROFILE_PAGE_SAVE_INFO = "PROFILE_PAGE_SAVE_INFO_" // + 견종, 무게, 사이즈, 무게
         static let PROFILE_PAGE_EDIT_INFO = "PROFILE_PAGE_EDIT_INFO_" // 수정
         static let PROFILE_FIRST_IS_IMAGE_REGISTERED = "PROFILE_PAGE_IS_IMAGE_REGISTERED" // 사진 등록 여부
     }
@@ -136,5 +138,24 @@ struct GATracking {
         static let INFO_PAGE_ERROR_DECLARATION_PASS = "INFO_PAGE_ERROR_DECLARATION_PASS" // 패스
         static let INFO_PAGE_ERROR_DECLARATION_COPY = "INFO_PAGE_ERROR_DECLARATION_COPY" // 메일 주소 복사
         static let INFO_PAGE_ERROR_DECLARATION_WRITE_MAIL = "INFO_PAGE_ERROR_DECLARATION_WRITE_MAIL" // 메일 작성
+    }
+    
+    // 로그 전송
+    static func sendLogEvent(eventName: String, params: [String : Any]?) {
+        // user ID 가져오기
+        let userID = ServerLogger.getUserID()
+        
+        // version 가져오기
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        
+        Analytics.setUserID("userID=\(userID)")
+        Analytics.setUserProperty(version, forName: "appVersion")
+        Analytics.logEvent(eventName, parameters: params)
+        
+        if params == nil {
+            print("GA LogEvent : \(eventName)")
+        } else {
+            print("GA LogEvent with params : \(eventName), msg: \(params!.description)")
+        }
     }
 }

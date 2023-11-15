@@ -158,8 +158,13 @@ struct StoreItemView: View {
             }
             
             // Detail View
-            .sheet(isPresented: $isDetailViewPresented, content: {
+            .sheet(isPresented: $isDetailViewPresented, onDismiss: {
+                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_CLOSE, params: nil)
+            }, content: {
                 DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                    .onAppear() {
+                        GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_OPEN, params: nil)
+                    }
             })
             
             // 시작할 때 타이머 시작

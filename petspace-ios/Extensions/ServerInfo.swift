@@ -23,7 +23,7 @@ struct ServerLogger {
     
     static let urlString = ServerURLCollection.sendLog.rawValue
 
-    static func sendLog(group: String, message: String) {
+    /* static func sendLog(group: String, message: String) {
     
         // user Id 가져오기
         let userID = getUserID()
@@ -75,7 +75,7 @@ struct ServerLogger {
             }
         }
         .resume() */
-    }
+    }*/
     
     static func getTimestamp() -> String {
         let currentDate = Date()

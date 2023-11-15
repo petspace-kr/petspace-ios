@@ -77,6 +77,7 @@ struct StoreListView: View {
                                 viewHeight = UIScreen.main.bounds.height * ScreenMode.fullScreen.rawValue
                                 screenMode = .fullScreen
                             })
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SEARCH_START, params: nil)
                         }
                     }
                     
@@ -86,25 +87,29 @@ struct StoreListView: View {
                     // 정렬 방식 선택 메뉴
                     Menu("\(sortMode.rawValue)") {
                         Section("정렬 방식을 선택하세요") {
-                            // 가격 순
+                            // 거리 순
                             Button(SortMode.distance.rawValue, systemImage: "map") {
                                 sortMode = .distance
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SORT_CHANGE_DISTANCE, params: nil)
                             }
                             
                             // 별점 순
                             Button(SortMode.rating.rawValue, systemImage: "star") {
                                 sortMode = .rating
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SORT_CHANGE_RATING, params: nil)
                             }
                             
                             // 가격 낮은 순
                             Button(SortMode.priceIncrease.rawValue, systemImage: "line.3.horizontal.decrease") {
                                 sortMode = .priceIncrease
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SORT_CHANGE_PRICE_INCREASE, params: nil)
                             }
                             .disabled(profileViewModel.dogProfile.isEmpty)
                             
                             // 가격 높은 순
                             Button(SortMode.priceDecrease.rawValue, systemImage: "line.3.horizontal.decrease") {
                                 sortMode = .priceDecrease
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SORT_CHANGE_PRICE_DECREASE, params: nil)
                             }
                             .disabled(profileViewModel.dogProfile.isEmpty)
                         }
@@ -119,6 +124,7 @@ struct StoreListView: View {
                     HStack {
                         Button {
                             isProfileViewPresented = true
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_LIST_PROFILE_PAGE_OPEN, params: nil)
                         } label: {
                             Text("프로필을 등록하면")
                                 .font(.system(size: 12))
@@ -135,7 +141,9 @@ struct StoreListView: View {
                             .multilineTextAlignment(.center)
                             .padding(.leading, -2)
                     }
-                    .sheet(isPresented: $isProfileViewPresented, content: {
+                    .sheet(isPresented: $isProfileViewPresented, onDismiss: {
+                        GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_LIST_PROFILE_PAGE_CLOSE, params: nil)
+                    }, content: {
                         ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                             .padding()
                             .padding(.top, 20)

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C0D3B362AFA9FA400AC4FAC /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0D3B352AFA9FA400AC4FAC /* ControlView.swift */; };
 		0C374FF12B04ECD900D82ACA /* GATracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C374FF02B04ECD900D82ACA /* GATracking.swift */; };
+		0C374FF32B0511B600D82ACA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C374FF22B0511B600D82ACA /* GoogleService-Info.plist */; };
 		0C3CBC992AFB823E000862C3 /* NetworkErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBC982AFB823E000862C3 /* NetworkErrorView.swift */; };
 		0C3CBC9B2AFB839D000862C3 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBC9A2AFB839D000862C3 /* ImagePicker.swift */; };
 		0C3CBC9D2AFB83AE000862C3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBC9C2AFB83AE000862C3 /* Extensions.swift */; };
@@ -35,7 +36,6 @@
 		0C3CBCC82AFB865D000862C3 /* CloseKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */; };
 		0C3CBCCA2AFB897D000862C3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */; };
 		0CAE0FFB2B023EAE00A83BF3 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE0FFA2B023EAE00A83BF3 /* DetailViewModel.swift */; };
-		0CAE0FFD2B02436D00A83BF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CAE0FFC2B02436D00A83BF3 /* GoogleService-Info.plist */; };
 		0CAE10002B02460300A83BF3 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE0FFF2B02460300A83BF3 /* FirebaseAnalytics */; };
 		0CAE10022B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE10012B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion */; };
 		0CAE10042B02460300A83BF3 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE10032B02460300A83BF3 /* FirebaseAnalyticsSwift */; };
@@ -63,6 +63,7 @@
 /* Begin PBXFileReference section */
 		0C0D3B352AFA9FA400AC4FAC /* ControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
 		0C374FF02B04ECD900D82ACA /* GATracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATracking.swift; sourceTree = "<group>"; };
+		0C374FF22B0511B600D82ACA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C3CBC982AFB823E000862C3 /* NetworkErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorView.swift; sourceTree = "<group>"; };
 		0C3CBC9A2AFB839D000862C3 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0C3CBC9C2AFB83AE000862C3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -89,7 +90,6 @@
 		0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseKeyboardButton.swift; sourceTree = "<group>"; };
 		0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0CAE0FFA2B023EAE00A83BF3 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
-		0CAE0FFC2B02436D00A83BF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0CAE10092B02481200A83BF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CB76C492AFA79AC009D7424 /* petspace-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "petspace-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = petspace_iosApp.swift; sourceTree = "<group>"; };
@@ -165,7 +165,7 @@
 		0CB76C4B2AFA79AC009D7424 /* petspace-ios */ = {
 			isa = PBXGroup;
 			children = (
-				0CAE0FFC2B02436D00A83BF3 /* GoogleService-Info.plist */,
+				0C374FF22B0511B600D82ACA /* GoogleService-Info.plist */,
 				0CB76C4C2AFA79AC009D7424 /* petspace_iosApp.swift */,
 				0CB76C502AFA79AD009D7424 /* Assets.xcassets */,
 				0CB76C552AFA79AD009D7424 /* Persistence.swift */,
@@ -378,7 +378,7 @@
 			files = (
 				0CB76C542AFA79AD009D7424 /* Preview Assets.xcassets in Resources */,
 				0CB76C712AFA8026009D7424 /* dogbreed.json in Resources */,
-				0CAE0FFD2B02436D00A83BF3 /* GoogleService-Info.plist in Resources */,
+				0C374FF32B0511B600D82ACA /* GoogleService-Info.plist in Resources */,
 				0CB76C512AFA79AD009D7424 /* Assets.xcassets in Resources */,
 				0CB76C6F2AFA8012009D7424 /* dummy.json in Resources */,
 			);

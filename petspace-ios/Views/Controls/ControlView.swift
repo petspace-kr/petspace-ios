@@ -42,17 +42,20 @@ struct ControlView: View {
             }
             .buttonStyle(.borderedProminent)
         } else {
+            // 첫 접속이라면
             if isFirst {
                 AppLoadingView()
                     .onAppear() {
                         checkNetwork()
                         isWelcomeViewPresented = true
-                        ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_FIRST_APP_OPEN")
                     }
                     .fullScreenCover(isPresented: $isWelcomeViewPresented, onDismiss: {
                         checkNetwork()
                     }, content: {
                         WelcomeView(isPresented: $isWelcomeViewPresented, mapViewModel: mapViewModel, profileViewModel: profileViewModel, isWelcome: true)
+                            .onAppear() {
+                                GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_FIRST_APP_OPEN, params: nil)
+                            }
                     })
             }
             
@@ -68,6 +71,7 @@ struct ControlView: View {
                     MapStoreListView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                         .onAppear() {
                             mapViewModel.checkLocationServiceEnabled()
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.APP_OPEN, params: nil)
                         }
                 }
             }

@@ -89,13 +89,13 @@ struct PermissionView: View {
                                                 isLocationPermission = 0
                                             case .restricted, .denied:
                                                 isLocationPermission = 1
-                                                ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PERMISSION_LOCATION_DENIED")
                                                 print("permission: \(isLocationPermission)")
+                                                GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PERMISSION_PAGE_LOCATION_DENIED, params: nil)
                                                 // timer?.fire()
                                             case .authorizedAlways, .authorizedWhenInUse:
                                                 isLocationPermission = 2
-                                                ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PERMISSION_PRECISE_LOCATION_ALLOW")
                                                 print("permission: \(isLocationPermission)")
+                                                GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PERMISSION_PAGE_LOCATION_ALLOW, params: nil)
                                                 // timer?.fire()
                                             @unknown default:
                                                 isLocationPermission = 0
@@ -226,6 +226,7 @@ struct PermissionView: View {
                 .padding(.bottom, 10)
             
             Button {
+                GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PERMISSION_PAGE_FINISH, params: nil)
                 dismiss()
             } label: {
                 Text("완료했어요")

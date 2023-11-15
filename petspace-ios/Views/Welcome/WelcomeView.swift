@@ -116,7 +116,7 @@ struct WelcomeView: View {
                     Button {
                         isProfileViewPresented = true
                         isRegisterStarted = true
-                        ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PAGE_PROFILE_ADD_BUTTON")
+                        GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PAGE_PROFILE_ADD_BUTTON, params: nil)
                     } label: {
                         Text("프로필 등록하기")
                             .standardButtonText()
@@ -127,7 +127,7 @@ struct WelcomeView: View {
                     // 나중에 등록 버튼
                     Button {
                         isAlert1Presented = true
-                        ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PAGE_PROFILE_PASS_BUTTON")
+                        GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PAGE_PROFILE_PASS_BUTTON, params: nil)
                     } label: {
                         Text("나중에 등록할래요")
                             .standardButtonText()
@@ -148,12 +148,12 @@ struct WelcomeView: View {
                         Button("프로필 등록하기", role: nil) {
                             isProfileViewPresented = true
                             isRegisterStarted = true
-                            ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PAGE_PROFILE_PASS_BUTTON_ADD")
+                            GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PAGE_PROFILE_PASS_BUTTON_ADD, params: nil)
                         }
                         Button("나중에 등록할래요", role: nil) {
                             isAlert2Presented = true
                             isRegisterStarted = true
-                            ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_PAGE_PROFILE_PASS_BUTTON_PASS")
+                            GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_PAGE_PROFILE_PASS_BUTTON_PASS, params: nil)
                         }
                     }, message: {
                         Text("프로필을 등록하면 우리 아이의 맞춤형 미용 가격을 바로 확인할 수 있어요.")
@@ -180,11 +180,9 @@ struct WelcomeView: View {
                     // Beta Info View
                     .fullScreenCover(isPresented: $isBetaInfoViewPresented, onDismiss: {
                         // isPresented = false
-                        dismiss()
-                        
                         UserDefaults.standard.set(true, forKey: "hasShownWelcomeView")
-                        ServerLogger.sendLog(group: "TEST_LOG", message: "WELCOME_FINISH")
-                        
+                        GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_FINISH, params: nil)
+                        dismiss()
                     }, content: {
                         BetaInfoView(isPresented: $isBetaInfoViewPresented)
                             .padding()
@@ -199,6 +197,7 @@ struct WelcomeView: View {
                     // 개인정보 처리방침 뷰
                     Button {
                         isPrivacyViewPresented = true
+                        GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_PRIVACY_OPEN, params: nil)
                     } label: {
                         Text("개인정보처리방침")
                             .foregroundStyle(.primary)
@@ -209,6 +208,7 @@ struct WelcomeView: View {
                     Button {
                         //
                         isPermissionAlertPresented = true
+                        GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_EDIT_PRIVACY_BUTTON, params: nil)
                     } label: {
                         Text("권한 허가 수정")
                             .standardButtonText(foregroundColor: Color("Background1"))
@@ -219,6 +219,7 @@ struct WelcomeView: View {
                     Button {
                         // isErrorDeclarationViewPresented = true
                         isErrorDeclarationModalPresented = true
+                        GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_ERROR_DECLARATION_BUTTON, params: nil)
                     } label: {
                         Text("기능 오류 신고하기")
                             .standardButtonText()
@@ -228,7 +229,9 @@ struct WelcomeView: View {
                 .padding()
                 
                 // 개인정보 처리방침 뷰
-                .sheet(isPresented: $isPrivacyViewPresented, content: {
+                .sheet(isPresented: $isPrivacyViewPresented, onDismiss: {
+                    GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_PRIVACY_CLOSE, params: nil)
+                }, content: {
                     SimpleTextView(title: "개인정보 처리방침", text: TextCollections.privacyText.rawValue)
                         .padding()
                         .padding(.top, 30)
@@ -242,9 +245,10 @@ struct WelcomeView: View {
                         if UIApplication.shared.canOpenURL(url) {
                             UIApplication.shared.open(url)
                         }
+                        GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_EDIT_PRIVACY_BUTTON_TO_SETTING, params: nil)
                     }
                     Button("알겠어요", role: nil) {
-                        //
+                        GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_EDIT_PRIVACY_BUTTON_PASS, params: nil)
                     }
                 }, message: {
                     Text("권한 허가 수정은 Apple 정책 상 직접 iPhone 설정 앱 - 펫스페이스 에서 권한을 수정할 수 있어요.")
@@ -267,11 +271,13 @@ struct WelcomeView: View {
                         print(emailAddr)
                         guard let emailUrl = URL(string: emailAddr) else { return }
                         UIApplication.shared.open(emailUrl)
+                        GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_ERROR_DECLARATION_WRITE_MAIL, params: nil)
                     }
                     Button("메일 주소를 복사할래요", role: nil) {
                         // 클립보드에 복사
                         UIPasteboard.general.string = "leehe228@konkuk.ac.kr"
                         isCopyFinishPresented = true
+                        GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_ERROR_DECLARATION_COPY, params: nil)
                     }
                     Button("알겠어요", role: nil) {
                         //
@@ -283,13 +289,16 @@ struct WelcomeView: View {
                 // 복사 완료 모달
                 .alert("복사 완료", isPresented: $isCopyFinishPresented, actions: {
                     Button("알겠어요", role: nil) {
-                        
+                        GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_ERROR_DECLARATION_PASS, params: nil)
                     }
                 }, message: {
                     Text("클립보드에 복사가 완료되었어요. 소중한 의견을 작성해 보내주세요.")
                 })
             }
         })
+        .onAppear {
+            var _ = ServerLogger.getUserID()
+        }
     }
 }
 
