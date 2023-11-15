@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C0D3B362AFA9FA400AC4FAC /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0D3B352AFA9FA400AC4FAC /* ControlView.swift */; };
+		0C374FF12B04ECD900D82ACA /* GATracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C374FF02B04ECD900D82ACA /* GATracking.swift */; };
 		0C3CBC992AFB823E000862C3 /* NetworkErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBC982AFB823E000862C3 /* NetworkErrorView.swift */; };
 		0C3CBC9B2AFB839D000862C3 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBC9A2AFB839D000862C3 /* ImagePicker.swift */; };
 		0C3CBC9D2AFB83AE000862C3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBC9C2AFB83AE000862C3 /* Extensions.swift */; };
@@ -61,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		0C0D3B352AFA9FA400AC4FAC /* ControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
+		0C374FF02B04ECD900D82ACA /* GATracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GATracking.swift; sourceTree = "<group>"; };
 		0C3CBC982AFB823E000862C3 /* NetworkErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorView.swift; sourceTree = "<group>"; };
 		0C3CBC9A2AFB839D000862C3 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0C3CBC9C2AFB83AE000862C3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				0C3CBC9E2AFB83CA000862C3 /* Haptics.swift */,
 				0C3CBCA02AFB83FA000862C3 /* ConstantText.swift */,
 				0C3CBCA22AFB843D000862C3 /* Crypto.swift */,
+				0C374FF02B04ECD900D82ACA /* GATracking.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				0C3CBCBD2AFB85C4000862C3 /* SettingView.swift in Sources */,
 				0C3CBCC12AFB85EB000862C3 /* AppLoadingView.swift in Sources */,
 				0C3CBCA92AFB84C1000862C3 /* WelcomeView.swift in Sources */,
+				0C374FF12B04ECD900D82ACA /* GATracking.swift in Sources */,
 				0C3CBCCA2AFB897D000862C3 /* ProfileViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

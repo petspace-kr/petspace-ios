@@ -12,11 +12,11 @@ struct petspace_iosApp: App {
     // Register App Delegate for Firebase
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     let persistenceController = PersistenceController.shared
-
+    // @ObservedObject var vm = MapViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ControlView()
-            // ProfileTestView()
         }
     }
 }

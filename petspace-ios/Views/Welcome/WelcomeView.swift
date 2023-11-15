@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ConfettiSwiftUI
+import UIKit
 
 struct WelcomeView: View {
     
@@ -47,6 +48,8 @@ struct WelcomeView: View {
     // Alert 모달
     @State private var isAlert1Presented: Bool = false
     @State private var isAlert2Presented: Bool = false
+    @State private var isErrorDeclarationModalPresented: Bool = false
+    @State private var isCopyFinishPresented: Bool = false
     
     // 권한 관련 안내 모달
     @State private var isPermissionAlertPresented: Bool = false
@@ -214,7 +217,8 @@ struct WelcomeView: View {
                     
                     // 기능 오류 신고 버튼
                     Button {
-                        isErrorDeclarationViewPresented = true
+                        // isErrorDeclarationViewPresented = true
+                        isErrorDeclarationModalPresented = true
                     } label: {
                         Text("기능 오류 신고하기")
                             .standardButtonText()
@@ -240,19 +244,49 @@ struct WelcomeView: View {
                         }
                     }
                     Button("알겠어요", role: nil) {
-                        
+                        //
                     }
                 }, message: {
                     Text("권한 허가 수정은 Apple 정책 상 직접 iPhone 설정 앱 - 펫스페이스 에서 권한을 수정할 수 있어요.")
                 })
                 
                 // 오류 신고 뷰
-                .sheet(isPresented: $isErrorDeclarationViewPresented, onDismiss: {
+                /* .sheet(isPresented: $isErrorDeclarationViewPresented, onDismiss: {
                     
                 }, content: {
                     ErrorDeclarationView(isPresent: $isErrorDeclarationViewPresented)
                         .padding()
                         .padding(.top, 20)
+                })*/
+                
+                // 기능 오류 신고 모달
+                .alert("기능 오류 신고 안내", isPresented: $isErrorDeclarationModalPresented, actions: {
+                    Button("메일을 작성할래요", role: nil) {
+                        // 메일 보내기
+                        let emailAddr = "mailto:leehe228@konkuk.ac.kr"
+                        print(emailAddr)
+                        guard let emailUrl = URL(string: emailAddr) else { return }
+                        UIApplication.shared.open(emailUrl)
+                    }
+                    Button("메일 주소를 복사할래요", role: nil) {
+                        // 클립보드에 복사
+                        UIPasteboard.general.string = "leehe228@konkuk.ac.kr"
+                        isCopyFinishPresented = true
+                    }
+                    Button("알겠어요", role: nil) {
+                        //
+                    }
+                }, message: {
+                    Text("기능 오류 신고는 leehe228@konkuk.ac.kr로 전송해주세요. 항상 소중한 의견에 귀를 기울이며 감사하는 펫스페이스가 되겠습니다.")
+                })
+                
+                // 복사 완료 모달
+                .alert("복사 완료", isPresented: $isCopyFinishPresented, actions: {
+                    Button("알겠어요", role: nil) {
+                        
+                    }
+                }, message: {
+                    Text("클립보드에 복사가 완료되었어요. 소중한 의견을 작성해 보내주세요.")
                 })
             }
         })

@@ -9,6 +9,7 @@ import CoreLocation
 import MapKit
 import Combine
 import Foundation
+import SwiftUI
 
 final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
@@ -140,3 +141,22 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
 //        
 //    }
 //}
+
+struct MapViewTestView: View {
+    @ObservedObject var vm: MapViewModel
+    
+    var body: some View {
+        Text("\(vm.userLatitude), \(vm.userLongitude)")
+            .onAppear {
+                vm.startUpdatingLocation()
+            }
+    }
+}
+
+#Preview {
+    @ObservedObject var vm = MapViewModel()
+    
+    return Group {
+        MapViewTestView(vm: vm)
+    }
+}
