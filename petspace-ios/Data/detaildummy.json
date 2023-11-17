@@ -1,0 +1,29 @@
+{
+    "data": {
+        "detail": {
+            "id": "b923b805-4e5f-47bd-a53c-9cea1ea8f740",
+            "name": "오리지날 그루밍",
+            "tel": "01096864847",
+            "description": "안녕하세요. 오리지널그루밍 애견미용실을 찾아주셔서 진심으로 감사드립니다. 오리지널그루밍은 한국의 애견미용 트렌드를 이끌어가는 샵입니다. 이름 그대로 진정한 미용이란 무엇 인가를 추구하는 의미를 담고 있습니다.",
+            "rating": -1,
+            "reviewCount": 50,
+            "iconImage": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221004_111%2F1664859823250yExgJ_JPEG%2FIMG_5421.JPG",
+            "images": [
+                "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221005_36%2F1664959427476nl73O_JPEG%2F1564F5C7-CA91-40D3-AD94-C49A9A745143.jpeg",
+                "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221004_67%2F1664859823281VXttq_JPEG%2FIMG_5614.JPG",
+                "https://search.pstatic.net/common/?src=https%3A%2F%2Fpup-review-phinf.pstatic.net%2FMjAyMzAxMjFfMjE4%2FMDAxNjc0MjMzNjE2Mzcx.YVPSb2n1EcSfK15ZKElcZysJLWu7os2FYCXx0yqHWIAg.2i3hXwi4dfR3bKdIfWCEczwFEEyT0tKrHWDjX0TJm3kg.JPEG%2FA2C119F4-F72F-4046-A4F6-073BBD35B005.jpeg"
+            ],
+            "address": "서울 강남구 언주로97길 36 1층",
+            "coordinate": {
+                "latitude": 37.5048191,
+                "longitude": 127.0385062
+            },
+            "pricingImage": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220501_193%2F1651394924939vCmzq_PNG%2F%25BF%25F8%25C0%25E5%25B4%25D4.png",
+            "createdAt": "2023-11-15T08:03:07.523Z",
+            "updatedAt": "2023-11-15T08:05:16.692Z",
+            "pricing": {
+                "cut": 35000
+            }
+        }
+    }
+}

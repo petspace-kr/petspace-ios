@@ -35,6 +35,7 @@
 		0C3CBCC62AFB863D000862C3 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC52AFB863D000862C3 /* SearchBar.swift */; };
 		0C3CBCC82AFB865D000862C3 /* CloseKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */; };
 		0C3CBCCA2AFB897D000862C3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */; };
+		0C929A182B078E34008D7B9F /* detaildummy.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C929A172B078E34008D7B9F /* detaildummy.json */; };
 		0CAE0FFB2B023EAE00A83BF3 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE0FFA2B023EAE00A83BF3 /* DetailViewModel.swift */; };
 		0CAE10002B02460300A83BF3 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE0FFF2B02460300A83BF3 /* FirebaseAnalytics */; };
 		0CAE10022B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 0CAE10012B02460300A83BF3 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -89,6 +90,7 @@
 		0C3CBCC52AFB863D000862C3 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseKeyboardButton.swift; sourceTree = "<group>"; };
 		0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		0C929A172B078E34008D7B9F /* detaildummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = detaildummy.json; sourceTree = "<group>"; };
 		0CAE0FFA2B023EAE00A83BF3 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		0CAE10092B02481200A83BF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CB76C492AFA79AC009D7424 /* petspace-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "petspace-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -286,6 +288,7 @@
 			children = (
 				0CB76C6E2AFA8012009D7424 /* dummy.json */,
 				0CB76C702AFA8026009D7424 /* dogbreed.json */,
+				0C929A172B078E34008D7B9F /* detaildummy.json */,
 				0CB76C762AFA809D009D7424 /* StoreData.swift */,
 				0CB76C782AFA80A4009D7424 /* DogBreedData.swift */,
 			);
@@ -379,6 +382,7 @@
 				0CB76C542AFA79AD009D7424 /* Preview Assets.xcassets in Resources */,
 				0CB76C712AFA8026009D7424 /* dogbreed.json in Resources */,
 				0C374FF32B0511B600D82ACA /* GoogleService-Info.plist in Resources */,
+				0C929A182B078E34008D7B9F /* detaildummy.json in Resources */,
 				0CB76C512AFA79AD009D7424 /* Assets.xcassets in Resources */,
 				0CB76C6F2AFA8012009D7424 /* dummy.json in Resources */,
 			);

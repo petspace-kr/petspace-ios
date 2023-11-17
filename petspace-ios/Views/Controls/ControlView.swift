@@ -108,6 +108,7 @@ struct ControlView: View {
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
                 print(json?["data"]! ?? "No Data Received")
                 if let data = json?["data"], data == "OK" {
+                    print("server healthy check: \(data)")
                     isError = false
                 } else {
                     isError = true

@@ -28,11 +28,11 @@ struct Store: Codable {
             var pricing: Pricing
             var pricingImage: String
             
-            // var createdAt: String
-            // var updatedAt: String
+            var createdAt: String
+            var updatedAt: String
             
             // deleted attribute
-            var type: String
+            // var type: String
             // var _id: String
             // var __v: String
             
@@ -51,8 +51,50 @@ struct Store: Codable {
                 var cut: Int
             }
             
+            // 추가 변수
             var distance: Double?
             var isSaved: Bool?
+        }
+    }
+}
+
+struct StoreDetail: Codable {
+    var data: DetailData
+    
+    struct DetailData: Codable {
+        var detail: DetailStoreItem
+        
+        struct DetailStoreItem: Codable, Identifiable {
+            var id: String
+            var name: String
+            var tel: String
+            var description: String
+            var rating: Double
+            var reviewCount: Int
+            var iconImage: String
+            var images: [String]
+            var address: String
+            var coordinate: Coordinate
+            var pricing: Pricing
+            var pricingImage: String
+            
+            var createdAt: String
+            var updatedAt: String
+            
+            struct Coordinate: Codable {
+                var longitude: Double
+                var latitude: Double
+            }
+            
+            var locationCoordinate: CLLocationCoordinate2D {
+                CLLocationCoordinate2D(
+                    latitude: coordinate.latitude, longitude: coordinate.longitude
+                )
+            }
+            
+            struct Pricing: Codable {
+                var cut: Int
+            }
         }
     }
 }
