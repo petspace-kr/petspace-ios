@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreLocation
 import Network
+import FirebaseAnalyticsSwift
 
 struct ControlView: View {
     

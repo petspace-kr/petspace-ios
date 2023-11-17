@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseCore
 import FirebaseAnalytics
+import FirebaseAnalyticsSwift
+import Firebase
 
 // 2023. 11. 15. 23:20
 struct GATracking {
@@ -157,5 +159,29 @@ struct GATracking {
         } else {
             print("GA LogEvent with params : \(eventName), msg: \(params!.description)")
         }
+    }
+    
+    struct ScreenNames {
+        private init() { }
+        
+        static let welcomeView = "WelcomeView"
+        static let profileView = "ProfileView"
+        static let mainView = "MainView"
+        static let detailView = "DetailView"
+        static let betaInfoView = "BetaInfoView"
+        static let permissionView = "PermissionView"
+        static let appLoadingView = "AppLoadingView"
+        static let historyView = "HistoryView"
+        static let bookingView = "BookingView"
+        static let settingView = "SettingView"
+        static let errorDeclarationView = "ErrorDeclarationView"
+        static let privacyView = "PrivacyView"
+        static let networkErrorView = "NetworkErrorView"
+        static let imageView = "ImageView"
+    }
+    
+    static func eventScreenView(screenName: String) {
+        Analytics.logEvent(AnalyticsEventScreenView,
+                           parameters: [AnalyticsParameterScreenName: screenName])
     }
 }
