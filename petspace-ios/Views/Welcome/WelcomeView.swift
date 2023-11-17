@@ -141,6 +141,10 @@ struct WelcomeView: View {
                     }, content: {
                         ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: true, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                             .padding()
+                            .onAppear() {
+                                // View 방문 이벤트
+                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.profileView)
+                            }
                     })
                     
                     // 프로필 등록없이 시작 경고 모달
@@ -175,6 +179,10 @@ struct WelcomeView: View {
                     }, content: {
                         PermissionView(isPresented: $isPermissionViewPresented, mapViewModel: mapViewModel)
                             .padding()
+                            .onAppear() {
+                                // View 방문 이벤트
+                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.permissionView)
+                            }
                     })
                     
                     // Beta Info View
@@ -186,6 +194,10 @@ struct WelcomeView: View {
                     }, content: {
                         BetaInfoView(isPresented: $isBetaInfoViewPresented)
                             .padding()
+                            .onAppear() {
+                                // View 방문 이벤트
+                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.betaInfoView)
+                            }
                     })
                 })
                 .padding()
@@ -235,6 +247,14 @@ struct WelcomeView: View {
                     SimpleTextView(title: "개인정보 처리방침", text: TextCollections.privacyText.rawValue)
                         .padding()
                         .padding(.top, 30)
+                        .onAppear() {
+                            // View 방문 이벤트
+                            GATracking.eventScreenView(screenName: GATracking.ScreenNames.privacyView)
+                        }
+                        .onDisappear() {
+                            // View 방문 이벤트
+                            GATracking.eventScreenView(screenName: GATracking.ScreenNames.infoView)
+                        }
                 })
                 
                 // 권한 허가 수정 안내 모달

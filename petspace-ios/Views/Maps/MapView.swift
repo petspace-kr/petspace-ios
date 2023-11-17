@@ -346,11 +346,21 @@ struct StoreAnnotation: View {
                 }
                 
             }
+            
+            // Detail View 보이기
             .sheet(isPresented: $isDetailViewPresented, onDismiss: {
                 
             }, content: {
                 DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                     .presentationDragIndicator(.visible)
+                    .onAppear() {
+                        // View 방문 이벤트
+                        GATracking.eventScreenView(screenName: GATracking.ScreenNames.detailView)
+                    }
+                    .onDisappear() {
+                        // View 방문 이벤트
+                        GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
+                    }
             })
             
             if allowExpand {

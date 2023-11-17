@@ -150,14 +150,14 @@ struct GATracking {
         // version 가져오기
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
         
-        Analytics.setUserID("userID=\(userID)")
+        Analytics.setUserID(userID)
         Analytics.setUserProperty(version, forName: "appVersion")
         Analytics.logEvent(eventName, parameters: params)
         
         if params == nil {
-            print("GA LogEvent : \(eventName)")
+            print("** [GA] Log Event: \(eventName)")
         } else {
-            print("GA LogEvent with params : \(eventName), msg: \(params!.description)")
+            print("** [GA] Log Event: \(eventName), with params: \(params!.description)")
         }
     }
     
@@ -178,10 +178,13 @@ struct GATracking {
         static let privacyView = "PrivacyView"
         static let networkErrorView = "NetworkErrorView"
         static let imageView = "ImageView"
+        static let infoView = "InfoView"
     }
     
     static func eventScreenView(screenName: String) {
+        print("** [GA] Screen Event: \(screenName)")
         Analytics.logEvent(AnalyticsEventScreenView,
-                           parameters: [AnalyticsParameterScreenName: screenName])
+                           parameters: [AnalyticsParameterScreenName: screenName,
+                                       AnalyticsParameterScreenClass: screenName])
     }
 }

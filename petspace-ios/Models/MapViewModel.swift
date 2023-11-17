@@ -14,7 +14,6 @@ import SwiftUI
 final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager?
-    private var timer: Timer?
     
     @Published var isLocationServiceEnabled: Bool = false
     @Published var isAuthorized: CLAuthorizationStatus = .notDetermined
@@ -25,8 +24,6 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     
     // Span
     @Published var mapSpan: CLLocationDegrees = 0.07
-    
-    @Published var isTimerRunning: Bool = false
     
      // Test
     @Published var userLatitude: Double = 0

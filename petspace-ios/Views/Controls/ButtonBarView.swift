@@ -138,6 +138,14 @@ struct ButtonBar: View {
                 .padding()
                 .padding(.top, 20)
                 .presentationDragIndicator(.visible)
+                .onAppear() {
+                    // View 방문 이벤트
+                    GATracking.eventScreenView(screenName: GATracking.ScreenNames.profileView)
+                }
+                .onDisappear() {
+                    // View 방문 이벤트
+                    GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
+                }
         })
         
         // 설정 뷰 보이기
@@ -148,6 +156,14 @@ struct ButtonBar: View {
                 .padding()
                 .padding(.top, 20)
                 .presentationDragIndicator(.visible)
+                .onAppear() {
+                    // View 방문 이벤트
+                    GATracking.eventScreenView(screenName: GATracking.ScreenNames.settingView)
+                }
+                .onDisappear() {
+                    // View 방문 이벤트
+                    GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
+                }
         })
         
         // Info 뷰 보이기
@@ -155,12 +171,26 @@ struct ButtonBar: View {
             GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_INFO_PAGE_CLOSE, params: nil)
         }, content: {
             WelcomeView(isPresented: $isInfoViewPresented, mapViewModel: mapViewModel, profileViewModel: profileViewModel, isWelcome: false)
+                .onAppear() {
+                    // View 방문 이벤트
+                    GATracking.eventScreenView(screenName: GATracking.ScreenNames.infoView)
+                }
         })
+        
+        // History 뷰 보이기
         .sheet(isPresented: $isHistoryViewPresented, content: {
             HistoryView()
                 .padding()
                 .padding(.top, 20)
                 .presentationDragIndicator(.visible)
+                .onAppear() {
+                    // View 방문 이벤트
+                    GATracking.eventScreenView(screenName: GATracking.ScreenNames.historyView)
+                }
+                .onDisappear() {
+                    // View 방문 이벤트
+                    GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
+                }
         })
     }
 }

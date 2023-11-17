@@ -29,6 +29,10 @@ struct ControlView: View {
         if isError {
             NetworkErrorView()
                 .padding()
+                .onAppear() {
+                    // View 방문 이벤트
+                    GATracking.eventScreenView(screenName: GATracking.ScreenNames.networkErrorView)
+                }
             
             Spacer()
                 .frame(height: 20)
@@ -49,6 +53,8 @@ struct ControlView: View {
                     .onAppear() {
                         checkNetwork()
                         isWelcomeViewPresented = true
+                        // View 방문 이벤트
+                        GATracking.eventScreenView(screenName: GATracking.ScreenNames.appLoadingView)
                     }
                     .fullScreenCover(isPresented: $isWelcomeViewPresented, onDismiss: {
                         checkNetwork()
@@ -56,16 +62,20 @@ struct ControlView: View {
                         WelcomeView(isPresented: $isWelcomeViewPresented, mapViewModel: mapViewModel, profileViewModel: profileViewModel, isWelcome: true)
                             .onAppear() {
                                 GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_FIRST_APP_OPEN, params: nil)
+                                // View 방문 이벤트
+                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.welcomeView)
                             }
                     })
             }
             
-            // 첫 접속이 아니라면
+            // 첫 접속이 아니라면 
             else {
                 if isLoading {
                     AppLoadingView()
                         .onAppear() {
                             checkNetwork()
+                            // View 방문 이벤트
+                            GATracking.eventScreenView(screenName: GATracking.ScreenNames.appLoadingView)
                         }
                 }
                 else {
@@ -73,6 +83,8 @@ struct ControlView: View {
                         .onAppear() {
                             mapViewModel.checkLocationServiceEnabled()
                             GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.APP_OPEN, params: nil)
+                            // View 방문 이벤트
+                            GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
                         }
                 }
             }

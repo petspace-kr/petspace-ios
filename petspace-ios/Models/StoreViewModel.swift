@@ -57,7 +57,7 @@ class StoreViewModel: ObservableObject {
             .decode(type: Store.self, decoder: JSONDecoder())
             .sink { _ in
             } receiveValue: { [weak self] returnedPost in
-                print("get data : \(returnedPost)")
+                // print("get data : \(returnedPost)")
                 self?.store = returnedPost.data.items
                 print("num of data: \(String(describing: self?.store.count))")
             }

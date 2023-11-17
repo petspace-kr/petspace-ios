@@ -16,9 +16,6 @@ struct StoreItemView: View {
     // 디테일 뷰
     @State private var isDetailViewPresented: Bool = false
     
-    // 거리 업데이트 타이머
-    @State private var timer: Timer? = nil
-    
     // 계산된 거리 저장 변수
     @State private var distanceKM: Double = 0.0
     
@@ -164,35 +161,15 @@ struct StoreItemView: View {
                 DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                     .onAppear() {
                         GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_OPEN, params: nil)
+                        // View 방문 이벤트
+                        GATracking.eventScreenView(screenName: GATracking.ScreenNames.detailView)
+                    }
+                    .onDisappear() {
+                        // View 방문 이벤트
+                        GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
                     }
             })
-            
-            // 시작할 때 타이머 시작
-            .onAppear() {
-                // startUpdateLocation()
-            }
-            
-            // 사라질 때 타이머 중지
-            .onDisappear() {
-                // stopUpdateLocation()
-            }
         }
-        
-        
-    }
-    
-    func startUpdateLocation() {
-        distanceKM = calculateDistance(itemCoord: storeItem.locationCoordinate, mvCoord: mapViewModel.currentRegion.center)
-        
-        // 5초마다 거리 계산해서 업데이트
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
-            distanceKM = calculateDistance(itemCoord: storeItem.locationCoordinate, mvCoord: mapViewModel.currentRegion.center)
-            print("storeItem \(storeItem.id) updated: \(distanceKM)")
-        }
-    }
-    
-    func stopUpdateLocation() {
-        timer?.fire()
     }
 }
 

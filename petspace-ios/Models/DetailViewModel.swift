@@ -52,7 +52,7 @@ final class DetailViewModel: ObservableObject {
             .decode(type: StoreDetail.self, decoder: JSONDecoder())
             .sink { _ in
             } receiveValue: { [weak self] returnedPost in
-                print("get detail data : \(returnedPost)")
+                // print("get detail data : \(returnedPost)")
                 self?.storeDetail = returnedPost.data.detail
             }
             .store(in: &cancellables)

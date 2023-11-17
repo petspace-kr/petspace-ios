@@ -147,6 +147,14 @@ struct StoreListView: View {
                         ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                             .padding()
                             .padding(.top, 20)
+                            .onAppear() {
+                                // View 방문 이벤트
+                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.profileView)
+                            }
+                            .onDisappear() {
+                                // View 방문 이벤트
+                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
+                            }
                     })
                 }
                 

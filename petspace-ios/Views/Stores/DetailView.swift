@@ -299,6 +299,14 @@ struct DetailView: View {
                                     
                                 }) {
                                     ImageView(isPresented: $isImageViewPresented, storeItem: storeItem)
+                                        .onAppear() {
+                                            // View 방문 이벤트
+                                            GATracking.eventScreenView(screenName: GATracking.ScreenNames.imageView)
+                                        }
+                                        .onDisappear() {
+                                            // View 방문 이벤트
+                                            GATracking.eventScreenView(screenName: GATracking.ScreenNames.detailView)
+                                        }
                                 }
                             }
                         }
