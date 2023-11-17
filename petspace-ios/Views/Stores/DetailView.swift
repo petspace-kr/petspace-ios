@@ -298,7 +298,7 @@ struct DetailView: View {
                                 .sheet(isPresented: $isImageViewPresented, onDismiss: {
                                     
                                 }) {
-                                    ImageView(storeItem: storeItem)
+                                    ImageView(isPresented: $isImageViewPresented, storeItem: storeItem)
                                 }
                             }
                         }
