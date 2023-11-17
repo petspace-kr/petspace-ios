@@ -359,7 +359,7 @@ struct StoreAnnotation: View {
                     if isExpandedShowing {
                         HStack(alignment: .center, spacing: 14) {
                             // 좋아요
-                            Button {
+                            /* Button {
                                 
                             } label: {
                                 VStack {
@@ -372,7 +372,7 @@ struct StoreAnnotation: View {
                                         .foregroundStyle(.blue)
                                         .fixedSize(horizontal: true, vertical: true)
                                 }
-                            }
+                            }*/
                             
                             // 경로
                             Button {

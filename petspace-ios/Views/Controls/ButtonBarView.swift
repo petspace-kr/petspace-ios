@@ -63,14 +63,14 @@ struct ButtonBar: View {
             
             if isExpaned {
                 // 지도 방향 전환 및 내 위치
-                Button {
+                /* Button {
                     // 현재 위치로
                     // 기본 위치로
                 } label: {
                     Image(systemName: (mapViewModel.userLatitude == 0 || mapViewModel.userLongitude == 0) ? "location.slash" : "location")
                         .frame(width: 48, height: 48)
                 }
-                .disabled(mapViewModel.userLatitude == 0 || mapViewModel.userLongitude == 0)
+                .disabled(mapViewModel.userLatitude == 0 || mapViewModel.userLongitude == 0)*/
                 
                 // 프로필 수정으로 이동
                 Button {
@@ -83,7 +83,7 @@ struct ButtonBar: View {
                 }
                 
                 // 저장된 매장 버튼
-                Button {
+                /* Button {
                     if isSavedStoreShowing {
                         GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_SAVED_SHOWING_OFF, params: nil)
                         isSavedStoreShowing = false
@@ -95,7 +95,7 @@ struct ButtonBar: View {
                 } label: {
                     Image(systemName: isSavedStoreShowing ? "heart.fill" : "heart")
                         .frame(width: 48, height: 48)
-                }
+                }*/
                 
                 // 설정
                 /* Button {
