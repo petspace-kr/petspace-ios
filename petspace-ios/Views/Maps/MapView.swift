@@ -507,7 +507,7 @@ struct StoreAnnotation: View {
                         .padding(.horizontal, 2)
                     }
                     else {
-                        if storeItem.rating < 0 {
+                        if storeItem.rating <= 0 {
                             Text("\(storeItem.pricing.cut) ~")
                               .font(Font.custom("SF Pro Text", size: 11))
                               .foregroundColor(.white)

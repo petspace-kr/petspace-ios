@@ -192,7 +192,7 @@ struct WelcomeView: View {
                         GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_FINISH, params: nil)
                         dismiss()
                     }, content: {
-                        BetaInfoView(isPresented: $isBetaInfoViewPresented)
+                        BetaInfoView(isPresented: $isBetaInfoViewPresented, storeViewModel: StoreViewModel())
                             .padding()
                             .onAppear() {
                                 // View 방문 이벤트

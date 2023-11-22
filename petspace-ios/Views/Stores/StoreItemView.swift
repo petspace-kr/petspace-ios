@@ -66,7 +66,7 @@ struct StoreItemView: View {
                                 .padding(0)
                         }
                         
-                        if storeItem.rating < 0 {
+                        if storeItem.rating <= 0 {
                             Text("리뷰 \(storeItem.reviewCount)개")
                                 .font(.system(size: 10))
                                 .padding(0)
@@ -179,13 +179,13 @@ struct StoreItemView: View {
     @ObservedObject var profileViewModel = ProfileViewModel()
     
     return Group {
-        VStack(spacing: 10) {
-            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[0])
-            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[1])
-            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[2])
-            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[3])
-            StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[4])
+        ScrollView {
+            VStack(spacing: 10) {
+                ForEach(storeViewModel.store) { store in
+                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: store)
+                }
+            }
+            .padding()
         }
-        .padding()
     }
 }

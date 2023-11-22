@@ -358,3 +358,20 @@ struct StoreListView: View {
         .background(.green)
     }
 }
+
+#Preview {
+    @State var isPresented: Bool = true
+    
+    return Group {
+        Text("")
+            .sheet(isPresented: $isPresented, content: {
+                Text("test")
+                    .presentationDetents([.fraction(0.1), .medium, .large])
+                    .presentationDragIndicator(.visible)
+            })
+        
+        Button("open!") {
+            isPresented = true
+        }
+    }
+}
