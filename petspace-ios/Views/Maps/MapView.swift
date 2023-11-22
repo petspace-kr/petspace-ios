@@ -385,7 +385,7 @@ struct StoreAnnotation: View {
                             }*/
                             
                             // 경로
-                            Button {
+                            /* Button {
                                 if updateSelectedID(selectedID: storeItem.id) {
                                     isLoading = true
                                     fetchRoute()
@@ -417,7 +417,7 @@ struct StoreAnnotation: View {
                                 }
                                 
                             }
-                            .disabled(mapViewModel.userLatitude == 0.0 || mapViewModel.userLongitude == 0.0)
+                            .disabled(mapViewModel.userLatitude == 0.0 || mapViewModel.userLongitude == 0.0)*/
                             
                             if let etaResult = etaResult {
                                 VStack {
