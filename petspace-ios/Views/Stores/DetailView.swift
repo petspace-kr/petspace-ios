@@ -343,6 +343,30 @@ struct DetailView: View {
                         Spacer()
                             .frame(height: 30)
                         
+                        Text("미용실 사진")
+                            .font(.headline)
+                            .bold()
+                        
+                        TabView {
+                            ForEach(storeItem.images, id: \.self) { image in
+                                AsyncImage(url: URL(string: image)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .clipped()
+                            }
+                        }
+                        .tabViewStyle(.page)
+                        .indexViewStyle(.page(backgroundDisplayMode: .always))
+                        .frame(height: 250)
+                        
+                        Spacer()
+                            .frame(height: 30)
+                        
                         Text("리뷰")
                             .font(.headline)
                             .bold()
@@ -508,3 +532,4 @@ struct DetailTitleImageView: View {
             })
     }
 }
+
