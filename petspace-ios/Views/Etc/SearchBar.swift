@@ -11,6 +11,7 @@ struct SearchBar: View {
     
     @Binding var text: String
     @Binding var isEditing: Bool
+    @State var showCancelButton: Bool
     
     var body: some View {
         HStack {
@@ -51,24 +52,31 @@ struct SearchBar: View {
 //
 //            }
             
-            Button(action: {
-                withAnimation(.spring, {
-                    self.isEditing = false
-                })
-                self.text = ""
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SEARCH_CANCEL, params: nil)
-            }) {
-                Text("취소")
+            if showCancelButton {
+                Button(action: {
+                    withAnimation(.spring, {
+                        self.isEditing = false
+                    })
+                    self.text = ""
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }) {
+                    Text("취소")
+                }
+                .padding(.trailing, 10)
+                .transition(.move(edge: .trailing))
+                .animation(.default, value: 0.3)
             }
-            .padding(.trailing, 10)
-            .transition(.move(edge: .trailing))
-            .animation(.default, value: 0.3)
         }
     }
 }
 
 #Preview {
-    SearchBar(text: .constant(""), isEditing: .constant(true))
-        .border(Color.black)
+    VStack(spacing: 30) {
+        SearchBar(text: .constant(""), isEditing: .constant(true), showCancelButton: true)
+            .border(Color.black)
+        
+        SearchBar(text: .constant(""), isEditing: .constant(true), showCancelButton: false)
+            .border(Color.black)
+    }
+    
 }

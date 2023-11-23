@@ -14,6 +14,9 @@ struct MapStoreListView: View {
     @ObservedObject var mapViewModel: MapViewModel
     @ObservedObject var profileViewModel: ProfileViewModel
     
+    @State var presentationDetents: Set<PresentationDetent> = [.fraction(0.1), .medium, .large]
+    @State var currentDetent: PresentationDetent = .medium
+    
     // 저장된 스토어 보여주는 여부
     @State private var isSavedStoreShowing: Bool = false
     
@@ -27,9 +30,17 @@ struct MapStoreListView: View {
                 ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                 
                 // Store List View
-                StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
+                // StoreListView(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
             }
             .ignoresSafeArea(edges: .bottom)
+            .sheet(isPresented: .constant(true), content: {
+                StoreListViewV2(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel, presentationDetents: $presentationDetents, currentDetent: $currentDetent)
+                    .presentationDetents(presentationDetents, selection: $currentDetent)
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(30.0)
+                    .presentationBackgroundInteraction(.enabled)
+                    .interactiveDismissDisabled()
+            })
         }
     }
 }

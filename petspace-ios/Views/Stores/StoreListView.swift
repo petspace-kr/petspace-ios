@@ -70,14 +70,21 @@ struct StoreListView: View {
                     
                     // 검색 중 아닌 경우 검색 버튼 보이기
                     if !isSearching {
-                        Button("검색") {
-                            withAnimation(.spring, {
-                                isSearching = true
-                                // 검색 시 전체화면으로 전환
-                                viewHeight = UIScreen.main.bounds.height * ScreenMode.fullScreen.rawValue
-                                screenMode = .fullScreen
-                            })
-                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SEARCH_START, params: nil)
+                        Button(isSearching ? "검색" : "취소") {
+                            if isSearching {
+                                withAnimation(.spring, {
+                                    isSearching = false
+                                })
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SEARCH_CANCEL, params: nil)
+                            } else {
+                                withAnimation(.spring, {
+                                    isSearching = true
+                                    // 검색 시 전체화면으로 전환
+                                    viewHeight = UIScreen.main.bounds.height * ScreenMode.fullScreen.rawValue
+                                    screenMode = .fullScreen
+                                })
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SEARCH_START, params: nil)
+                            }
                         }
                     }
                     
@@ -160,7 +167,7 @@ struct StoreListView: View {
                 
                 // 검색 중인 경우 검색바 표시
                 if isSearching {
-                    SearchBar(text: $searchText, isEditing: $isSearching)
+                    SearchBar(text: $searchText, isEditing: $isSearching, showCancelButton: false)
                 }
                 
                 ScrollView(showsIndicators: false, content: {
@@ -359,19 +366,328 @@ struct StoreListView: View {
     }
 }
 
+struct StoreListViewV2: View {
+    
+    @ObservedObject var mapViewModel: MapViewModel
+    @ObservedObject var storeViewModel: StoreViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
+    
+    // 정렬 방식
+    private enum SortMode: String {
+        case distance = "거리순"
+        case rating = "별점순"
+        case priceIncrease = "가격낮은순"
+        case priceDecrease = "가격높은순"
+    }
+    @State private var sortMode: SortMode = .distance
+    
+    // 프로필 뷰 Presented
+    @State private var isProfileViewPresented: Bool = false
+    
+    // 검색
+    @State private var isSearching: Bool = false
+    @State private var searchText: String = ""
+    
+    // 필터링 된 Store List
+    @State private var filteredStoreItems: [Store.Data.StoreItem] = []
+    
+    // 저장된 Store 보여주는 여부
+    @State private var isSavedStoreShowing: Bool = false
+    
+    // Sheet Detent
+    @Binding var presentationDetents: Set<PresentationDetent>
+    @Binding var currentDetent: PresentationDetent
+    
+    // 이전 detent 저장
+    @State private var previousDetent: PresentationDetent = .medium
+    
+    var body: some View {
+        NavigationStack(root: {
+            VStack {
+                
+                Spacer()
+                    .frame(height: 20)
+                
+                HStack {
+                    Text("강남구 애견미용실")
+                        .font(.headline)
+                        .bold()
+                        .padding(.leading, 10)
+                    
+                    Spacer()
+                    
+                    /*Menu("test") {
+                        Button("large") {
+                            currentDetent = .large
+                        }
+                        Button("medium") {
+                            currentDetent = .medium
+                        }
+                        Button("hide") {
+                            currentDetent = .fraction(0.1)
+                        }
+                    }*/
+                    
+                    // 검색 중 아닌 경우 검색 버튼 보이기
+                    Button(isSearching ? "취소" : "검색") {
+                        // 검색 취소
+                        if isSearching {
+                            withAnimation(.spring, {
+                                isSearching = false
+                                presentationDetents = [.fraction(0.1), .medium, .large]
+                                currentDetent = previousDetent
+                            })
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SEARCH_CANCEL, params: nil)
+                        } else {
+                            // 검색
+                            withAnimation(.spring, {
+                                isSearching = true
+                                // 검색 시 전체화면으로 전환
+                                presentationDetents = [.large]
+                                previousDetent = currentDetent
+                                currentDetent = .large
+                            })
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SEARCH_START, params: nil)
+                        }
+                    }
+                    
+                    Spacer()
+                        .frame(width: 12)
+                    
+                    // 정렬 방식 선택 메뉴
+                    Menu("\(sortMode.rawValue)") {
+                        Section("정렬 방식을 선택하세요") {
+                            // 거리 순
+                            Button(SortMode.distance.rawValue, systemImage: "map") {
+                                sortMode = .distance
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SORT_CHANGE_DISTANCE, params: nil)
+                            }
+                            
+                            // 별점 순
+                            Button(SortMode.rating.rawValue, systemImage: "star") {
+                                sortMode = .rating
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SORT_CHANGE_RATING, params: nil)
+                            }
+                            
+                            // 가격 낮은 순
+                            Button(SortMode.priceIncrease.rawValue, systemImage: "line.3.horizontal.decrease") {
+                                sortMode = .priceIncrease
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SORT_CHANGE_PRICE_INCREASE, params: nil)
+                            }
+                            .disabled(profileViewModel.dogProfile.isEmpty)
+                            
+                            // 가격 높은 순
+                            Button(SortMode.priceDecrease.rawValue, systemImage: "line.3.horizontal.decrease") {
+                                sortMode = .priceDecrease
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.SORT_CHANGE_PRICE_DECREASE, params: nil)
+                            }
+                            .disabled(profileViewModel.dogProfile.isEmpty)
+                        }
+                    }
+                    .padding(.trailing, 6)
+                }
+                .padding(.top, 4)
+                .padding(.bottom, 10)
+                
+                // 프로필 등록된 경우
+                if profileViewModel.dogProfile.isEmpty {
+                    HStack {
+                        Button {
+                            isProfileViewPresented = true
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_LIST_PROFILE_PAGE_OPEN, params: nil)
+                        } label: {
+                            Text("프로필을 등록하면")
+                                .font(.system(size: 12))
+                                .foregroundStyle(.secondary)
+                                // .padding(.vertical, 10)
+                                .multilineTextAlignment(.center)
+                                .padding(0)
+                        }
+                        .padding(.trailing, -2)
+                        Text("맞춤형 가격을 바로 확인할 수 있어요")
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                            // .padding(.vertical, 10)
+                            .multilineTextAlignment(.center)
+                            .padding(.leading, -2)
+                    }
+                    .sheet(isPresented: $isProfileViewPresented, onDismiss: {
+                        GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_LIST_PROFILE_PAGE_CLOSE, params: nil)
+                    }, content: {
+                        ProfileView(isPresented: $isProfileViewPresented, isEditing: true, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                            .padding()
+                            .padding(.top, 20)
+                            .onAppear() {
+                                // View 방문 이벤트
+                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.profileView)
+                            }
+                            .onDisappear() {
+                                // View 방문 이벤트
+                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
+                            }
+                    })
+                }
+                
+                // 검색 중인 경우 검색바 표시
+                if isSearching {
+                    SearchBar(text: $searchText, isEditing: $isSearching, showCancelButton: false)
+                }
+                
+                ScrollView(showsIndicators: false, content: {
+
+                    if isSearching && !searchText.isEmpty {
+                        let filteredStoreItems = storeViewModel.store.filter({ searchModel(textArray: [$0.name, $0.address, $0.description], keyword: searchText) && checkIsSaved(isSaved: $0.isSaved) })
+                        
+                        if filteredStoreItems.isEmpty {
+                            Text("검색 결과가 없어요.\n다른 검색어를 입력해보세요.")
+                                .font(.system(size: 15))
+                                .foregroundStyle(.gray)
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 5)
+                        }
+                        
+                        // 거리 순 정렬
+                        else if sortMode == .distance {
+                            ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        
+                        // 별점 순 정렬
+                        else if sortMode == .rating {
+                            ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        
+                        // 가격 낮은 순
+                        else if sortMode == .priceIncrease {
+                            ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        
+                        // 가격 높은 순
+                        else if sortMode == .priceDecrease {
+                            ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                    }
+                    else {
+                        let filteredStoreItems = storeViewModel.store.filter({ checkIsSaved(isSaved: $0.isSaved) })
+                        
+                        if filteredStoreItems.isEmpty {
+                            Text("저장된 미용실이 없어요.\n마음에 드는 미용실을 저장해보세요.")
+                                .font(.system(size: 15))
+                                .foregroundStyle(.gray)
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 5)
+                        }
+                        
+                        // 거리 순 정렬
+                        else if sortMode == .distance {
+                            ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        
+                        // 별점 순 정렬
+                        else if sortMode == .rating {
+                            ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        
+                        // 가격 낮은 순
+                        else if sortMode == .priceIncrease {
+                            ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        
+                        // 가격 높은 순
+                        else if sortMode == .priceDecrease {
+                            ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                    }
+                })
+                .navigationTitle("강남구 애견미용실")
+                .navigationBarHidden(true)
+                .padding(.top, 10)
+            }
+            .padding(10)
+        })
+    }
+    
+    private func searchModel(textArray: [String], keyword: String) -> Bool {
+        let origin: String = textArray.joined(separator: " ").lowercased()
+        let keyword: String = keyword.lowercased()
+        
+        return origin.contains(keyword)
+    }
+    
+    private func checkIsSaved(isSaved: Bool?) -> Bool {
+        if !isSavedStoreShowing {
+            return true
+        } else {
+            if let isSaved = isSaved {
+                return isSaved
+            } else {
+                return false
+            }
+        }
+    }
+}
+
 #Preview {
+    @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    
+    @State var presentationDetents: Set<PresentationDetent> = [.fraction(0.1), .medium, .large]
+    @State var currentDetent: PresentationDetent = .medium
     @State var isPresented: Bool = true
     
     return Group {
         Text("")
             .sheet(isPresented: $isPresented, content: {
-                Text("test")
-                    .presentationDetents([.fraction(0.1), .medium, .large])
+                StoreListViewV2(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel, presentationDetents: $presentationDetents, currentDetent: $currentDetent)
+                    .presentationDetents(presentationDetents, selection: $currentDetent)
                     .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(30.0)
+                    .presentationBackgroundInteraction(.enabled)
+                    .interactiveDismissDisabled()
             })
         
-        Button("open!") {
-            isPresented = true
+        VStack {
+            Button("open!") {
+                isPresented.toggle()
+            }
+            
+            Menu("change") {
+                Button("large") {
+                    currentDetent = .large
+                    print(currentDetent)
+                }
+                Button("medium") {
+                    currentDetent = .medium
+                    print(currentDetent)
+                }
+            }
+            
+            Spacer()
         }
+        
     }
 }
