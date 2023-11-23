@@ -56,7 +56,7 @@ struct ButtonBar: View {
                 }
             } label: {
                 // Image(systemName: isExpaned ? "chevron.up" : "chevron.down")
-                Image(systemName: "chevron.down")
+                Image(systemName: isExpaned ? "xmark.circle" : "line.3.horizontal.circle")
                     .frame(width: 48, height: 48)
                     .rotationEffect(.degrees(isExpaned ? 180 : 0))
             }
