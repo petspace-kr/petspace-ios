@@ -534,93 +534,96 @@ struct StoreListViewV2: View {
                 }
                 
                 ScrollView(showsIndicators: false, content: {
-
-                    if isSearching && !searchText.isEmpty {
-                        let filteredStoreItems = storeViewModel.store.filter({ searchModel(textArray: [$0.name, $0.address, $0.description], keyword: searchText) && checkIsSaved(isSaved: $0.isSaved) })
-                        
-                        if filteredStoreItems.isEmpty {
-                            Text("검색 결과가 없어요.\n다른 검색어를 입력해보세요.")
-                                .font(.system(size: 15))
-                                .foregroundStyle(.gray)
-                                .multilineTextAlignment(.center)
-                                .padding(.top, 5)
-                        }
-                        
-                        // 거리 순 정렬
-                        else if sortMode == .distance {
-                            ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 4)
+                    LazyVStack {
+                        if isSearching && !searchText.isEmpty {
+                            let filteredStoreItems = storeViewModel.store.filter({ searchModel(textArray: [$0.name, $0.address, $0.description], keyword: searchText) && checkIsSaved(isSaved: $0.isSaved) })
+                            
+                            if filteredStoreItems.isEmpty {
+                                Text("검색 결과가 없어요.\n다른 검색어를 입력해보세요.")
+                                    .font(.system(size: 15))
+                                    .foregroundStyle(.gray)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.top, 5)
+                            }
+                            
+                            // 거리 순 정렬
+                            else if sortMode == .distance {
+                                ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                        .padding(.bottom, 4)
+                                }
+                            }
+                            
+                            // 별점 순 정렬
+                            else if sortMode == .rating {
+                                ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                        .padding(.bottom, 4)
+                                }
+                            }
+                            
+                            // 가격 낮은 순
+                            else if sortMode == .priceIncrease {
+                                ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                        .padding(.bottom, 4)
+                                }
+                            }
+                            
+                            // 가격 높은 순
+                            else if sortMode == .priceDecrease {
+                                ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                        .padding(.bottom, 4)
+                                }
                             }
                         }
-                        
-                        // 별점 순 정렬
-                        else if sortMode == .rating {
-                            ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 4)
+                        else {
+                            let filteredStoreItems = storeViewModel.store.filter({ checkIsSaved(isSaved: $0.isSaved) })
+                            
+                            if filteredStoreItems.isEmpty {
+                                Text("저장된 미용실이 없어요.\n마음에 드는 미용실을 저장해보세요.")
+                                    .font(.system(size: 15))
+                                    .foregroundStyle(.gray)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.top, 5)
                             }
-                        }
-                        
-                        // 가격 낮은 순
-                        else if sortMode == .priceIncrease {
-                            ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 4)
+                            
+                            // 거리 순 정렬
+                            else if sortMode == .distance {
+                                ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                        .padding(.bottom, 4)
+                                }
                             }
-                        }
-                        
-                        // 가격 높은 순
-                        else if sortMode == .priceDecrease {
-                            ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 4)
+                            
+                            // 별점 순 정렬
+                            else if sortMode == .rating {
+                                ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                        .padding(.bottom, 4)
+                                }
+                            }
+                            
+                            // 가격 낮은 순
+                            else if sortMode == .priceIncrease {
+                                ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                        .padding(.bottom, 4)
+                                }
+                            }
+                            
+                            // 가격 높은 순
+                            else if sortMode == .priceDecrease {
+                                ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                        .padding(.bottom, 4)
+                                }
                             }
                         }
                     }
-                    else {
-                        let filteredStoreItems = storeViewModel.store.filter({ checkIsSaved(isSaved: $0.isSaved) })
-                        
-                        if filteredStoreItems.isEmpty {
-                            Text("저장된 미용실이 없어요.\n마음에 드는 미용실을 저장해보세요.")
-                                .font(.system(size: 15))
-                                .foregroundStyle(.gray)
-                                .multilineTextAlignment(.center)
-                                .padding(.top, 5)
-                        }
-                        
-                        // 거리 순 정렬
-                        else if sortMode == .distance {
-                            ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 4)
-                            }
-                        }
-                        
-                        // 별점 순 정렬
-                        else if sortMode == .rating {
-                            ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 4)
-                            }
-                        }
-                        
-                        // 가격 낮은 순
-                        else if sortMode == .priceIncrease {
-                            ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 4)
-                            }
-                        }
-                        
-                        // 가격 높은 순
-                        else if sortMode == .priceDecrease {
-                            ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
-                                    .padding(.bottom, 4)
-                            }
-                        }
-                    }
+                    
+                    
                 })
                 .navigationTitle("강남구 애견미용실")
                 .navigationBarHidden(true)
