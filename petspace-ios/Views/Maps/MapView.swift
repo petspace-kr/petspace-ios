@@ -76,6 +76,50 @@ struct MapView: View {
     }
 }
 
+struct MapViewV2: View {
+    @ObservedObject var storeViewModel: StoreViewModel
+    @ObservedObject var mapViewModel: MapViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
+    
+    // Map Camera
+    /* @State var locationCoordinate: CLLocationCoordinate2D
+    @State var coordinateSpan: MKCoordinateSpan
+    @State var coordinateRegion: MKCoordinateRegion
+    @State var mapCameraPosition: MapCameraPosition
+    @State var mapCamera: MapCamera*/
+
+    @State private var mapCamera: MapCamera = MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.484_902, longitude: 127.041_819), distance: 24000, heading: 0, pitch: 0)
+    let mapCameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 1200,
+                                                                    maximumDistance: 1200000)
+    
+    // distance
+    @State private var lastDistance: Double = 24000
+    
+    // last center
+    @State private var lastLatitude: CLLocationDegrees = 37.484_902
+    @State private var lastLongitude: CLLocationDegrees = 127.041_819
+    
+    var body: some View {
+        Map(initialPosition: .camera(mapCamera), bounds: mapCameraBounds) {
+            UserAnnotation()
+        }
+        .mapControls {
+            MapCompass()
+            MapPitchToggle()
+            MapUserLocationButton()
+        }
+        .safeAreaPadding()
+        .onMapCameraChange { mapCameraUpdateContext in
+            print("\(mapCameraUpdateContext.camera.distance)")
+            print("\(mapCameraUpdateContext.camera.centerCoordinate)")
+        }
+    }
+    
+    func controlAnnotations() {
+        
+    }
+}
+
 struct MapOneView: View {
     @State var storeItem: Store.Data.StoreItem
     @ObservedObject var mapViewModel: MapViewModel
@@ -253,6 +297,16 @@ struct MapOneView: View {
     
     return Group {
         MapView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+    }
+}
+
+#Preview {
+    @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    
+    return Group {
+        MapViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
     }
 }
 
@@ -592,6 +646,17 @@ struct StoreAnnotation: View {
     }
 }
 
+struct StoreAnnotationV2: View {
+    
+    @ObservedObject var storeViewModel: StoreViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
+    @ObservedObject var mapViewModel: MapViewModel
+    
+    var body: some View {
+        Text("Store Annotation v2")
+    }
+}
+
 #Preview {
     @ObservedObject var storeViewModel = StoreViewModel()
     @ObservedObject var profileViewModel = ProfileViewModel()
@@ -604,5 +669,15 @@ struct StoreAnnotation: View {
         StoreAnnotation(profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeItem: storeViewModel.store[2], routeDisplaying: .constant(false), route: .constant(nil), mapCameraPosition: $mapCameraPosition, etaResult: .constant(nil), selectedAnnotationId: .constant(storeViewModel.store[2].id))
         StoreAnnotation(profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeItem: storeViewModel.store[3], routeDisplaying: .constant(false), route: .constant(nil), mapCameraPosition: $mapCameraPosition, etaResult: .constant(nil), selectedAnnotationId: .constant(storeViewModel.store[3].id))
         StoreAnnotation(profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeItem: storeViewModel.store[4], routeDisplaying: .constant(false), route: .constant(nil), mapCameraPosition: $mapCameraPosition, etaResult: .constant(nil), selectedAnnotationId: .constant(storeViewModel.store[4].id))
+    }
+}
+
+#Preview {
+    @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
+    
+    return Group {
+        StoreAnnotationV2(storeViewModel: storeViewModel, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
     }
 }
