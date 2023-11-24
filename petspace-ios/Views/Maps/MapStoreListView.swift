@@ -90,11 +90,30 @@ struct MapStoreListViewV2: View {
     @ObservedObject var profileViewModel = ProfileViewModel()
     
     return Group {
+        MapStoreListViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+    }
+}
+
+#Preview {
+    @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    
+    @State var presentationDetents: Set<PresentationDetent> = [.fraction(0.1), .medium, .large]
+    @State var currentDetent: PresentationDetent = .medium
+    
+    return Group {
         TabView {
-            MapStoreListViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+            MapViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                 .tabItem {
-                    Label("Test", systemImage: "star")
+                    Label("둘러보기", systemImage: "map")
+                }
+            
+            StoreListViewV2(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel, presentationDetents: $presentationDetents, currentDetent: $currentDetent)
+                .tabItem {
+                    Label("미용실", systemImage: "list.bullet")
                 }
         }
+        
     }
 }
