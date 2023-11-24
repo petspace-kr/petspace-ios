@@ -397,7 +397,6 @@ struct ControlViewV3: View {
                                 Label("설정", systemImage: "gearshape.circle")
                             }
                     }
-                    .tabViewStyle(.automatic)
                 }
             }
         }

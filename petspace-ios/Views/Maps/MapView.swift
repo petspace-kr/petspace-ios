@@ -88,7 +88,7 @@ struct MapViewV2: View {
     @State var mapCameraPosition: MapCameraPosition
     @State var mapCamera: MapCamera*/
 
-    @State private var mapCamera: MapCamera = MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.484_902, longitude: 127.041_819), distance: 24000, heading: 0, pitch: 0)
+    @State private var mapCamera: MapCamera = MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0)
     let mapCameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 1200,
                                                                     maximumDistance: 1200000)
     
@@ -96,12 +96,27 @@ struct MapViewV2: View {
     @State private var lastDistance: Double = 24000
     
     // last center
-    @State private var lastLatitude: CLLocationDegrees = 37.484_902
-    @State private var lastLongitude: CLLocationDegrees = 127.041_819
+    @State private var lastLatitude: CLLocationDegrees = 37.498_600
+    @State private var lastLongitude: CLLocationDegrees = 127.041_800
+    
+    // 지도 Routing 관련
+    @State private var routeDisplaying: Bool = false
+    @State private var route: MKRoute?
+    @State private var routeDestination: MKMapItem?
+    @State private var etaResult: MKDirections.ETAResponse?
     
     var body: some View {
         Map(initialPosition: .camera(mapCamera), bounds: mapCameraBounds) {
             UserAnnotation()
+            
+            // 축소 시 표시 X
+            if lastDistance < 120000 {
+                ForEach(storeViewModel.store) { storeItem in
+                    Annotation(storeItem.name, coordinate: CLLocationCoordinate2D(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude)) {
+                        StoreAnnotationV2(storeItem: storeItem)
+                    }
+                }
+            }
         }
         .mapControls {
             MapCompass()
@@ -112,11 +127,10 @@ struct MapViewV2: View {
         .onMapCameraChange { mapCameraUpdateContext in
             print("\(mapCameraUpdateContext.camera.distance)")
             print("\(mapCameraUpdateContext.camera.centerCoordinate)")
+            lastDistance = mapCameraUpdateContext.camera.distance
+            lastLatitude = mapCameraUpdateContext.camera.centerCoordinate.latitude
+            lastLongitude = mapCameraUpdateContext.camera.centerCoordinate.longitude
         }
-    }
-    
-    func controlAnnotations() {
-        
     }
 }
 
@@ -648,12 +662,26 @@ struct StoreAnnotation: View {
 
 struct StoreAnnotationV2: View {
     
-    @ObservedObject var storeViewModel: StoreViewModel
-    @ObservedObject var profileViewModel: ProfileViewModel
-    @ObservedObject var mapViewModel: MapViewModel
+    // @ObservedObject var storeViewModel: StoreViewModel
+    // @ObservedObject var profileViewModel: ProfileViewModel
+    // @ObservedObject var mapViewModel: MapViewModel
+    
+    @State var storeItem: Store.Data.StoreItem
     
     var body: some View {
-        Text("Store Annotation v2")
+        AsyncImage(url: URL(string: storeItem.iconImage)) { image in
+            image
+                .resizable()
+                .scaledToFill()
+                .clipShape(Circle())
+        } placeholder: {
+            ProgressView()
+        }
+        .frame(width: 30, height: 30)
+        .shadow(radius: 5)
+        .onTapGesture {
+            
+        }
     }
 }
 
@@ -678,6 +706,8 @@ struct StoreAnnotationV2: View {
     @ObservedObject var mapViewModel = MapViewModel()
     
     return Group {
-        StoreAnnotationV2(storeViewModel: storeViewModel, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+        StoreAnnotationV2(
+            // storeViewModel: storeViewModel, profileViewModel: profileViewModel, mapViewModel: mapViewModel,
+            storeItem: storeViewModel.store[0])
     }
 }
