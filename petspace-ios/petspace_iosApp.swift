@@ -16,7 +16,8 @@ struct petspace_iosApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ControlView()
+            ControlViewV2()
+            // MapViewV2(storeViewModel: StoreViewModel(), mapViewModel: MapViewModel(), profileViewModel: ProfileViewModel())
         }
     }
 }

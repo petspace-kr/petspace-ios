@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ButtonBarView: View {
     
+    var alignment: ButtonBarAlignment
     @Binding var isSavedStoreShowing: Bool
     
     // MapViewModel
@@ -20,13 +21,26 @@ struct ButtonBarView: View {
     var body: some View {
         VStack {
             HStack {
-                Spacer()
+                if alignment == .topTrailing || alignment == .topCenter {
+                    Spacer()
+                }
+                
                 ButtonBar(mapViewModel: mapViewModel, profileViewModel: profileViewModel, isSavedStoreShowing: $isSavedStoreShowing)
-                    .padding(.trailing, 16)
+                    .padding(.horizontal, 16)
+                
+                if alignment == .topLeading || alignment == .topCenter {
+                    Spacer()
+                }
             }
             Spacer()
         }
     }
+}
+
+enum ButtonBarAlignment {
+    case topTrailing
+    case topLeading
+    case topCenter
 }
 
 struct ButtonBar: View {
@@ -201,6 +215,6 @@ struct ButtonBar: View {
     @State var isSavedStoreShowing: Bool = false
     
     return Group {
-        ButtonBarView(isSavedStoreShowing: $isSavedStoreShowing, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+        ButtonBarView(alignment: .topLeading, isSavedStoreShowing: $isSavedStoreShowing, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
     }
 }
