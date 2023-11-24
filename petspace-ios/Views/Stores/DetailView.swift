@@ -343,29 +343,31 @@ struct DetailView: View {
                         Spacer()
                             .frame(height: 30)
                         
-                        Text("미용실 사진")
-                            .font(.headline)
-                            .bold()
-                        
-                        TabView {
-                            ForEach(storeItem.images, id: \.self) { image in
-                                AsyncImage(url: URL(string: image)) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                } placeholder: {
-                                    ProgressView()
+                        if storeItem.images.count > 0 {
+                            Text("미용실 사진")
+                                .font(.headline)
+                                .bold()
+                            
+                            TabView {
+                                ForEach(storeItem.images, id: \.self) { image in
+                                    AsyncImage(url: URL(string: image)) { image in
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .clipped()
                                 }
-                                .clipped()
                             }
+                            .tabViewStyle(.page)
+                            .indexViewStyle(.page(backgroundDisplayMode: .always))
+                            .frame(height: 250)
+                            
+                            Spacer()
+                                .frame(height: 30)
                         }
-                        .tabViewStyle(.page)
-                        .indexViewStyle(.page(backgroundDisplayMode: .always))
-                        .frame(height: 250)
-                        
-                        Spacer()
-                            .frame(height: 30)
                         
                         Text("리뷰")
                             .font(.headline)
@@ -496,7 +498,7 @@ struct DetailTitleImageView: View {
                     Spacer()
                         .frame(width: 20)
                     
-                    if storeItem.rating < 0 {
+                    if storeItem.rating <= 0 {
                         Text("\(storeItem.address)")
                             .font(.system(size: 14))
                             .multilineTextAlignment(.leading)
