@@ -18,6 +18,8 @@ struct DetailView: View {
     
     // 이미지 뷰 Presented
     @State private var isImageViewPresented: Bool = false
+    @State private var isSimpleImageViewPresented: Bool = false
+    @State private var selectedImage: String = ""
     
     // 프로필 뷰 모델
     @ObservedObject var profileViewModel: ProfileViewModel
@@ -359,11 +361,18 @@ struct DetailView: View {
                                         ProgressView()
                                     }
                                     .clipped()
+                                    .onTapGesture {
+                                        isSimpleImageViewPresented = true
+                                        selectedImage = image
+                                    }
                                 }
                             }
                             .tabViewStyle(.page)
                             .indexViewStyle(.page(backgroundDisplayMode: .always))
                             .frame(height: 250)
+                            .sheet(isPresented: $isSimpleImageViewPresented) {
+                                ImagePagingView(storeItem: storeItem, selectedImage: selectedImage)
+                            }
                             
                             Spacer()
                                 .frame(height: 30)
