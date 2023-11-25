@@ -142,6 +142,7 @@ struct ControlView: View {
 //    ControlView()
 //}
 
+// deprecated
 struct ControlViewV2: View {
     
     // ViewModels
@@ -233,6 +234,7 @@ struct ControlViewV2: View {
                             .tabItem {
                                 Label("예약", systemImage: "book.circle")
                             }
+                            .badge(3)
                         
                         Text("Tab4")
                             .tabItem {
@@ -367,7 +369,7 @@ struct ControlViewV3: View {
                     TabView {
                         MapViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                             .tabItem {
-                                Label("둘러보기", systemImage: "map.circle")
+                                Label("둘러보기", systemImage: "map.circle.fill")
                             }
                             .onAppear() {
                                 mapViewModel.checkLocationServiceEnabled()
@@ -378,25 +380,25 @@ struct ControlViewV3: View {
                         
                         StoreListViewV3(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
                             .tabItem {
-                                Label("미용실", systemImage: "storefront.circle")
+                                Label("미용실", systemImage: "storefront.circle.fill")
                             }
                         
                         ProfileView(isPresented: .constant(true), isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                             .padding()
                             .tabItem {
-                                Label("프로필", systemImage: "dog.circle")
+                                Label("프로필", systemImage: "dog.circle.fill")
                             }
                         
                         HistoryView()
                             .padding()
                             .tabItem {
-                                Label("예약", systemImage: "book.circle")
+                                Label("예약", systemImage: "book.circle.fill")
                             }
+                            .badge(0)
                         
                         SettingView()
-                            .padding()
                             .tabItem {
-                                Label("설정", systemImage: "gearshape.circle")
+                                Label("설정", systemImage: "gearshape.circle.fill")
                             }
                     }
                 }
