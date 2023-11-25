@@ -31,6 +31,7 @@ struct SettingView: View {
     // 프로필 View Model
     @ObservedObject var profileViewModel: ProfileViewModel
     
+    // App Version
     var appVersion: String {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             return version
@@ -265,9 +266,37 @@ struct SettingView: View {
                         .frame(height: 10)
                     
                     // 프로필 초기화
-                    Button {
-                        isResetProfileAlertPresented = true
-                    } label: {
+                    if !profileViewModel.dogProfile.isEmpty {
+                        Button {
+                            isResetProfileAlertPresented = true
+                        } label: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .fill(Color("Background1"))
+                                    .stroke(Color("Stroke1"), lineWidth: 1)
+                                
+                                HStack {
+                                    Spacer()
+                                        .frame(width: 15)
+                                    
+                                    Image(systemName: "xmark.bin")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 18, height: 18)
+                                        .foregroundStyle(.red)
+                                    
+                                    Spacer()
+                                        .frame(width: 10)
+                                    
+                                    Text("프로필 초기화")
+                                        .foregroundStyle(.red)
+                                    
+                                    Spacer()
+                                }
+                            }
+                            .frame(height: 48)
+                        }
+                    } else {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10.0)
                                 .fill(Color("Background1"))
@@ -277,17 +306,17 @@ struct SettingView: View {
                                 Spacer()
                                     .frame(width: 15)
                                 
-                                Image(systemName: "xmark.bin")
+                                Image(systemName: "exclamationmark.triangle")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 18, height: 18)
-                                    .foregroundStyle(.red)
+                                    .foregroundStyle(.gray)
                                 
                                 Spacer()
                                     .frame(width: 10)
                                 
-                                Text("프로필 초기화")
-                                    .foregroundStyle(.red)
+                                Text("프로필 데이터가 없어요")
+                                    .foregroundStyle(.gray)
                                 
                                 Spacer()
                             }
@@ -334,7 +363,7 @@ struct SettingView: View {
                     
                     HStack {
                         Spacer()
-                        Text("PETSPACE ver \(appVersion)")
+                        Text("PETSPACE ver \(appVersion)\nAll Right Reserved.")
                             .foregroundStyle(.gray)
                             .font(.system(size: 11))
                         Spacer()

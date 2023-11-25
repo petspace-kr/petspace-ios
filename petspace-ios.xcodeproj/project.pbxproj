@@ -277,10 +277,10 @@
 		0CB76C6A2AFA7CBF009D7424 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
+				0C3CBCC02AFB85EB000862C3 /* AppLoadingView.swift */,
 				0C3CBCA42AFB8468000862C3 /* BetaInfoView.swift */,
 				0C3CBCA62AFB8496000862C3 /* PermissionView.swift */,
 				0C3CBCA82AFB84C1000862C3 /* WelcomeView.swift */,
-				0C3CBCC02AFB85EB000862C3 /* AppLoadingView.swift */,
 				0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */,
 			);
 			path = Welcome;
