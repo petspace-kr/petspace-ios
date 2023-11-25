@@ -115,13 +115,17 @@ struct MapViewV2: View {
     @State private var route: MKRoute?
     @State private var routeDestination: MKMapItem?
     @State private var etaResult: MKDirections.ETAResponse?
+    @State private var isLoading: Bool = false
     
     // Store Preview
     @State var isPreviewPresented: Bool = false
     @State var selectedStore: Store.Data.StoreItem?
     
     // Sheet selection
+    @State private var presentationDetents: Set<PresentationDetent> = [.fraction(0.3), .fraction(0.3000001)]
     @State private var detentSelection: PresentationDetent = .fraction(0.3)
+    
+    @State private var sheetScreenType: MapSheetScreenMode = .hidden
     
     var body: some View {
         Map(position: $mapCameraPosition, bounds: mapCameraBounds) {
@@ -132,7 +136,7 @@ struct MapViewV2: View {
             if lastDistance < 40000 {
                 ForEach(storeViewModel.store) { storeItem in
                     Annotation(storeItem.name, coordinate: CLLocationCoordinate2D(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude)) {
-                        StoreAnnotationV2(storeItem: storeItem, mapCameraPosition: $mapCameraPosition, isPreviewPresented: $isPreviewPresented, selectedStore: $selectedStore)
+                        StoreAnnotationV2(storeItem: storeItem, mapCameraPosition: $mapCameraPosition, isPreviewPresented: $isPreviewPresented, selectedStore: $selectedStore, sheetScreenType: $sheetScreenType)
                     }
                 }
             }
@@ -145,6 +149,11 @@ struct MapViewV2: View {
                         ClusteredAnnotation(cluster: cluster, mapCameraPosition: $mapCameraPosition)
                     }
                 }
+            }
+            
+            if let route {
+                MapPolyline(route.polyline)
+                    .stroke(.blue, lineWidth: 6)
             }
         }
         .mapControls {
@@ -168,20 +177,268 @@ struct MapViewV2: View {
             lastLongitude = mapCameraUpdateContext.camera.centerCoordinate.longitude
         }
         .sheet(isPresented: $isPreviewPresented, onDismiss: {
-            
+            resetRoute()
+            changeSheetMode(to: .previewStore)
         }, content: {
-            if let selectedStore = selectedStore {
-                StorePreviewView(store: selectedStore)
-                    .presentationDetents([.fraction(0.3), .large], selection: $detentSelection)
-                    .presentationDragIndicator(.visible)
-                    .presentationCornerRadius(30.0)
-                    .presentationBackgroundInteraction(.enabled)
-            } else {
-                ProgressView()
-                    .presentationDetents([.fraction(0.3), .large], selection: $detentSelection)
-                    .presentationDragIndicator(.visible)
-                    .presentationCornerRadius(30.0)
-                    .presentationBackgroundInteraction(.enabled)
+            withAnimation(.spring()) {
+                VStack {
+                    switch sheetScreenType {
+                    case .hidden:
+                        ProgressView()
+                    case .routeButton:
+                        HStack {
+                            // 닫기 버튼
+                            Button {
+                                resetRoute()
+                                changeSheetMode(to: .previewStore)
+                                if let selectedStore {
+                                    withAnimation(.spring()) {
+                                        mapCameraPosition = .camera(MapCamera(centerCoordinate: selectedStore.locationCoordinate, distance: 2000, heading: 0, pitch: 0))
+                                    }
+                                }
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 15.0)
+                                        .fill(Color("Foreground1"))
+                                    
+                                    VStack {
+                                        Image(systemName: "xmark.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .bold()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.white)
+                                            .padding(.top, 3)
+                                        Text("닫기")
+                                            .font(.system(size: 12))
+                                            .foregroundColor(Color("Background1"))
+                                    }
+                                }
+                                .frame(width: 60, height: 60)
+                            }
+                            
+                            // 경로 새로고침 버튼
+                            Button {
+                                fetchRoute()
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 15.0)
+                                        .fill(Color.blue)
+                                    
+                                    VStack {
+                                        Image(systemName: "arrow.circlepath")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .bold()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.white)
+                                            .padding(.top, 3)
+                                        Text("새고로침")
+                                            .font(.system(size: 11))
+                                            .foregroundColor(Color("Background1"))
+                                    }
+                                }
+                                .frame(width: 60, height: 60)
+                            }
+                            .disabled(isLoading)
+                            
+                            if let etaResult {
+                                VStack {
+                                    Text("\(String(format: "%.2f", (etaResult.distance / 1000)))km")
+                                        .fixedSize(horizontal: true, vertical: true)
+                                    Text("\(String(format: "%.0f", (etaResult.expectedTravelTime / 60)))분 예정")
+                                        .fixedSize(horizontal: true, vertical: true)
+                                }
+                                .frame(maxWidth: .infinity)
+                            } else {
+                                if isLoading {
+                                    ProgressView()
+                                        .frame(maxWidth: .infinity)
+                                } else {
+                                    Text("경로를 찾을 수 없어요")
+                                        .font(.system(size: 13))
+                                        .foregroundColor(.gray)
+                                        .frame(maxWidth: .infinity)
+                                }
+                            }
+                            
+                            // 자세히 버튼
+                            Button {
+                                resetRoute()
+                                changeSheetMode(to: .detailView)
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 15.0)
+                                        .fill(Color.gray)
+                                    
+                                    VStack {
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .bold()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.white)
+                                            .padding(.top, 3)
+                                        Text("자세히")
+                                            .font(.system(size: 11))
+                                            .foregroundColor(Color("Background1"))
+                                    }
+                                }
+                                .frame(width: 60, height: 60)
+                            }
+                        }
+                        .padding(.horizontal, 10)
+                        
+                    case .previewStore:
+                        if let selectedStore {
+                            StorePreviewView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: selectedStore)
+                            HStack {
+                                Button {
+                                    //
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        VStack {
+                                            Image(systemName: "heart")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("저장")
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+                                    .frame(height: 60)
+                                }
+                                
+                                Button {
+                                    fetchRoute()
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        VStack {
+                                            Image(systemName: "arrow.triangle.turn.up.right.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("경로")
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+                                    .frame(height: 60)
+                                }
+                                .disabled(mapViewModel.userLatitude == 0.0 || mapViewModel.userLongitude == 0.0)
+                                
+                                Button {
+                                    // 전화 걸기
+                                    let formattedString = "tel://" + selectedStore.tel
+                                    print(formattedString)
+                                    guard let phoneUrl = URL(string: formattedString) else { return }
+                                    UIApplication.shared.open(phoneUrl)
+                                    GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_CALL_CLICK, params: nil)
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        VStack {
+                                            Image(systemName: "phone.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("전화")
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+                                    .frame(height: 60)
+                                }
+                                
+                                Button {
+                                    //
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        VStack {
+                                            Image(systemName: "book.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("예약")
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+                                    .frame(height: 60)
+                                }
+                                .disabled(true)
+                                
+                                Button {
+                                    changeSheetMode(to: .detailView)
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        VStack {
+                                            Image(systemName: "info.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("자세히")
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+                                    .frame(height: 60)
+                                }
+                                
+                                Button {
+                                    changeSheetMode(to: .hidden)
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        VStack {
+                                            Image(systemName: "xmark.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("닫기")
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+                                    .frame(height: 60)
+                                }
+                            }
+                            .padding(.horizontal, 10)
+                        }
+                        else {
+                            ProgressView()
+                        }
+                    case .detailView:
+                        if let selectedStore {
+                            DetailView(storeItem: selectedStore, isPresented: $isPreviewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                                .background(Color("Background2"))
+                        }
+                        else {
+                            ProgressView()
+                        }
+                    }
+                }
+                .presentationDetents(presentationDetents, selection: $detentSelection)
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(30.0)
+                .presentationBackgroundInteraction(.enabled)
             }
         })
     }
@@ -216,6 +473,91 @@ struct MapViewV2: View {
         print("number of clusters: \(clusters.count)")
         return clusters
     }
+    
+    func fetchRoute() {
+        isLoading = true
+        
+        if let selectedStore = selectedStore {
+            let request = MKDirections.Request()
+            request.source = MKMapItem(placemark: .init(coordinate: CLLocationCoordinate2D(latitude: mapViewModel.userLatitude, longitude: mapViewModel.userLongitude)))
+            request.destination = MKMapItem(placemark: .init(coordinate: selectedStore.locationCoordinate))
+            
+            print("source: \(mapViewModel.currentRegion.center)) -> to: \(selectedStore.locationCoordinate))")
+            
+            Task {
+                let result = try? await MKDirections(request: request).calculate()
+                etaResult = try? await MKDirections(request: request).calculateETA()
+                route = result?.routes.first
+                routeDestination = MKMapItem(placemark: .init(coordinate: selectedStore.locationCoordinate))
+                
+                if let etaResult = etaResult {
+                    print("distance: \(String(describing: etaResult.distance))")
+                    print("eta: \(String(describing: etaResult.expectedTravelTime))")
+                    print("departure date: \(String(describing: etaResult.expectedDepartureDate))")
+                    print("arrival date: \(String(describing: etaResult.expectedArrivalDate))")
+                    print("transport type: \(String(describing: etaResult.transportType))")
+                    
+                    withAnimation(.spring()) {
+                        routeDisplaying = true
+                        
+                        if let rect = route?.polyline.boundingMapRect {
+                            mapCameraPosition = .rect(rect)
+                            changeSheetMode(to: .routeButton)
+                        }
+                    }
+                } 
+                
+                isLoading = false
+            }
+        } else {
+            isLoading = false
+        }
+    }
+    
+    func resetRoute() {
+        withAnimation(.spring()) {
+            routeDisplaying = false
+            etaResult = nil
+            route = nil
+            routeDestination = nil
+        }
+    }
+    
+    func changeSheetMode(to: MapSheetScreenMode) {
+        withAnimation(.spring()) {
+            sheetScreenType = to
+        }
+        
+        var newDetent: PresentationDetent
+        var newPresentationDetents: Set<PresentationDetent>
+        switch to {
+        case .hidden:
+            isPreviewPresented = false
+            newPresentationDetents = [.fraction(0.3), .fraction(0.3000001)]
+            newDetent = .fraction(0.3)
+        case .routeButton:
+            newPresentationDetents = [.fraction(0.12), .fraction(0.1200001)]
+            newDetent = .fraction(0.12)
+        case .previewStore:
+            newPresentationDetents = [.fraction(0.3), .fraction(0.3000001)]
+            newDetent = .fraction(0.3)
+        case .detailView:
+            newPresentationDetents = [.large]
+            newDetent = .large
+        }
+        
+        withAnimation(.spring()) {
+            presentationDetents = newPresentationDetents
+            detentSelection = newDetent
+        }
+    }
+}
+
+enum MapSheetScreenMode {
+    case hidden
+    case routeButton
+    case previewStore
+    case detailView
 }
 
 #Preview {
@@ -744,6 +1086,7 @@ struct StoreAnnotationV2: View {
     @Binding var mapCameraPosition: MapCameraPosition
     @Binding var isPreviewPresented: Bool
     @Binding var selectedStore: Store.Data.StoreItem?
+    @Binding var sheetScreenType: MapSheetScreenMode
     
     var body: some View {
         AsyncImage(url: URL(string: storeItem.iconImage)) { image in
@@ -766,6 +1109,7 @@ struct StoreAnnotationV2: View {
             
             if selectedStore != nil {
                 isPreviewPresented = true
+                sheetScreenType = .previewStore
             }
         }
         /* .sheet(isPresented: $isPresented) {
@@ -789,13 +1133,13 @@ struct ClusteredAnnotation: View {
             Circle()
                 .fill(Color.white)
                 .opacity(0.5)
-                .frame(width: 30, height: 30)
+                .frame(width: 30 + CGFloat(cluster.points.count / 2), height: 30 + CGFloat(cluster.points.count / 2))
                 .shadow(radius: 5)
             
             Circle()
                 // .stroke(Color.white, lineWidth: 5)
                 .fill(Color(red: 0, green: 0.64, blue: 1).opacity(0.3 + 0.05 * Double(min(cluster.points.count, 10))))
-                .frame(width: 24, height: 24)
+                .frame(width: 24 + CGFloat(cluster.points.count / 2), height: 24 + CGFloat(cluster.points.count / 2))
             
             Text("\(cluster.points.count)")
                 .font(.system(size: 12))

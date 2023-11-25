@@ -8,11 +8,144 @@
 import SwiftUI
 
 struct StorePreviewView: View {
+    
+    @ObservedObject var mapViewModel: MapViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
+    let storeItem: Store.Data.StoreItem
+    
     var body: some View {
-        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
+        HStack(alignment: .center, content: {
+            // Store Main Image
+            AsyncImage(url: URL(string: storeItem.iconImage)) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(width: 97, height: 113)
+                .background(Color.gray)
+                .cornerRadius(18)
+            
+            Spacer()
+            
+            VStack(alignment: .leading, spacing: 4.0, content: {
+                HStack {
+                    // Store Title
+                    Text(storeItem.name)
+                        .font(.system(size: 15))
+                        .bold()
+                    
+                    Spacer()
+                }
+                
+                // Store Address
+                Text(storeItem.address)
+                    .font(.system(size: 12))
+            
+                // Store Score and Number of Reviews
+                HStack {
+                    if storeItem.rating <= 0 {
+                        Text("리뷰 \(storeItem.reviewCount)개")
+                            .font(.system(size: 10))
+                            .padding(0)
+                            .bold()
+                    }
+                    else {
+                        Text("✦ \(String(format: "%.1f", storeItem.rating)) ∙ 리뷰 \(storeItem.reviewCount)개")
+                            .font(.system(size: 10))
+                            .padding(0)
+                            .bold()
+                    }
+                    
+                    // 위치 정보 허용된 경우 거리 표시
+                    if (mapViewModel.isAuthorized == .authorizedAlways || mapViewModel.isAuthorized == .authorizedWhenInUse) && (mapViewModel.userLatitude != 0.0 && mapViewModel.userLongitude != 0.0) {
+                        // Text("\(String(format: "%.2f", distanceKM))km")
+                        Text("\(String(format: "%.2f", Coordinate(latitude: mapViewModel.userLatitude, longitude: mapViewModel.userLongitude).distance(to: Coordinate(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude))))km")
+                            .font(.system(size: 10))
+                            .padding(0)
+                    }
+                }
+                
+                // Store Description
+                Text(storeItem.description)
+                    .font(.system(size: 10))
+                    .foregroundStyle(.gray)
+                    .lineLimit(profileViewModel.dogProfile.isEmpty ? 3 : 1) // 텍스트가 한 줄로 제한
+                    .truncationMode(.tail) // 끝에 ... 추가
+                
+                Spacer()
+                    .frame(height: 1)
+                
+                // 프로필이 등록된 경우
+                if !profileViewModel.dogProfile.isEmpty {
+                    Menu {
+                        Section("프로필을 선택하세요") {
+                            ForEach (Array(profileViewModel.dogProfile.enumerated()), id: \.offset) { index, profile in
+                                Button("\(profile.dogName) - \(profile.dogBreed)") {
+                                    // 프로필 변경 코드 작성
+                                    profileViewModel.selectedProfileIndex = index
+                                }
+                            }
+                        }
+                        
+                    } label: {
+                        ZStack(alignment: .leading, content: {
+                            RoundedRectangle(cornerRadius: .infinity)
+                                .fill(Color("Background2"))
+                                .stroke(Color("Stroke1"), lineWidth: 1)
+                                .frame(height: 35)
+                            
+                            HStack {
+                                // 프로필 이미지
+                                if let imageData = profileViewModel.dogProfile[profileViewModel.selectedProfileIndex].profileImageData {
+                                    if let image = imageData.decodeToImage() {
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 35, height: 35)
+                                            .clipShape(Circle())
+                                    } else {
+                                        Spacer()
+                                            .frame(width: 16)
+                                    }
+                                } else {
+                                    Spacer()
+                                        .frame(width: 16)
+                                }
+                                
+                                VStack(alignment: .leading, content: {
+                                    Text("✲ 프로필 맞춤")
+                                        .font(.system(size: 10))
+                                        .foregroundColor(Color(red: 0, green: 0.64, blue: 1))
+                                        .fixedSize(horizontal: true, vertical: true)
+                                    Text("커트 \(storeItem.pricing.cut)원~")
+                                        .font(.system(size: 10))
+                                        .foregroundColor(.primary)
+                                        .fixedSize(horizontal: true, vertical: true)
+                                })
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.down")
+                                    .foregroundColor(.gray)
+                                    .padding(.horizontal, 10)
+                            }
+                        })
+                    }
+                }
+            })
+        })
+        .padding(10)
     }
 }
 
 #Preview {
-    StorePreviewView()
+    @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    
+    return Group {
+        StorePreviewView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeViewModel.store[0])
+    }
 }

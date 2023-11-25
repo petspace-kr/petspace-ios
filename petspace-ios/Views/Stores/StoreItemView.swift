@@ -11,7 +11,7 @@ struct StoreItemView: View {
     
     @ObservedObject var mapViewModel: MapViewModel
     @ObservedObject var profileViewModel: ProfileViewModel
-    @State var storeItem: Store.Data.StoreItem
+    let storeItem: Store.Data.StoreItem
     
     // 디테일 뷰
     @State private var isDetailViewPresented: Bool = false
