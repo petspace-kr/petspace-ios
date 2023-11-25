@@ -392,16 +392,18 @@ struct DetailView: View {
                                 .foregroundStyle(.gray)
                         }
                         
-                        
                         Spacer()
-                            .frame(height: 20)
+                            .frame(height: 30)
                         
-                        Button("아직 예약이 불가능한 미용실이에요") {
+                        Button {
                             
+                        } label: {
+                            Text("아직 예약이 불가능한 미용실이에요")
+                                .standardButtonText()
                         }
-                        .bigButton()
+                        .standardButton()
                         .disabled(true)
-                        .padding()
+                                 
                     } // End of VStack
                     .padding(12)
                     
