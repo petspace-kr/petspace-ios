@@ -166,7 +166,7 @@ struct ButtonBar: View {
         .sheet(isPresented: $isSettingViewPresented, onDismiss: {
             GATracking.sendLogEvent(eventName: GATracking.EtcViewMessage.BAR_SETTING_PAGE_CLOSE, params: nil)
         }, content: {
-            SettingView()
+            SettingView(profileViewModel: profileViewModel)
                 .padding()
                 .padding(.top, 20)
                 .presentationDragIndicator(.visible)

@@ -395,7 +395,7 @@ struct ControlViewV3: View {
                             }
                             .badge(0)
                         
-                        SettingView()
+                        SettingView(profileViewModel: profileViewModel)
                             .tabItem {
                                 Label("설정", systemImage: "gearshape.circle.fill")
                             }

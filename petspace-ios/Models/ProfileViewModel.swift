@@ -79,6 +79,9 @@ class ProfileViewModel: ObservableObject {
         dogProfile.removeAll()
         dogProfile = []
         selectedProfileIndex = -1
+        
+        // 삭제된 데이터를 로컬 저장소에 저장
+        saveProfile()
     }
 }
 

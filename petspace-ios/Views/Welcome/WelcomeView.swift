@@ -187,7 +187,7 @@ struct WelcomeView: View {
                     
                     // Beta Info View
                     .fullScreenCover(isPresented: $isBetaInfoViewPresented, onDismiss: {
-                        // isPresented = false
+                        // WelcomeView 표시하지 않음
                         UserDefaults.standard.set(true, forKey: "hasShownWelcomeView")
                         GATracking.sendLogEvent(eventName: GATracking.RegisterStepsMessage.WELCOME_FINISH, params: nil)
                         dismiss()
