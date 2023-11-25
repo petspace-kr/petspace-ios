@@ -40,4 +40,28 @@ func calculateDistance(itemCoord: CLLocationCoordinate2D, mvCoord: CLLocationCoo
     return distanceKm
 }
 
-
+class Cluster: Identifiable {
+    var id: UUID
+    var center: CLLocationCoordinate2D
+    var points: [CLLocationCoordinate2D]
+    
+    init(center: CLLocationCoordinate2D, points: [CLLocationCoordinate2D]) {
+        self.id = UUID()
+        self.center = center
+        self.points = points
+    }
+    
+    func updateCenter() {
+        var latMean: CLLocationDegrees = 0
+        var longMean: CLLocationDegrees = 0
+        
+        for point in points {
+            latMean += point.latitude
+            longMean += point.longitude
+        }
+        
+        var newCenter = CLLocationCoordinate2D(latitude: latMean / Double(points.count), longitude: longMean / Double(points.count))
+        print("center updated from: \(center) \nto: \(newCenter)")
+        center = newCenter
+    }
+}

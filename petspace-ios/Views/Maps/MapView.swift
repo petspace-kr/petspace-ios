@@ -76,6 +76,16 @@ struct MapView: View {
     }
 }
 
+/* #Preview {
+    @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    
+    return Group {
+        MapView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+    }
+} */
+
 struct MapViewV2: View {
     @ObservedObject var storeViewModel: StoreViewModel
     @ObservedObject var mapViewModel: MapViewModel
@@ -105,15 +115,31 @@ struct MapViewV2: View {
     @State private var routeDestination: MKMapItem?
     @State private var etaResult: MKDirections.ETAResponse?
     
+    // @State private var clusters: [Cluster] = []
+    
     var body: some View {
+        
         Map(initialPosition: .camera(mapCamera), bounds: mapCameraBounds) {
             UserAnnotation()
             
-            // 축소 시 표시 X
-            if lastDistance < 120000 {
+            // 확대된 경우 전부 표시
+            if lastDistance < 40000 {
                 ForEach(storeViewModel.store) { storeItem in
                     Annotation(storeItem.name, coordinate: CLLocationCoordinate2D(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude)) {
                         StoreAnnotationV2(storeItem: storeItem)
+                    }
+                }
+            }
+            // 클러스터링
+            else {
+                let clusters = clusterAnnotations(clusterRadius: 2 * (lastDistance / 120_000))
+                
+                ForEach(clusters) { cluster in
+                    Annotation("", coordinate: cluster.center) {
+                        ClusteredAnnotation(cluster: cluster)
+                            .onTapGesture {
+                                
+                            }
                     }
                 }
             }
@@ -125,12 +151,60 @@ struct MapViewV2: View {
         }
         .safeAreaPadding()
         .onMapCameraChange { mapCameraUpdateContext in
-            print("\(mapCameraUpdateContext.camera.distance)")
-            print("\(mapCameraUpdateContext.camera.centerCoordinate)")
+            print("mapCam distance: \(mapCameraUpdateContext.camera.distance)")
+            print("mapCam Center: (\(mapCameraUpdateContext.camera.centerCoordinate.latitude), \(mapCameraUpdateContext.camera.centerCoordinate.longitude))")
+            
+            // 확대, 축소 비율이 1.1 이상 변한 경우만 업데이트
+            /* print("map distance ratio: \(max(lastDistance, mapCameraUpdateContext.camera.distance) / min(lastDistance, mapCameraUpdateContext.camera.distance))")
+            if max(lastDistance, mapCameraUpdateContext.camera.distance) / min(lastDistance, mapCameraUpdateContext.camera.distance) > 1.1 && lastDistance >= 40000 {
+                clusters = clusterAnnotations(clusterRadius: 2 * (lastDistance / 120_000))
+            }*/
+            
             lastDistance = mapCameraUpdateContext.camera.distance
             lastLatitude = mapCameraUpdateContext.camera.centerCoordinate.latitude
             lastLongitude = mapCameraUpdateContext.camera.centerCoordinate.longitude
         }
+    }
+    
+    func clusterAnnotations(clusterRadius: Double) -> [Cluster] {
+        var clusters: [Cluster] = []
+        
+        for store in storeViewModel.store {
+            var isClustered = false
+            
+            var clusterId: Int = 0
+            for cluster in clusters {
+                let distance = calculateDistance(itemCoord: cluster.center, mvCoord: store.locationCoordinate)
+                
+                if distance <= clusterRadius {
+                    cluster.points.append(store.locationCoordinate)
+                    isClustered = true
+                    // print("store appended to cluster \(clusterId): \(distance)")
+                    break
+                }
+                clusterId += 1
+            }
+            
+            if !isClustered {
+                let newCluster = Cluster(center: store.locationCoordinate, points: [store.locationCoordinate])
+                clusters.append(newCluster)
+                // print("new \(clusters.count)th cluster created: \(newCluster.center)")
+            }
+            
+        }
+        
+        print("number of clusters: \(clusters.count)")
+        return clusters
+    }
+}
+
+#Preview {
+    @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    
+    return Group {
+        MapViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
     }
 }
 
@@ -301,26 +375,6 @@ struct MapOneView: View {
                 isLoading = false
             }
         }
-    }
-}
-
-#Preview {
-    @ObservedObject var storeViewModel = StoreViewModel()
-    @ObservedObject var mapViewModel = MapViewModel()
-    @ObservedObject var profileViewModel = ProfileViewModel()
-    
-    return Group {
-        MapView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
-    }
-}
-
-#Preview {
-    @ObservedObject var storeViewModel = StoreViewModel()
-    @ObservedObject var mapViewModel = MapViewModel()
-    @ObservedObject var profileViewModel = ProfileViewModel()
-    
-    return Group {
-        MapViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
     }
 }
 
@@ -685,7 +739,31 @@ struct StoreAnnotationV2: View {
     }
 }
 
-#Preview {
+struct ClusteredAnnotation: View {
+    
+    let cluster: Cluster
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(Color.white)
+                .opacity(0.5)
+                .frame(width: 30, height: 30)
+                .shadow(radius: 5)
+            
+            Circle()
+                // .stroke(Color.white, lineWidth: 5)
+                .fill(Color(red: 0, green: 0.64, blue: 1).opacity(0.3 + 0.05 * Double(min(cluster.points.count, 10))))
+                .frame(width: 24, height: 24)
+            
+            Text("\(cluster.points.count)")
+                .font(.system(size: 12))
+                .bold()
+        }
+    }
+}
+
+/* #Preview {
     @ObservedObject var storeViewModel = StoreViewModel()
     @ObservedObject var profileViewModel = ProfileViewModel()
     @ObservedObject var mapViewModel = MapViewModel()
@@ -698,7 +776,7 @@ struct StoreAnnotationV2: View {
         StoreAnnotation(profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeItem: storeViewModel.store[3], routeDisplaying: .constant(false), route: .constant(nil), mapCameraPosition: $mapCameraPosition, etaResult: .constant(nil), selectedAnnotationId: .constant(storeViewModel.store[3].id))
         StoreAnnotation(profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeItem: storeViewModel.store[4], routeDisplaying: .constant(false), route: .constant(nil), mapCameraPosition: $mapCameraPosition, etaResult: .constant(nil), selectedAnnotationId: .constant(storeViewModel.store[4].id))
     }
-}
+}*/
 
 #Preview {
     @ObservedObject var storeViewModel = StoreViewModel()
@@ -710,4 +788,8 @@ struct StoreAnnotationV2: View {
             // storeViewModel: storeViewModel, profileViewModel: profileViewModel, mapViewModel: mapViewModel,
             storeItem: storeViewModel.store[0])
     }
+}
+
+#Preview {
+    ClusteredAnnotation(cluster: Cluster(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), points: []))
 }
