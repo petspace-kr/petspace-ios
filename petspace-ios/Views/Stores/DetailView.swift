@@ -437,6 +437,20 @@ struct DetailTitleImageView: View {
             // 그라데이션
             Rectangle()
                 .foregroundColor(.clear)
+                .background(
+                    LinearGradient(
+                        stops: [
+                            Gradient.Stop(color: .black.opacity(0.05), location: 0.00),
+                            Gradient.Stop(color: .black.opacity(0.05), location: 1.00),
+                        ],
+                        startPoint: UnitPoint(x: 0.5, y: 1),
+                        endPoint: UnitPoint(x: 0.5, y: 0)
+                    )
+                )
+            
+            // 그라데이션
+            Rectangle()
+                .foregroundColor(.clear)
                 .frame(height: 120)
                 .background(
                     LinearGradient(
