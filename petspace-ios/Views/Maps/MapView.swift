@@ -97,8 +97,9 @@ struct MapViewV2: View {
     @State var coordinateRegion: MKCoordinateRegion
     @State var mapCameraPosition: MapCameraPosition
     @State var mapCamera: MapCamera*/
-
-    @State private var mapCamera: MapCamera = MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0)
+    
+    @State private var mapCameraPosition: MapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0))
+    // @State private var mapCamera: MapCamera = MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0)
     let mapCameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 1200,
                                                                     maximumDistance: 1200000)
     
@@ -115,18 +116,23 @@ struct MapViewV2: View {
     @State private var routeDestination: MKMapItem?
     @State private var etaResult: MKDirections.ETAResponse?
     
-    // @State private var clusters: [Cluster] = []
+    // Store Preview
+    @State var isPreviewPresented: Bool = false
+    @State var selectedStore: Store.Data.StoreItem?
+    
+    // Sheet selection
+    @State private var detentSelection: PresentationDetent = .fraction(0.3)
     
     var body: some View {
-        
-        Map(initialPosition: .camera(mapCamera), bounds: mapCameraBounds) {
+        Map(position: $mapCameraPosition, bounds: mapCameraBounds) {
+        // Map(initialPosition: .camera(mapCamera), bounds: mapCameraBounds) {
             UserAnnotation()
             
             // 확대된 경우 전부 표시
             if lastDistance < 40000 {
                 ForEach(storeViewModel.store) { storeItem in
                     Annotation(storeItem.name, coordinate: CLLocationCoordinate2D(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude)) {
-                        StoreAnnotationV2(storeItem: storeItem)
+                        StoreAnnotationV2(storeItem: storeItem, mapCameraPosition: $mapCameraPosition, isPreviewPresented: $isPreviewPresented, selectedStore: $selectedStore)
                     }
                 }
             }
@@ -136,10 +142,7 @@ struct MapViewV2: View {
                 
                 ForEach(clusters) { cluster in
                     Annotation("", coordinate: cluster.center) {
-                        ClusteredAnnotation(cluster: cluster)
-                            .onTapGesture {
-                                
-                            }
+                        ClusteredAnnotation(cluster: cluster, mapCameraPosition: $mapCameraPosition)
                     }
                 }
             }
@@ -164,6 +167,23 @@ struct MapViewV2: View {
             lastLatitude = mapCameraUpdateContext.camera.centerCoordinate.latitude
             lastLongitude = mapCameraUpdateContext.camera.centerCoordinate.longitude
         }
+        .sheet(isPresented: $isPreviewPresented, onDismiss: {
+            
+        }, content: {
+            if let selectedStore = selectedStore {
+                StorePreviewView(store: selectedStore)
+                    .presentationDetents([.fraction(0.3), .large], selection: $detentSelection)
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(30.0)
+                    .presentationBackgroundInteraction(.enabled)
+            } else {
+                ProgressView()
+                    .presentationDetents([.fraction(0.3), .large], selection: $detentSelection)
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(30.0)
+                    .presentationBackgroundInteraction(.enabled)
+            }
+        })
     }
     
     func clusterAnnotations(clusterRadius: Double) -> [Cluster] {
@@ -720,7 +740,10 @@ struct StoreAnnotationV2: View {
     // @ObservedObject var profileViewModel: ProfileViewModel
     // @ObservedObject var mapViewModel: MapViewModel
     
-    @State var storeItem: Store.Data.StoreItem
+    let storeItem: Store.Data.StoreItem
+    @Binding var mapCameraPosition: MapCameraPosition
+    @Binding var isPreviewPresented: Bool
+    @Binding var selectedStore: Store.Data.StoreItem?
     
     var body: some View {
         AsyncImage(url: URL(string: storeItem.iconImage)) { image in
@@ -734,14 +757,32 @@ struct StoreAnnotationV2: View {
         .frame(width: 30, height: 30)
         .shadow(radius: 5)
         .onTapGesture {
+            print(storeItem.name)
+            print(storeItem.locationCoordinate)
+            withAnimation(.spring()) {
+                mapCameraPosition = .camera(MapCamera(centerCoordinate: storeItem.locationCoordinate, distance: 2000, heading: 0, pitch: 0))
+            }
+            selectedStore = storeItem
             
+            if selectedStore != nil {
+                isPreviewPresented = true
+            }
         }
+        /* .sheet(isPresented: $isPresented) {
+            StorePreviewView()
+                .presentationDetents([.fraction(0.3)])
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(30.0)
+                .presentationBackgroundInteraction(.enabled)
+                .interactiveDismissDisabled()
+        }*/
     }
 }
 
 struct ClusteredAnnotation: View {
     
     let cluster: Cluster
+    @Binding var mapCameraPosition: MapCameraPosition
     
     var body: some View {
         ZStack {
@@ -759,6 +800,11 @@ struct ClusteredAnnotation: View {
             Text("\(cluster.points.count)")
                 .font(.system(size: 12))
                 .bold()
+        }
+        .onTapGesture {
+            withAnimation(.spring()) {
+                mapCameraPosition = .camera(MapCamera(centerCoordinate: cluster.center, distance: 10000, heading: 0, pitch: 0))
+            }
         }
     }
 }
@@ -778,18 +824,18 @@ struct ClusteredAnnotation: View {
     }
 }*/
 
-#Preview {
-    @ObservedObject var storeViewModel = StoreViewModel()
-    @ObservedObject var profileViewModel = ProfileViewModel()
-    @ObservedObject var mapViewModel = MapViewModel()
-    
-    return Group {
-        StoreAnnotationV2(
-            // storeViewModel: storeViewModel, profileViewModel: profileViewModel, mapViewModel: mapViewModel,
-            storeItem: storeViewModel.store[0])
-    }
-}
+//#Preview {
+//    @ObservedObject var storeViewModel = StoreViewModel()
+//    @ObservedObject var profileViewModel = ProfileViewModel()
+//    @ObservedObject var mapViewModel = MapViewModel()
+//    
+//    return Group {
+//        StoreAnnotationV2(
+//            // storeViewModel: storeViewModel, profileViewModel: profileViewModel, mapViewModel: mapViewModel,
+//            storeItem: storeViewModel.store[0])
+//    }
+//}
 
-#Preview {
-    ClusteredAnnotation(cluster: Cluster(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), points: []))
-}
+//#Preview {
+//    ClusteredAnnotation(cluster: Cluster(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), points: []))
+//}
