@@ -289,9 +289,8 @@ struct DetailView: View {
                                         .scaledToFit()
                                 } placeholder: {
                                     ProgressView()
+                                        .frame(maxWidth: .infinity)
                                 }
-                                // .frame(width: geometry.size.width - 60)
-                                .background(Color.gray)
                                 .cornerRadius(10)
                                 .clipped()
                                 .onTapGesture {
@@ -430,8 +429,8 @@ struct DetailTitleImageView: View {
                     .scaledToFit()
             } placeholder: {
                 ProgressView()
+                    .frame(maxWidth: .infinity)
             }
-            .background(Color.gray)
             .clipped()
             
             // 그라데이션
