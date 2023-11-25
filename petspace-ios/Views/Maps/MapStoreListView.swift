@@ -8,7 +8,9 @@
 import SwiftUI
 import CoreLocation
 
-struct MapStoreListView: View {
+
+// Deprecated
+/* struct MapStoreListView: View {
     
     @ObservedObject var storeViewModel: StoreViewModel
     @ObservedObject var mapViewModel: MapViewModel
@@ -116,4 +118,4 @@ struct MapStoreListViewV2: View {
         }
         
     }
-}
+}*/
