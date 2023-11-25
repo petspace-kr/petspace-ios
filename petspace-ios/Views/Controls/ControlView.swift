@@ -390,7 +390,6 @@ struct ControlViewV3: View {
                             }
                         
                         HistoryView()
-                            .padding()
                             .tabItem {
                                 Label("예약", systemImage: "book.circle.fill")
                             }
