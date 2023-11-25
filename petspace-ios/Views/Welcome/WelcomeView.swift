@@ -54,6 +54,15 @@ struct WelcomeView: View {
     // 권한 관련 안내 모달
     @State private var isPermissionAlertPresented: Bool = false
     
+    // App Version
+    var appVersion: String {
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            return version
+        } else {
+            return "N/A"
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .center, content: {
                     
@@ -87,8 +96,8 @@ struct WelcomeView: View {
                     .bold()
                     .multilineTextAlignment(.center)
                 
-                Text("베타")
-                    .italic()
+                Text("ver \(appVersion)")
+                    .font(.system(size: 13))
                     .foregroundStyle(.secondary)
             }
             
@@ -205,7 +214,13 @@ struct WelcomeView: View {
             
             // 첫 접속이 아닐 경우 isWelcome == false
             else {
-                VStack {
+                Spacer()
+                
+                Text("ⓒ 2023 TEAM PETSPACE")
+                    .font(.system(size: 14))
+                    .foregroundStyle(.gray)
+                    .padding(.bottom, 4)
+                /* VStack {
                     // 개인정보 처리방침 뷰
                     Button {
                         isPrivacyViewPresented = true
@@ -314,6 +329,7 @@ struct WelcomeView: View {
                 }, message: {
                     Text("클립보드에 복사가 완료되었어요. 소중한 의견을 작성해 보내주세요.")
                 })
+                 */
             }
         })
         .onAppear {
