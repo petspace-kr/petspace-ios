@@ -338,7 +338,8 @@ struct DetailView: View {
                         }
                         
                         if isMapShowing {
-                            MapOneView(storeItem: storeItem, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+                            // MapOneView(storeItem: storeItem, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+                            MapOneViewV2(storeItem: storeItem, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                         }
                         
                         Spacer()

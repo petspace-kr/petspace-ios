@@ -160,6 +160,7 @@ struct MapViewV2: View {
             MapCompass()
             MapPitchToggle()
             MapUserLocationButton()
+            MapScaleView()
         }
         .safeAreaPadding()
         .onMapCameraChange { mapCameraUpdateContext in
@@ -219,6 +220,7 @@ struct MapViewV2: View {
                             
                             // 경로 새로고침 버튼
                             Button {
+                                isLoading = true
                                 fetchRoute()
                             } label: {
                                 ZStack {
@@ -314,6 +316,7 @@ struct MapViewV2: View {
                                 }
                                 
                                 Button {
+                                    isLoading = true
                                     fetchRoute()
                                 } label: {
                                     ZStack {
@@ -420,7 +423,7 @@ struct MapViewV2: View {
                                     .frame(height: 60)
                                 }
                             }
-                            .padding(.horizontal, 10)
+                            .padding(.horizontal, 14)
                         }
                         else {
                             ProgressView()
@@ -475,8 +478,6 @@ struct MapViewV2: View {
     }
     
     func fetchRoute() {
-        isLoading = true
-        
         if let selectedStore = selectedStore {
             let request = MKDirections.Request()
             request.source = MKMapItem(placemark: .init(coordinate: CLLocationCoordinate2D(latitude: mapViewModel.userLatitude, longitude: mapViewModel.userLongitude)))
@@ -740,7 +741,194 @@ struct MapOneView: View {
     }
 }
 
-#Preview {
+struct MapOneViewV2: View {
+    @State var storeItem: Store.Data.StoreItem
+    @ObservedObject var mapViewModel: MapViewModel
+    @ObservedObject var profileViewModel: ProfileViewModel
+    
+    // 지도 Routing 관련
+    @State private var routeDisplaying: Bool = false
+    @State private var route: MKRoute?
+    @State private var routeDestination: MKMapItem?
+    @State private var etaResult: MKDirections.ETAResponse?
+    
+    @State private var mapCameraPosition: MapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0))
+    // @State private var mapCamera: MapCamera = MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0)
+    let mapCameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 1200,
+                                                                    maximumDistance: 1200000)
+    
+    // 결과가 나왔는지
+    @State private var isLoading: Bool = false
+    @State private var isResult: Bool = false
+    
+    // 확대 여부
+    @State private var isExpanded: Bool = false
+    
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            Map(position: $mapCameraPosition, bounds: mapCameraBounds) {
+                
+                UserAnnotation()
+                
+                Annotation(storeItem.name, coordinate: CLLocationCoordinate2D(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude)) {
+                    AsyncImage(url: URL(string: storeItem.iconImage)) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .clipShape(Circle())
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(width: 30, height: 30)
+                    .shadow(radius: 5)
+                }
+                
+                if let route {
+                    MapPolyline(route.polyline)
+                        .stroke(.blue, lineWidth: 6)
+                }
+            }
+            .mapControls {
+                MapCompass()
+                MapPitchToggle()
+                MapUserLocationButton()
+                MapScaleView()
+            }
+            .onAppear {
+                mapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: storeItem.locationCoordinate, distance: 2000, heading: 0, pitch: 0))
+            }
+            
+            HStack {
+                Button {
+                    withAnimation(.spring()) {
+                        isResult = true
+                        isLoading = true
+                        fetchRoute()
+                    }
+                    // 경로 탐색 시작
+                } label: {
+                    VStack {
+                        if isLoading {
+                            ProgressView()
+                                .frame(width: 16, height: 16)
+                        } else {
+                            Image(systemName: isResult ? "goforward" : "arrow.triangle.turn.up.right.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 16, height: 16)
+                        }
+                        Text(isResult ? "새로고침" : "경로")
+                            .font(.system(size: 8))
+                            .foregroundStyle(mapViewModel.userLatitude == 0.0 || mapViewModel.userLongitude == 0.0 ? .gray : .blue)
+                            .fixedSize(horizontal: true, vertical: true)
+                    }
+                }
+                .padding(.horizontal, isResult ? 0 : 6)
+                .disabled(mapViewModel.userLatitude == 0.0 || mapViewModel.userLongitude == 0.0)
+                
+                if isResult {
+                    if let etaResult = etaResult {
+                        Text("\(String(format: "%.1f", (etaResult.distance / 1000)))km\n\(String(format: "%.0f", (etaResult.expectedTravelTime / 60)))분 예정")
+                            .font(.system(size: 12))
+                            .padding(.horizontal, 8)
+                            .fixedSize(horizontal: true, vertical: true)
+                        
+                        Button {
+                            // 경로 삭제
+                            resetRoute()
+                        } label: {
+                            VStack {
+                                Image(systemName: "xmark.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 16, height: 16)
+                                Text("삭제")
+                                    .font(.system(size: 8))
+                                    .foregroundStyle(.blue)
+                                    .fixedSize(horizontal: true, vertical: true)
+                            }
+                        }
+                    }
+                }
+                
+                Button {
+                    withAnimation(.spring()) {
+                        isExpanded.toggle()
+                        
+                        withAnimation(.spring()) {
+                            mapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: storeItem.locationCoordinate, distance: 2000, heading: 0, pitch: 0))
+                        }
+                    }
+                } label: {
+                    VStack {
+                        Image(systemName: isExpanded ? "arrow.up.right.and.arrow.down.left.circle" : "arrow.down.left.and.arrow.up.right.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 16, height: 16)
+                        Text(isExpanded ? "축소" : "확대")
+                            .font(.system(size: 8))
+                            .foregroundStyle(.blue)
+                            .fixedSize(horizontal: true, vertical: true)
+                    }
+                }
+                .padding(.horizontal, 6)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
+            .materialBackground()
+            .padding(.bottom, 8)
+        }
+        .cornerRadius(10)
+        .frame(height: isExpanded ? 600 : 300)
+    }
+    
+    func fetchRoute() {
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: .init(coordinate: CLLocationCoordinate2D(latitude: mapViewModel.userLatitude, longitude: mapViewModel.userLongitude)))
+        request.destination = MKMapItem(placemark: .init(coordinate: storeItem.locationCoordinate))
+        
+        print("source: \(mapViewModel.currentRegion.center)) -> to: \(storeItem.locationCoordinate))")
+        
+        Task {
+            let result = try? await MKDirections(request: request).calculate()
+            etaResult = try? await MKDirections(request: request).calculateETA()
+            route = result?.routes.first
+            routeDestination = MKMapItem(placemark: .init(coordinate: storeItem.locationCoordinate))
+            
+            if let etaResult = etaResult {
+                print("distance: \(String(describing: etaResult.distance))")
+                print("eta: \(String(describing: etaResult.expectedTravelTime))")
+                print("departure date: \(String(describing: etaResult.expectedDepartureDate))")
+                print("arrival date: \(String(describing: etaResult.expectedArrivalDate))")
+                print("transport type: \(String(describing: etaResult.transportType))")
+                
+                withAnimation(.spring()) {
+                    routeDisplaying = true
+                    isExpanded = true
+                    
+                    if let rect = route?.polyline.boundingMapRect {
+                        mapCameraPosition = .rect(rect)
+                    }
+                }
+            }
+            isLoading = false
+        }
+    }
+    
+    func resetRoute() {
+        withAnimation(.spring()) {
+            routeDisplaying = false
+            isExpanded = false
+            etaResult = nil
+            route = nil
+            routeDestination = nil
+            
+            mapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: storeItem.locationCoordinate, distance: 2000, heading: 0, pitch: 0))
+        }
+    }
+}
+
+/* #Preview {
     @ObservedObject var storeViewModel = StoreViewModel()
     @ObservedObject var mapViewModel = MapViewModel()
     @ObservedObject var profileViewModel = ProfileViewModel()
@@ -749,8 +937,20 @@ struct MapOneView: View {
         MapOneView(storeItem: storeViewModel.store[0], mapViewModel: mapViewModel, profileViewModel: profileViewModel)
             .padding(10)
     }
+} */
+
+#Preview {
+    @ObservedObject var storeViewModel = StoreViewModel()
+    @ObservedObject var mapViewModel = MapViewModel()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    
+    return Group {
+        MapOneViewV2(storeItem: storeViewModel.store[0], mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+            .padding(10)
+    }
 }
 
+// Deprecated
 struct StoreAnnotation: View {
     
     // Environment
