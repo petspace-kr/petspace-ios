@@ -79,13 +79,14 @@ struct ControlView: View {
                         }
                 }
                 else {
-                    MapStoreListView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+                    /* MapStoreListView(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
                         .onAppear() {
                             mapViewModel.checkLocationServiceEnabled()
                             GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.APP_OPEN, params: nil)
                             // View 방문 이벤트
                             GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
-                        }
+                        }*/
+                    Text("MapStoreListView Deprecated")
                 }
             }
         }
@@ -211,7 +212,8 @@ struct ControlViewV2: View {
                 }
                 else {
                     TabView {
-                        MapStoreListViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+                        /* MapStoreListViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)*/
+                        Text("MapStoreListViewV2 Deprecated")
                             .tabItem {
                                 Label("찾아보기", systemImage: "map")
                             }
