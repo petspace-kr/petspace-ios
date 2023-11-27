@@ -308,6 +308,7 @@ struct ControlViewV3: View {
     @State private var isError: Bool = false
     @State private var isLoading: Bool = true
     @State private var isFirst: Bool = false
+    @State private var isDataLoading: Bool = false
     
     // presented variable
     @State var isWelcomeViewPresented: Bool = false
@@ -367,16 +368,49 @@ struct ControlViewV3: View {
                 }
                 else {
                     TabView {
-                        MapViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
-                            .tabItem {
-                                Label("둘러보기", systemImage: "map.circle.fill")
+                        ZStack {
+                            MapViewV2(storeViewModel: storeViewModel, mapViewModel: mapViewModel, profileViewModel: profileViewModel)
+                            
+                            VStack {
+                                Spacer()
+                                    .frame(height: 20)
+                                
+                                HStack {
+                                    Spacer()
+                                        .frame(width: 20)
+                                    
+                                    HStack {
+                                        Text("PETSPACE")
+                                            .multilineTextAlignment(.center)
+                                            .font(.title3)
+                                            .bold()
+                                            .padding(.vertical, 5)
+                                            .padding(.horizontal, 10)
+                                        
+                                        if isDataLoading {
+                                            ProgressView()
+                                            
+                                            Spacer()
+                                                .frame(width: 12)
+                                        }
+                                    }
+                                    .materialBackground()
+                                    
+                                    Spacer()
+                                }
+                                
+                                Spacer()
                             }
-                            .onAppear() {
-                                mapViewModel.checkLocationServiceEnabled()
-                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.APP_OPEN, params: nil)
-                                // View 방문 이벤트
-                                GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
-                            }
+                        }
+                        .tabItem {
+                            Label("둘러보기", systemImage: "map.circle.fill")
+                        }
+                        .onAppear() {
+                            mapViewModel.checkLocationServiceEnabled()
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.APP_OPEN, params: nil)
+                            // View 방문 이벤트
+                            GATracking.eventScreenView(screenName: GATracking.ScreenNames.mainView)
+                        }
                         
                         StoreListViewV3(mapViewModel: mapViewModel, storeViewModel: storeViewModel, profileViewModel: profileViewModel)
                             .tabItem {

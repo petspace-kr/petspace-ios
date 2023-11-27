@@ -100,7 +100,7 @@ struct MapViewV2: View {
     
     @State private var mapCameraPosition: MapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0))
     // @State private var mapCamera: MapCamera = MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0)
-    let mapCameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 1200,
+    let mapCameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 600,
                                                                     maximumDistance: 1200000)
     
     // distance
@@ -127,33 +127,46 @@ struct MapViewV2: View {
     
     @State private var sheetScreenType: MapSheetScreenMode = .hidden
     
+    // 경로 로딩
+    // @State private var isRouteLoading: Bool = false
+    
     var body: some View {
         Map(position: $mapCameraPosition, bounds: mapCameraBounds) {
         // Map(initialPosition: .camera(mapCamera), bounds: mapCameraBounds) {
             UserAnnotation()
             
-            // 확대된 경우 전부 표시
-            if lastDistance < 40000 {
-                ForEach(storeViewModel.store) { storeItem in
-                    Annotation(storeItem.name, coordinate: CLLocationCoordinate2D(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude)) {
-                        StoreAnnotationV2(storeItem: storeItem, mapCameraPosition: $mapCameraPosition, isPreviewPresented: $isPreviewPresented, selectedStore: $selectedStore, sheetScreenType: $sheetScreenType)
+            // 경로를 보여주는 경우
+            if routeDisplaying {
+                if let selectedStore {
+                    Annotation(selectedStore.name, coordinate: CLLocationCoordinate2D(latitude: selectedStore.coordinate.latitude, longitude: selectedStore.coordinate.longitude)) {
+                        StoreAnnotationV2(storeItem: selectedStore, mapCameraPosition: $mapCameraPosition, isPreviewPresented: $isPreviewPresented, selectedStore: $selectedStore, sheetScreenType: $sheetScreenType)
                     }
                 }
-            }
-            // 클러스터링
-            else {
-                let clusters = clusterAnnotations(clusterRadius: 2 * (lastDistance / 120_000))
                 
-                ForEach(clusters) { cluster in
-                    Annotation("", coordinate: cluster.center) {
-                        ClusteredAnnotation(cluster: cluster, mapCameraPosition: $mapCameraPosition)
-                    }
+                if let route {
+                    MapPolyline(route.polyline)
+                        .stroke(.blue, lineWidth: 6)
                 }
             }
-            
-            if let route {
-                MapPolyline(route.polyline)
-                    .stroke(.blue, lineWidth: 6)
+            else {
+                // 확대된 경우 전부 표시
+                if lastDistance < 40000 {
+                    ForEach(storeViewModel.store) { storeItem in
+                        Annotation(storeItem.name, coordinate: CLLocationCoordinate2D(latitude: storeItem.coordinate.latitude, longitude: storeItem.coordinate.longitude)) {
+                            StoreAnnotationV2(storeItem: storeItem, mapCameraPosition: $mapCameraPosition, isPreviewPresented: $isPreviewPresented, selectedStore: $selectedStore, sheetScreenType: $sheetScreenType)
+                        }
+                    }
+                }
+                // 클러스터링
+                else {
+                    let clusters = clusterAnnotations(clusterRadius: 2 * (lastDistance / 120_000))
+                    
+                    ForEach(clusters) { cluster in
+                        Annotation("", coordinate: cluster.center) {
+                            ClusteredAnnotation(cluster: cluster, mapCameraPosition: $mapCameraPosition)
+                        }
+                    }
+                }
             }
         }
         .mapControls {
@@ -162,6 +175,7 @@ struct MapViewV2: View {
             MapUserLocationButton()
             MapScaleView()
         }
+        .controlSize(.mini)
         .safeAreaPadding()
         .onMapCameraChange { mapCameraUpdateContext in
             print("mapCam distance: \(mapCameraUpdateContext.camera.distance)")
@@ -200,7 +214,7 @@ struct MapViewV2: View {
                             } label: {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 15.0)
-                                        .fill(Color("Foreground1"))
+                                        .fill(Color.black)
                                     
                                     VStack {
                                         Image(systemName: "xmark.circle")
@@ -208,11 +222,11 @@ struct MapViewV2: View {
                                             .scaledToFit()
                                             .bold()
                                             .frame(width: 20, height: 20)
-                                            .foregroundColor(.white)
+                                            .foregroundColor(Color.white)
                                             .padding(.top, 3)
                                         Text("닫기")
                                             .font(.system(size: 12))
-                                            .foregroundColor(Color("Background1"))
+                                            .foregroundColor(Color.white)
                                     }
                                 }
                                 .frame(width: 60, height: 60)
@@ -220,7 +234,6 @@ struct MapViewV2: View {
                             
                             // 경로 새로고침 버튼
                             Button {
-                                isLoading = true
                                 fetchRoute()
                             } label: {
                                 ZStack {
@@ -237,7 +250,7 @@ struct MapViewV2: View {
                                             .padding(.top, 3)
                                         Text("새고로침")
                                             .font(.system(size: 11))
-                                            .foregroundColor(Color("Background1"))
+                                            .foregroundColor(.white)
                                     }
                                 }
                                 .frame(width: 60, height: 60)
@@ -283,7 +296,7 @@ struct MapViewV2: View {
                                             .padding(.top, 3)
                                         Text("자세히")
                                             .font(.system(size: 11))
-                                            .foregroundColor(Color("Background1"))
+                                            .foregroundColor(.white)
                                     }
                                 }
                                 .frame(width: 60, height: 60)
@@ -295,6 +308,7 @@ struct MapViewV2: View {
                         if let selectedStore {
                             StorePreviewView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: selectedStore)
                             HStack {
+                                // 저장 버튼
                                 Button {
                                     //
                                 } label: {
@@ -315,8 +329,8 @@ struct MapViewV2: View {
                                     .frame(height: 60)
                                 }
                                 
+                                // 경로 버튼
                                 Button {
-                                    isLoading = true
                                     fetchRoute()
                                 } label: {
                                     ZStack {
@@ -324,18 +338,28 @@ struct MapViewV2: View {
                                             .fill(Color("Background1"))
                                             .stroke(Color("Stroke1"), lineWidth: 1)
                                         
-                                        VStack {
-                                            Image(systemName: "arrow.triangle.turn.up.right.circle")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 20, height: 20)
-                                            Text("경로")
-                                                .font(.system(size: 10))
+                                        if isLoading {
+                                            VStack {
+                                                ProgressView()
+                                                    .frame(width: 20, height: 20)
+                                                Text("탐색중")
+                                                    .font(.system(size: 10))
+                                            }
+                                        } else {
+                                            VStack {
+                                                Image(systemName: "arrow.triangle.turn.up.right.circle")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 20, height: 20)
+                                                Text("경로")
+                                                    .font(.system(size: 10))
+                                            }
                                         }
+                                        
                                     }
                                     .frame(height: 60)
                                 }
-                                .disabled(mapViewModel.userLatitude == 0.0 || mapViewModel.userLongitude == 0.0)
+                                .disabled((mapViewModel.userLatitude == 0.0 || mapViewModel.userLongitude == 0.0) || isLoading)
                                 
                                 Button {
                                     // 전화 걸기
@@ -478,6 +502,8 @@ struct MapViewV2: View {
     }
     
     func fetchRoute() {
+        isLoading = true
+        
         if let selectedStore = selectedStore {
             let request = MKDirections.Request()
             request.source = MKMapItem(placemark: .init(coordinate: CLLocationCoordinate2D(latitude: mapViewModel.userLatitude, longitude: mapViewModel.userLongitude)))
@@ -754,7 +780,7 @@ struct MapOneViewV2: View {
     
     @State private var mapCameraPosition: MapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0))
     // @State private var mapCamera: MapCamera = MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: 37.498_600, longitude: 127.041_800), distance: 24000, heading: 0, pitch: 0)
-    let mapCameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 1200,
+    let mapCameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 200,
                                                                     maximumDistance: 1200000)
     
     // 결과가 나왔는지
@@ -781,6 +807,11 @@ struct MapOneViewV2: View {
                     }
                     .frame(width: 30, height: 30)
                     .shadow(radius: 5)
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            mapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: storeItem.locationCoordinate, distance: 2000, heading: 0, pitch: 0))
+                        }
+                    }
                 }
                 
                 if let route {
@@ -794,6 +825,7 @@ struct MapOneViewV2: View {
                 MapUserLocationButton()
                 MapScaleView()
             }
+            .controlSize(.mini)
             .onAppear {
                 mapCameraPosition = MapCameraPosition.camera(MapCamera(centerCoordinate: storeItem.locationCoordinate, distance: 2000, heading: 0, pitch: 0))
             }
@@ -835,6 +867,8 @@ struct MapOneViewV2: View {
                         
                         Button {
                             // 경로 삭제
+                            isResult = false
+                            isLoading = false
                             resetRoute()
                         } label: {
                             VStack {
@@ -1300,16 +1334,16 @@ struct StoreAnnotationV2: View {
         .frame(width: 30, height: 30)
         .shadow(radius: 5)
         .onTapGesture {
-            print(storeItem.name)
-            print(storeItem.locationCoordinate)
+            if sheetScreenType != .routeButton {
+                selectedStore = storeItem
+                
+                if selectedStore != nil {
+                    isPreviewPresented = true
+                    sheetScreenType = .previewStore
+                }
+            }
             withAnimation(.spring()) {
                 mapCameraPosition = .camera(MapCamera(centerCoordinate: storeItem.locationCoordinate, distance: 2000, heading: 0, pitch: 0))
-            }
-            selectedStore = storeItem
-            
-            if selectedStore != nil {
-                isPreviewPresented = true
-                sheetScreenType = .previewStore
             }
         }
         /* .sheet(isPresented: $isPresented) {

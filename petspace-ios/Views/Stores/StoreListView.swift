@@ -346,7 +346,7 @@ struct StoreListView: View {
     }
 }
 
-#Preview {
+/* #Preview {
     @ObservedObject var mapViewModel = MapViewModel()
     @ObservedObject var storeViewModel = StoreViewModel()
     @ObservedObject var profileViewModel = ProfileViewModel()
@@ -364,7 +364,7 @@ struct StoreListView: View {
         .ignoresSafeArea(edges: .bottom)
         .background(.green)
     }
-}
+} */
 
 struct StoreListViewV2: View {
     
@@ -653,7 +653,7 @@ struct StoreListViewV2: View {
     }
 }
 
-#Preview {
+/* #Preview {
     @ObservedObject var mapViewModel = MapViewModel()
     @ObservedObject var storeViewModel = StoreViewModel()
     @ObservedObject var profileViewModel = ProfileViewModel()
@@ -693,7 +693,7 @@ struct StoreListViewV2: View {
         }
         
     }
-}
+}*/
 
 struct StoreListViewV3: View {
     
@@ -867,9 +867,12 @@ struct StoreListViewV3: View {
                             }
                         }
                     }
-                    
-                    
                 })
+                .refreshable {
+                    // reload store list
+                    storeViewModel.loadStoreListData()
+                    print("refresh")
+                }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItemGroup(placement: .topBarLeading, content: {
