@@ -136,31 +136,59 @@ struct ProfileView: View {
                 
             }
             
-            VStack {
+            ScrollView {
                 VStack(spacing: 20, content: {
                     
-                     // 고양이 강아지
-                        /* GeometryReader { geometry in
-                            HStack(alignment: .center) {
-                                Button {
-
-                                } label: {
-                                    Label("강아지", systemImage: "dog")
-                                        .tint(.blue)
+                    // 고양이 강아지
+                    /* HStack {
+                        Button {
+                            dogSize = .small
+                            dogBreed = ""
+                            dogBreedIndex = -1
+                        } label: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .fill(Color.blue)
+                                    .stroke(Color("Stroke1"), lineWidth: 1)
+                                
+                                HStack {
+                                    Image(systemName: "cat")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundStyle(Color.primary)
+                                    Text("고양이")
+                                        .foregroundStyle(Color.primary)
                                 }
-                                .frame(width: geometry.size.width / 2 - 10)
-                                .background(.blue)
-
-                                Button {
-
-                                } label: {
-                                    Label("고양이", systemImage: "cat")
-                                        .tint(.blue)
-                                }
-                                .frame(width: geometry.size.width / 2 - 10)
-                                .background(.blue)
                             }
-                        } */
+                            .frame(height: 54)
+                        }
+                        .frame(maxWidth: .infinity)
+                        
+                        Button {
+                            dogSize = .small
+                            dogBreed = ""
+                            dogBreedIndex = -1
+                        } label: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .fill(Color("Background1"))
+                                    .stroke(Color("Stroke1"), lineWidth: 1)
+                                
+                                HStack {
+                                    Image(systemName: "dog")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundStyle(Color.primary)
+                                    Text("강아지")
+                                        .foregroundStyle(Color.primary)
+                                }
+                            }
+                            .frame(height: 54)
+                        }
+                        .frame(maxWidth: .infinity)
+                    } */
                     
                     if isEditing {
                         ZStack {
@@ -242,94 +270,173 @@ struct ProfileView: View {
                         .frame(height: 48)
                     })
                     
+                    
                     // 견종
                     VStack(alignment: .leading, content: {
                         Text("견종")
                         
+                        HStack {
+                            Button {
+                                dogSize = .small
+                                dogBreed = ""
+                                dogBreedIndex = -1
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10.0)
+                                        .fill(dogSize == .small ? Color.gray : Color("Background1"))
+                                        .stroke(Color("Stroke1"), lineWidth: 1)
+                                    
+                                    HStack {
+                                        Image(systemName: "dog")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 15, height: 15)
+                                            .foregroundStyle(Color.primary)
+                                        Text("소형견")
+                                            .foregroundStyle(Color.primary)
+                                    }
+                                }
+                                .frame(height: 54)
+                            }
+                            .frame(maxWidth: .infinity)
+                            
+                            Button {
+                                dogSize = .medium
+                                dogBreed = ""
+                                dogBreedIndex = -1
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10.0)
+                                        .fill(dogSize == .medium ? Color.gray : Color("Background1"))
+                                        .stroke(Color("Stroke1"), lineWidth: 1)
+                                    
+                                    HStack {
+                                        Image(systemName: "dog")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundStyle(Color.primary)
+                                        Text("중형견")
+                                            .foregroundStyle(Color.primary)
+                                    }
+                                }
+                                .frame(height: 54)
+                            }
+                            .frame(maxWidth: .infinity)
+                            
+                            Button {
+                                dogSize = .large
+                                dogBreed = ""
+                                dogBreedIndex = -1
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10.0)
+                                        .fill(dogSize == .large ? Color.gray : Color("Background1"))
+                                        .stroke(Color("Stroke1"), lineWidth: 1)
+                                    
+                                    HStack {
+                                        Image(systemName: "dog")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 25, height: 25)
+                                            .foregroundStyle(Color.primary)
+                                        Text("대형견")
+                                            .foregroundStyle(Color.primary)
+                                    }
+                                }
+                                .frame(height: 54)
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.bottom, 3)
+                        
                         GroupBox {
                             if isEditing {
                                 HStack {
-                                    Menu {
-                                        Section("소, 중, 대형견 중 선택하세요") {
-                                            Menu {
-                                                Section("소형견 중 견종을 선택하세요") {
-                                                    ForEach(Array(dogBreedData.small.enumerated()), id: \.offset) { index, dog in
-                                                        Button("\(dog.name)") {
-                                                            dogSize = .small
-                                                            dogBreedIndex = index
-                                                            dogBreed = dogBreedData.small[index].name
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                Section("목록에 없다면 선택하세요") {
-                                                    Button("여기에 없는 소형견이에요") {
+                                    if dogSize == .small {
+                                        Menu {
+                                            Section("소형견 중 견종을 선택하세요") {
+                                                ForEach(Array(dogBreedData.small.enumerated()), id: \.offset) { index, dog in
+                                                    Button("\(dog.name)") {
                                                         dogSize = .small
-                                                        dogBreedIndex = -999
-                                                        dogBreed = ""
+                                                        dogBreedIndex = index
+                                                        dogBreed = dogBreedData.small[index].name
                                                     }
                                                 }
-                                                
-                                            } label: {
-                                                Text("소형견")
                                             }
-                                            Menu {
-                                                Section("중형견 중 견종을 선택하세요") {
-                                                    ForEach(Array(dogBreedData.medium.enumerated()), id: \.offset) { index, dog in
-                                                        Button("\(dog.name)") {
-                                                            dogSize = .medium
-                                                            dogBreedIndex = index
-                                                            dogBreed = dogBreedData.medium[index].name
-                                                        }
-                                                    }
+                                            
+                                            Section("목록에 없다면 선택하세요") {
+                                                Button("여기에 없는 소형견이에요") {
+                                                    dogSize = .small
+                                                    dogBreedIndex = -999
+                                                    dogBreed = ""
                                                 }
-                                                
-                                                Section("목록에 없다면 선택하세요") {
-                                                    Button("여기에 없는 중형견이에요") {
-                                                        dogSize = .medium
-                                                        dogBreedIndex = -999
-                                                        dogBreed = ""
-                                                    }
-                                                }
-                                                
-                                            } label: {
-                                                Text("중형견")
                                             }
-                                            Menu {
-                                                Section("대형견 중 견종을 선택하세요") {
-                                                    ForEach(Array(dogBreedData.large.enumerated()), id: \.offset) { index, dog in
-                                                        Button("\(dog.name)") {
-                                                            dogSize = .large
-                                                            dogBreedIndex = index
-                                                            dogBreed = dogBreedData.large[index].name
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                Section("목록에 없다면 선택하세요") {
-                                                    Button("여기에 없는 대형견이에요") {
-                                                        dogSize = .large
-                                                        dogBreedIndex = -999
-                                                        dogBreed = ""
-                                                    }
-                                                }
-                                                
-                                            } label: {
-                                                Text("대형견")
-                                            }
+                                            
+                                        } label: {
+                                            Text(dogBreedIndex == -999 ? "소형견" : dogBreedIndex == -1 ? "선택하세요" : dogBreed)
                                         }
+                                        .frame(height: 24)
                                         
-                                    } label: {
-                                        // Text(dog_breed == "" ? "선택하세요" : (dog_breed_index == -999 ? dog_size_text[dog_size] : dog_breed))
+                                        Spacer()
                                         
-                                        // Text(dogBreedIndex == -999 ? DogSize(rawValue: dogSize.rawValue)?.rawValue : (dogBreed == "" ? "선택하세요" : dogBreed))
+                                    } else if dogSize == .medium {
+                                        Menu {
+                                            Section("중형견 중 견종을 선택하세요") {
+                                                ForEach(Array(dogBreedData.medium.enumerated()), id: \.offset) { index, dog in
+                                                    Button("\(dog.name)") {
+                                                        dogSize = .medium
+                                                        dogBreedIndex = index
+                                                        dogBreed = dogBreedData.medium[index].name
+                                                    }
+                                                }
+                                            }
+                                            
+                                            Section("목록에 없다면 선택하세요") {
+                                                Button("여기에 없는 중형견이에요") {
+                                                    dogSize = .medium
+                                                    dogBreedIndex = -999
+                                                    dogBreed = ""
+                                                }
+                                            }
+                                            
+                                        } label: {
+                                            Text(dogBreedIndex == -999 ? "중형견" : dogBreedIndex == -1 ? "선택하세요" : dogBreed)
+                                        }
+                                        .frame(height: 24)
                                         
-                                        Text(dogBreedIndex == -999 ? dogSizeString[dogSize.rawValue] : (dogBreed == "" ? "선택하세요" : dogBreed))
+                                        Spacer()
                                         
-                                    } // End of Menu
-                                    .frame(height: 24)
-                                    Spacer()
+                                    } else {
+                                        Menu {
+                                            Section("대형견 중 견종을 선택하세요") {
+                                                ForEach(Array(dogBreedData.large.enumerated()), id: \.offset) { index, dog in
+                                                    Button("\(dog.name)") {
+                                                        dogSize = .large
+                                                        dogBreedIndex = index
+                                                        dogBreed = dogBreedData.large[index].name
+                                                    }
+                                                }
+                                            }
+                                            
+                                            Section("목록에 없다면 선택하세요") {
+                                                Button("여기에 없는 대형견이에요") {
+                                                    dogSize = .large
+                                                    dogBreedIndex = -999
+                                                    dogBreed = ""
+                                                }
+                                            }
+                                            
+                                        } label: {
+                                            Text(dogBreedIndex == -999 ? "대형견" : dogBreedIndex == -1 ? "선택하세요" : dogBreed)
+                                        }
+                                        .frame(height: 24)
+                                        
+                                        Spacer()
+                                    }
                                 }
+                                .frame(maxWidth: .infinity)
                             } else {
                                 HStack {
                                     Text(dogBreed)
@@ -428,6 +535,7 @@ struct ProfileView: View {
                 .animation(.easeInOut, value: 0.1)
                 
                 Spacer()
+                Spacer().frame(height: 30)
                 
                 if isKeyboardFocused {
                     CloseKeyboardButton()
