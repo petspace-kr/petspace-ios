@@ -20,6 +20,7 @@ struct PermissionView: View {
     @State private var isLocationPermission: Int = 0
     @State private var isPreciseLocationPermission: Int = 0
     @State private var isPhotoPermission: Int = 1
+    @State private var isAlarmPermission: Int = 0
     
     // 위치 권한 허용 타이머 및 관련 변수
     @State private var timer: Timer?
@@ -196,7 +197,7 @@ struct PermissionView: View {
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom, 1)
                                 
-                                Button {
+                                /* Button {
                                     
                                 } label: {
                                     Text(isPhotoPermission == 0 ? "허가하기" : "허가됨")
@@ -208,7 +209,54 @@ struct PermissionView: View {
                                         .foregroundColor(.white)
                                         .cornerRadius(.infinity)
                                 }
-                                .disabled(isPhotoPermission > 0)
+                                .disabled(isPhotoPermission > 0)*/
+                            }
+                            
+                            Spacer()
+                        }
+                    } // End of GroupBox
+                    
+                    // 알림
+                    GroupBox {
+                        HStack(alignment: .top, spacing: 14) {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.orange)
+                                    .frame(width: 52, height: 52)
+                                    .cornerRadius(10)
+                                
+                                Image(systemName: "bell.badge")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .bold()
+                                    .frame(width: 24)
+                                    .foregroundColor(.white)
+                            }
+                            
+                            VStack(alignment: .leading) {
+                                Text("앱 알림 허용")
+                                    .bold()
+                                    .font(.system(size: 15))
+                                    .padding(.bottom, 1)
+                                
+                                Text("애견 미용실 예약 정보, 예약 상태 알림, 업데이트 내용을 푸시 알림, 뱃지를 통해 알려드려요. 알림 권한은 앱 내 설정에서 변경할 수 있어요.")
+                                    .font(.system(size: 12))
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.bottom, 1)
+                                
+                                Button {
+                                    requestNotificationPermission()
+                                } label: {
+                                    Text(isAlarmPermission == 0 ? "허가하기" : isAlarmPermission == 1 ? "허가됨" : "거부됨")
+                                        .bold()
+                                        .font(.system(size: 15))
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .background(Color.accentColor)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(.infinity)
+                                }
+                                .disabled(isAlarmPermission > 0)
                             }
                             
                             Spacer()
@@ -234,6 +282,20 @@ struct PermissionView: View {
             }
             .standardButton()
         }
+    }
+    
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, Error in
+            if didAllow {
+                print("Push: 권한 허용")
+                // return true
+                isAlarmPermission = 1
+            } else {
+                print("Push: 권한 거부")
+                // return false
+                isAlarmPermission = 2
+            }
+        })
     }
 }
 

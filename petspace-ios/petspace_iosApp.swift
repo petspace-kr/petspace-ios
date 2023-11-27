@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseMessagingInterop
 
 @main
 struct petspace_iosApp: App {
@@ -21,3 +23,4 @@ struct petspace_iosApp: App {
         }
     }
 }
+

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingView: View {
     
-    @State private var testIsOn1: Bool = false
+    @State private var isAlarmPermitted: Bool = false
     @State private var testIsOn2: Bool = false
     
     // 권한 설정
@@ -30,6 +30,9 @@ struct SettingView: View {
     
     // 프로필 View Model
     @ObservedObject var profileViewModel: ProfileViewModel
+    
+    // 알림 설정 허가 여부
+    @State private var isAlarmPermission: Int = 0
     
     // App Version
     var appVersion: String {
@@ -86,10 +89,19 @@ struct SettingView: View {
                             
                             Spacer()
                             
-                            Toggle(isOn: $testIsOn1) {
-                                
-                            }
-                            .disabled(true)
+                            Toggle("", isOn: $isAlarmPermitted)
+                                .onChange(of: isAlarmPermitted) { value in
+                                    // true
+                                    if value {
+                                        requestNotificationPermission()
+                                    }
+                                    // false
+                                    else {
+                                        
+                                    }
+                                    
+                                    // requestNotificationPermission()
+                                }
                             
                             Spacer()
                                 .frame(width: 10)
@@ -97,7 +109,7 @@ struct SettingView: View {
                     }
                     .frame(height: 48)
                     
-                    Spacer()
+                    /* Spacer()
                         .frame(height: 10)
                     
                     ZStack {
@@ -132,7 +144,7 @@ struct SettingView: View {
                                 .frame(width: 10)
                         }
                     }
-                    .frame(height: 48)
+                    .frame(height: 48)*/
                     
                     Spacer()
                         .frame(height: 30)
@@ -374,6 +386,11 @@ struct SettingView: View {
         }
         .padding()
         
+        // 알림 설정 여부
+        .onAppear {
+            checkNotificationPermitted()
+        }
+        
         // 개인정보 처리방침 뷰
         .sheet(isPresented: $isPrivacyViewPresented, onDismiss: {
             GATracking.sendLogEvent(eventName: GATracking.InfoViewMessage.INFO_PAGE_PRIVACY_CLOSE, params: nil)
@@ -478,6 +495,51 @@ struct SettingView: View {
         
         // 앱 초기 상태로 되돌림 (WelcomeView 표시)
         UserDefaults.standard.set(false, forKey: "hasShownWelcomeView")
+    }
+    
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, Error in
+            if didAllow {
+                print("Push: 권한 허용")
+                // return true
+                isAlarmPermission = 1
+                isAlarmPermitted = true
+            } else {
+                print("Push: 권한 거부")
+                // return false
+                isAlarmPermission = 2
+                isAlarmPermitted = false
+            }
+        })
+        
+        checkNotificationPermitted()
+    }
+    
+    func checkNotificationPermitted() {
+        let center = UNUserNotificationCenter.current()
+        
+        center.getNotificationSettings { settings in
+            switch settings.alertSetting {
+            case .notSupported:
+                isAlarmPermission = 0
+                isAlarmPermitted = false
+            case .disabled:
+                isAlarmPermission = 2
+                isAlarmPermitted = false
+            case .enabled:
+                isAlarmPermission = 1
+                isAlarmPermitted = true
+            @unknown default:
+                isAlarmPermission = 0
+                isAlarmPermitted = false
+            }
+        }
+        print(isAlarmPermitted.description)
+        print(isAlarmPermission)
+        
+        if isAlarmPermission == 2 {
+            isPermissionAlertPresented = true
+        }
     }
 }
 
