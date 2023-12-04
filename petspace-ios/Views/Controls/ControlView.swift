@@ -417,8 +417,10 @@ struct ControlViewV3: View {
                                 Label("미용실", systemImage: "storefront.circle.fill")
                             }
                         
-                        ProfileView(isPresented: .constant(true), isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
-                            .padding()
+//                        ProfileView(isPresented: .constant(true), isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                        // .padding()
+                        // ProfileListView(profileViewModel: profileViewModel)
+                        ProfileTestView(profileViewModel: profileViewModel)
                             .tabItem {
                                 Label("프로필", systemImage: "dog.circle.fill")
                             }

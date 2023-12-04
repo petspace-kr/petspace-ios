@@ -17,7 +17,27 @@ class ProfileViewModel: ObservableObject {
     @Published var selectedProfileIndex: Int = -1
     
     init() {
-        loadProfile()
+        addDummyData()
+        // loadProfile()
+    }
+    
+    func addDummyData() {
+        if let url = Bundle.main.url(forResource: "dummyprofile", withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                var profile = try decoder.decode(DogProfile.self, from: data)
+                
+                if profile.id == nil {
+                    profile.id = UUID()
+                }
+                
+                self.dogProfile = [profile]
+                selectedProfileIndex = 0
+            } catch {
+                print("Error while decoding JSON: \(error)")
+            }
+        }
     }
     
     func loadProfile() {
@@ -86,13 +106,22 @@ class ProfileViewModel: ObservableObject {
 }
 
 struct DogProfile: Identifiable, Codable {
-    var id: UUID
+    var id: UUID?
     var dogName: String
     var dogBreed: String
     var dogSize: DogSize
     var dogWeight: Double
     var profileImageData: Data?
     // var birthday: Date?
+    
+    init(dogName: String, dogBreed: String, dogSize: DogSize, dogWeight: Double) {
+        self.id = UUID()
+        self.dogName = dogName
+        self.dogBreed = dogBreed
+        self.dogSize = dogSize
+        self.dogWeight = dogWeight
+        self.profileImageData = nil
+    }
     
     init(dogName: String, dogBreed: String, dogSize: DogSize, dogWeight: Double, profileImage: UIImage?) {
         self.id = UUID()
@@ -118,7 +147,7 @@ enum DogSize: Int, Codable {
 
 struct ProfileTestView: View {
     
-    @ObservedObject var profileViewModel = ProfileViewModel()
+    @ObservedObject var profileViewModel: ProfileViewModel
     
     @State private var name: String = ""
     @State private var breed: String = ""
@@ -197,6 +226,8 @@ struct ProfileTestView: View {
                         }
                     }
                 }
+                .listStyle(.plain)
+                .padding(0)
             }
         }
         .padding()
@@ -204,7 +235,11 @@ struct ProfileTestView: View {
 }
 
 #Preview {
-    ProfileTestView()
+    @ObservedObject var profileViewModel = ProfileViewModel()
+    
+    return Group {
+        ProfileTestView(profileViewModel: profileViewModel)
+    }
 }
 
 extension UIImage {

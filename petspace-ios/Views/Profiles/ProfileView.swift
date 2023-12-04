@@ -276,77 +276,84 @@ struct ProfileView: View {
                         Text("견종")
                         
                         HStack {
-                            Button {
-                                dogSize = .small
-                                dogBreed = ""
-                                dogBreedIndex = -1
-                            } label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10.0)
-                                        .fill(dogSize == .small ? Color.gray : Color("Background1"))
-                                        .stroke(Color("Stroke1"), lineWidth: 1)
-                                    
-                                    HStack {
-                                        Image(systemName: "dog")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 15, height: 15)
-                                            .foregroundStyle(Color.primary)
-                                        Text("소형견")
-                                            .foregroundStyle(Color.primary)
+                             if isEditing || dogSize == .small {
+                                Button {
+                                    dogSize = .small
+                                    dogBreed = ""
+                                    dogBreedIndex = -1
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(!isEditing ? Color("Background1") : dogSize == .small ? Color.gray : Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        HStack {
+                                            Image(systemName: "dog")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 15, height: 15)
+                                                .foregroundStyle(Color.primary)
+                                            Text("소형견")
+                                                .foregroundStyle(Color.primary)
+                                        }
                                     }
+                                    .frame(height: 54)
                                 }
-                                .frame(height: 54)
+                                .frame(maxWidth: .infinity)
+                                .disabled(!isEditing)
                             }
-                            .frame(maxWidth: .infinity)
-                            
-                            Button {
-                                dogSize = .medium
-                                dogBreed = ""
-                                dogBreedIndex = -1
-                            } label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10.0)
-                                        .fill(dogSize == .medium ? Color.gray : Color("Background1"))
-                                        .stroke(Color("Stroke1"), lineWidth: 1)
-                                    
-                                    HStack {
-                                        Image(systemName: "dog")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 20, height: 20)
-                                            .foregroundStyle(Color.primary)
-                                        Text("중형견")
-                                            .foregroundStyle(Color.primary)
+                            if isEditing || dogSize == .medium {
+                                Button {
+                                    dogSize = .medium
+                                    dogBreed = ""
+                                    dogBreedIndex = -1
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(!isEditing ? Color("Background1") : dogSize == .medium ? Color.gray : Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        HStack {
+                                            Image(systemName: "dog")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                                .foregroundStyle(Color.primary)
+                                            Text("중형견")
+                                                .foregroundStyle(Color.primary)
+                                        }
                                     }
+                                    .frame(height: 54)
                                 }
-                                .frame(height: 54)
+                                .frame(maxWidth: .infinity)
+                                .disabled(!isEditing)
                             }
-                            .frame(maxWidth: .infinity)
-                            
-                            Button {
-                                dogSize = .large
-                                dogBreed = ""
-                                dogBreedIndex = -1
-                            } label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10.0)
-                                        .fill(dogSize == .large ? Color.gray : Color("Background1"))
-                                        .stroke(Color("Stroke1"), lineWidth: 1)
-                                    
-                                    HStack {
-                                        Image(systemName: "dog")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 25, height: 25)
-                                            .foregroundStyle(Color.primary)
-                                        Text("대형견")
-                                            .foregroundStyle(Color.primary)
+                            if isEditing || dogSize == .large {
+                                Button {
+                                    dogSize = .large
+                                    dogBreed = ""
+                                    dogBreedIndex = -1
+                                } label: {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .fill(!isEditing ? Color("Background1") : dogSize == .large ? Color.gray : Color("Background1"))
+                                            .stroke(Color("Stroke1"), lineWidth: 1)
+                                        
+                                        HStack {
+                                            Image(systemName: "dog")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 25, height: 25)
+                                                .foregroundStyle(Color.primary)
+                                            Text("대형견")
+                                                .foregroundStyle(Color.primary)
+                                        }
                                     }
+                                    .frame(height: 54)
                                 }
-                                .frame(height: 54)
+                                .frame(maxWidth: .infinity)
+                                .disabled(!isEditing)
                             }
-                            .frame(maxWidth: .infinity)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.bottom, 3)
