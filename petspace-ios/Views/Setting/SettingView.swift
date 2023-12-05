@@ -460,7 +460,8 @@ struct SettingView: View {
         // 프로필 데이터 초기화
         .alert("프로필 데이터를 초기화할까요?", isPresented: $isResetProfileAlertPresented, actions: {
             Button("초기화할게요", role: .destructive) {
-                
+                profileViewModel.resetAllProfile()
+                profileViewModel.saveProfile()
             }
             Button("취소할게요", role: .cancel) {
                 
