@@ -95,6 +95,14 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
+    func deleteProfile(index: Int) {
+        dogProfile.remove(at: index)
+        selectedProfileIndex = max(selectedProfileIndex - 1, -1)
+        
+        saveProfile()
+        print("profile #\(index) deleted. now num of profiles: \(dogProfile.count) and index is \(selectedProfileIndex)")
+    }
+    
     func resetAllProfile() {
         dogProfile.removeAll()
         dogProfile = []
@@ -102,6 +110,7 @@ class ProfileViewModel: ObservableObject {
         
         // 삭제된 데이터를 로컬 저장소에 저장
         saveProfile()
+        print("all profile data removed.")
     }
 }
 
@@ -191,17 +200,23 @@ struct ProfileTestView: View {
             }
             
             HStack {
-                Button("Add Profile") {
+                Button("Add") {
                     profileViewModel.addProfile(dogName: name, dogBreed: breed, dogSize: .small, dogWeight: 10.0, profileImage: nil)
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(name == "" || breed == "" || weight == "")
                 
-                Button("Update Profile") {
+                Button("Update") {
                     profileViewModel.updateProfile(index: currentIndex, dogName: name, dogBreed: breed, dogSize: .small, dogWeight: 10.0, profileImage: nil)
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(name == "" || breed == "" || weight == "")
+                
+                Button("Delete") {
+                    profileViewModel.deleteProfile(index: currentIndex)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.orange)
                 
                 Button("Reset") {
                     profileViewModel.resetAllProfile()

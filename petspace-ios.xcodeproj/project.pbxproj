@@ -115,6 +115,7 @@
 		0CE4B9482B14D62D0046D834 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 0CE4B9472B14D62D0046D834 /* FirebaseStorageCombine-Community */; };
 		0CE5B5A72AFD22E3007BD3BB /* WelcomeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */; };
 		0CE5B5A92AFD266E007BD3BB /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5B5A82AFD266E007BD3BB /* ViewExtensions.swift */; };
+		0CFB407E2B1F6E9600DC602A /* ProfileAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFB407D2B1F6E9600DC602A /* ProfileAddView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,6 +172,7 @@
 		0CE4B8E02B14D5730046D834 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0CE5B5A62AFD22E3007BD3BB /* WelcomeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeRowView.swift; sourceTree = "<group>"; };
 		0CE5B5A82AFD266E007BD3BB /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		0CFB407D2B1F6E9600DC602A /* ProfileAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -377,6 +379,7 @@
 				0CB76C6B2AFA7CD9009D7424 /* ProfileView.swift */,
 				0C6451C32B1E268600F677EF /* ProfileListView.swift */,
 				0C6451C72B1E394A00F677EF /* ProfileEditView.swift */,
+				0CFB407D2B1F6E9600DC602A /* ProfileAddView.swift */,
 			);
 			path = Profiles;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				0C3CBCBF2AFB85D4000862C3 /* ErrorDeclarationView.swift in Sources */,
 				0C4993912B107BC600FC60C9 /* StorePreviewView.swift in Sources */,
 				0CB76C772AFA809D009D7424 /* StoreData.swift in Sources */,
+				0CFB407E2B1F6E9600DC602A /* ProfileAddView.swift in Sources */,
 				0C3CBCBD2AFB85C4000862C3 /* SettingView.swift in Sources */,
 				0C3CBCC12AFB85EB000862C3 /* AppLoadingView.swift in Sources */,
 				0C3CBCA92AFB84C1000862C3 /* WelcomeView.swift in Sources */,

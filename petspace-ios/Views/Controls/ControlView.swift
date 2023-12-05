@@ -419,8 +419,8 @@ struct ControlViewV3: View {
                         
 //                        ProfileView(isPresented: .constant(true), isEditing: false, isFirstRegister: false, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
                         // .padding()
-                        // ProfileListView(profileViewModel: profileViewModel)
-                        ProfileTestView(profileViewModel: profileViewModel)
+                         ProfileListView(profileViewModel: profileViewModel)
+                        // ProfileTestView(profileViewModel: profileViewModel)
                             .tabItem {
                                 Label("프로필", systemImage: "dog.circle.fill")
                             }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// deprecated
 struct ProfileView: View {
     
     // Environment
