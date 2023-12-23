@@ -43,7 +43,8 @@ struct MapView: View {
                                         route: $route,
                                         mapCameraPosition: $mapCameraPosition,
                                         etaResult: $etaResult,
-                                        selectedAnnotationId: $selectedAnnotationId
+                                        selectedAnnotationId: $selectedAnnotationId,
+                                        storeViewModel: storeViewModel
                         )
                     }
                 }
@@ -454,7 +455,7 @@ struct MapViewV2: View {
                         }
                     case .detailView:
                         if let selectedStore {
-                            DetailView(storeItem: selectedStore, isPresented: $isPreviewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                            DetailView(storeItem: selectedStore, isPresented: $isPreviewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeViewModel: storeViewModel)
                                 .background(Color("Background2"))
                         }
                         else {
@@ -601,6 +602,7 @@ struct MapOneView: View {
     @State var storeItem: Store.Data.StoreItem
     @ObservedObject var mapViewModel: MapViewModel
     @ObservedObject var profileViewModel: ProfileViewModel
+    @ObservedObject var storeViewModel: StoreViewModel
     
     // 지도 Routing 관련
     @State private var routeDisplaying: Bool = false
@@ -631,7 +633,8 @@ struct MapOneView: View {
                                     route: $route,
                                     mapCameraPosition: $mapCameraPosition,
                                     etaResult: $etaResult,
-                                    selectedAnnotationId: .constant(storeItem.id)
+                                    selectedAnnotationId: .constant(storeItem.id),
+                                    storeViewModel: storeViewModel
                     )
                 }
                 
@@ -1012,6 +1015,8 @@ struct StoreAnnotation: View {
     @State private var isLoading: Bool = false
     @State private var isResult: Bool = false
     
+    @ObservedObject var storeViewModel: StoreViewModel
+    
     var body: some View {
         VStack(spacing: 5) {
             // 이미지
@@ -1069,7 +1074,7 @@ struct StoreAnnotation: View {
             .sheet(isPresented: $isDetailViewPresented, onDismiss: {
                 
             }, content: {
-                DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeViewModel: storeViewModel)
                     .presentationDragIndicator(.visible)
                     .onAppear() {
                         // View 방문 이벤트

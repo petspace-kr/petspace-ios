@@ -22,6 +22,7 @@ struct HistoryView: View {
                     
                 }
                 .padding(.trailing, 6)
+                .disabled(true)
             }
             
             Spacer()

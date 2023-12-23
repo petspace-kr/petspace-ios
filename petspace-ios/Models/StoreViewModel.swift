@@ -20,7 +20,9 @@ class StoreViewModel: ObservableObject {
         loadData()
         
         // 서버에서 데이터 받아옴
-        loadStoreListData()
+        loadStoreListData {
+            print("store data all loaded")
+        }
     }
     
     // 내부 local 파일에서 데이터를 불러옴
@@ -37,7 +39,7 @@ class StoreViewModel: ObservableObject {
         }
     }
     
-    func loadStoreListData() {
+    func loadStoreListData(completion: @escaping () -> Void) {
         print("loadStoreListData")
         
         let parameters = "{\"breed\": \"시고르자브\",\"kg\": 7.3\n}"
@@ -60,6 +62,68 @@ class StoreViewModel: ObservableObject {
                 // print("get data : \(returnedPost)")
                 self?.store = returnedPost.data.items
                 print("num of data: \(String(describing: self?.store.count))")
+                completion()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func loadStoreListDataV2(dogBreed: String, dogWeight: Double, completion: @escaping() -> Void) {
+        print("loadStoreListData V2")
+        
+        let parameters = "{\"breed\": \"\(dogBreed)\",\"kg\": \(String(format: "%.2f", dogWeight))}"
+        print("parameters: " + parameters)
+        let postData = parameters.data(using: .utf8)
+        
+        guard let url = URL(string: ServerURLCollection.getStoreList.rawValue) else { return }
+        
+        var request = URLRequest(url: url, timeoutInterval: 3000)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        URLSession.shared.dataTaskPublisher(for: request)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .tryMap(validate)
+            .decode(type: Store.self, decoder: JSONDecoder())
+            .sink { _ in
+            } receiveValue: { [weak self] returnedPost in
+                // print("get data : \(returnedPost)")
+                self?.store = returnedPost.data.items
+                print("num of data: \(String(describing: self?.store.count))")
+                completion()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func loadStoreListDataVM(profileViewModel: ProfileViewModel, completion: @escaping() -> Void) {
+        print("loadStoreListData with VM")
+        
+        let dogBreed = profileViewModel.selectedProfile.dogBreed
+        let dogWeight = profileViewModel.selectedProfile.dogWeight
+        
+        let parameters = "{\"breed\": \"\(dogBreed)\",\"kg\": \(String(format: "%.2f", dogWeight))}"
+        print("parameters: " + parameters)
+        let postData = parameters.data(using: .utf8)
+        
+        guard let url = URL(string: ServerURLCollection.getStoreList.rawValue) else { return }
+        
+        var request = URLRequest(url: url, timeoutInterval: 3000)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        
+        URLSession.shared.dataTaskPublisher(for: request)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .tryMap(validate)
+            .decode(type: Store.self, decoder: JSONDecoder())
+            .sink { _ in
+            } receiveValue: { [weak self] returnedPost in
+                // print("get data : \(returnedPost)")
+                self?.store = returnedPost.data.items
+                print("num of data: \(String(describing: self?.store.count))")
+                completion()
             }
             .store(in: &cancellables)
     }

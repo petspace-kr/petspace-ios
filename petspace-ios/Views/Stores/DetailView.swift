@@ -27,6 +27,8 @@ struct DetailView: View {
     // Map View Model
     @ObservedObject var mapViewModel: MapViewModel
     
+    @ObservedObject var storeViewModel: StoreViewModel
+    
     // 세부 정보 표시 여부
     @State private var isPriceTableShowing: Bool = false
     @State private var isMapShowing: Bool = false
@@ -131,6 +133,9 @@ struct DetailView: View {
                                             Button("\(profile.dogName) - \(profile.dogBreed)") {
                                                 // 프로필 변경 코드 작성
                                                 profileViewModel.selectedProfileIndex = index
+                                                storeViewModel.loadStoreListDataVM(profileViewModel: profileViewModel, completion: {
+                                                    print("profile changed and data all loaded.")
+                                                })
                                             }
                                         }
                                     }
@@ -188,37 +193,44 @@ struct DetailView: View {
                                     .fill(Color("Background1"))
                                     .stroke(Color("Stroke1"), lineWidth: 1)
                                 
-                                VStack(alignment: .leading) {
-                                    Text("미용")
-                                        .font(.headline)
-                                        .bold()
-                                    
-                                    HStack {
-                                        Text("일반컷")
-                                            .font(.system(size: 15))
-                                        
-                                        Spacer()
-                                        
-                                        Text("\(storeItem.pricing.cut)")
-                                            .font(.system(size: 15))
-                                    }
-                                    .padding(.top, 10)
-                                    
-                                    
-                                    HStack {
-                                        Text("가위컷")
-                                            .font(.system(size: 15))
-                                        
-                                        Spacer()
-                                        
-                                        Text("\(storeItem.pricing.cut + 10000)")
-                                            .font(.system(size: 15))
-                                    }
-                                    .padding(.top, 2)
-                                    
+                                if storeItem.pricing.cut == 33333 {
+                                    Text("가격 정보가 없어요. 프로필을 변경해보세요.")
+                                        .font(.system(size: 14))
+                                        .padding()
                                 }
-                                .padding(.vertical, 20)
-                                .padding(.horizontal, 16)
+                                else {
+                                    VStack(alignment: .leading) {
+                                        Text("미용")
+                                            .font(.headline)
+                                            .bold()
+                                        
+                                        HStack {
+                                            Text("일반컷")
+                                                .font(.system(size: 15))
+                                            
+                                            Spacer()
+                                            
+                                            Text("\(storeItem.pricing.cut)")
+                                                .font(.system(size: 15))
+                                        }
+                                        .padding(.top, 10)
+                                        
+                                        
+                                        HStack {
+                                            Text("가위컷")
+                                                .font(.system(size: 15))
+                                            
+                                            Spacer()
+                                            
+                                            Text("\(storeItem.pricing.cut + 10000)")
+                                                .font(.system(size: 15))
+                                        }
+                                        .padding(.top, 2)
+                                        
+                                    }
+                                    .padding(.vertical, 20)
+                                    .padding(.horizontal, 16)
+                                }
                             }
                             
                             HStack {
@@ -554,7 +566,7 @@ struct DetailTitleImageView: View {
     return Group {
         Text("")
             .sheet(isPresented: .constant(true), content: {
-                DetailView(storeItem: storeViewModel.store[2], isPresented: .constant(true), profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                DetailView(storeItem: storeViewModel.store[2], isPresented: .constant(true), profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeViewModel: storeViewModel)
                     .background(Color("Background2"))
             })
     }

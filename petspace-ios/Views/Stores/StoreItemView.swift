@@ -11,6 +11,7 @@ struct StoreItemView: View {
     
     @ObservedObject var mapViewModel: MapViewModel
     @ObservedObject var profileViewModel: ProfileViewModel
+    @ObservedObject var storeViewModel: StoreViewModel
     let storeItem: Store.Data.StoreItem
     
     // 디테일 뷰
@@ -97,6 +98,9 @@ struct StoreItemView: View {
                                     Button("\(profile.dogName) - \(profile.dogBreed)") {
                                         // 프로필 변경 코드 작성
                                         profileViewModel.selectedProfileIndex = index
+                                        storeViewModel.loadStoreListDataVM(profileViewModel: profileViewModel, completion: {
+                                            print("profile changed and data all loaded.")
+                                        })
                                     }
                                 }
                             }
@@ -131,10 +135,18 @@ struct StoreItemView: View {
                                             .font(.system(size: 10))
                                             .foregroundColor(Color(red: 0, green: 0.64, blue: 1))
                                             .fixedSize(horizontal: true, vertical: true)
-                                        Text("커트 \(storeItem.pricing.cut)원~")
-                                            .font(.system(size: 10))
-                                            .foregroundColor(.primary)
-                                            .fixedSize(horizontal: true, vertical: true)
+                                        
+                                        if storeItem.pricing.cut == 33333 {
+                                            Text("맞춤 가격 정보가 없어요.")
+                                                .font(.system(size: 9))
+                                                .foregroundColor(.secondary)
+                                                .fixedSize(horizontal: true, vertical: true)
+                                        } else {
+                                            Text("커트 \(storeItem.pricing.cut)원~")
+                                                .font(.system(size: 10))
+                                                .foregroundColor(.primary)
+                                                .fixedSize(horizontal: true, vertical: true)
+                                        }
                                     })
                                     
                                     Spacer()
@@ -159,7 +171,7 @@ struct StoreItemView: View {
             .sheet(isPresented: $isDetailViewPresented, onDismiss: {
                 GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_CLOSE, params: nil)
             }, content: {
-                DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel)
+                DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeViewModel: storeViewModel)
                     .onAppear() {
                         GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_OPEN, params: nil)
                         // View 방문 이벤트
@@ -183,7 +195,7 @@ struct StoreItemView: View {
         ScrollView {
             VStack(spacing: 10) {
                 ForEach(storeViewModel.store) { store in
-                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: store)
+                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: store)
                 }
             }
             .padding()

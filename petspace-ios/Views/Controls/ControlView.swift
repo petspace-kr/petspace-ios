@@ -395,6 +395,14 @@ struct ControlViewV3: View {
                                         }
                                     }
                                     .materialBackground()
+                                    .onTapGesture {
+                                        isDataLoading = true
+                                        storeViewModel.loadStoreListDataV2(dogBreed: profileViewModel.selectedProfile.dogName, dogWeight: profileViewModel.selectedProfile.dogWeight) {
+                                            sleep(1)
+                                            print("data all loaded")
+                                            isDataLoading = false
+                                        }
+                                    }
                                     
                                     Spacer()
                                 }

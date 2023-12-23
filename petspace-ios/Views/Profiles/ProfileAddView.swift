@@ -10,6 +10,8 @@ import SwiftUI
 struct ProfileAddView: View {
     
     @Environment(\.dismiss) var dismiss
+    @Binding var isPresented: Bool
+    
     @ObservedObject var profileViewModel: ProfileViewModel
     
     // 이미지 선택 관련 변수
@@ -33,6 +35,8 @@ struct ProfileAddView: View {
     // 견종
     @State private var dogBreedData: DogBreed = load("dogbreed.json")
     private let dogSizeString: [String] = ["소형견", "중형견", "대형견"]
+    
+    @State private var isLoading: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -362,19 +366,27 @@ struct ProfileAddView: View {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button {
                         dismiss()
+                        isPresented = false
                     } label: {
-                        Label("프로필", systemImage: "chevron.left")
+                        Text("취소")
                     }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button("저장") {
-                        if let dogWeightDouble = Double(dogWeight) {
-                            profileViewModel.addProfile(dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: dogWeightDouble, profileImage: selectedImage)
+                    if isLoading {
+                        ProgressView()
+                    } else {
+                        Button("저장") {
+                            isLoading = true
                             
-                            dismiss()
+                            if let dogWeightDouble = Double(dogWeight) {
+                                profileViewModel.addProfile(dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: dogWeightDouble, profileImage: selectedImage)
+                                
+                                dismiss()
+                                isPresented = false
+                            }
                         }
+                        .disabled(dogName == "" || dogBreed == "" || dogWeight == "" || Double(dogWeight) == nil)
                     }
-                    .disabled(dogName == "" || dogBreed == "" || dogWeight == "" || Double(dogWeight) == nil)
                 }
             }
         }
@@ -402,6 +414,6 @@ struct ProfileAddView: View {
     @ObservedObject var profileViewModel = ProfileViewModel()
     
     return Group {
-        ProfileAddView(profileViewModel: profileViewModel)
+        ProfileAddView(isPresented: .constant(true), profileViewModel: profileViewModel)
     }
 }

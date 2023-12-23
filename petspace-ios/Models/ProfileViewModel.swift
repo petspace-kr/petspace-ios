@@ -17,8 +17,14 @@ class ProfileViewModel: ObservableObject {
     @Published var selectedProfileIndex: Int = -1
     
     init() {
-        addDummyData()
-        // loadProfile()
+        // addDummyData()
+        loadProfile()
+    }
+    
+    var selectedProfile: DogProfile {
+        get {
+            return dogProfile[selectedProfileIndex]
+        }
     }
     
     func addDummyData() {

@@ -14,6 +14,8 @@ struct ProfileListView: View {
     @State private var isProfileEditViewPresented: Bool = false
     @State private var selectedIndex: Int = -1
     
+    private let dogSizeString: [String] = ["소형견", "중형견", "대형견"]
+    
     // 삭제 여부 모달
     @State private var isDeleteModalShowing: Bool = false
     
@@ -38,6 +40,15 @@ struct ProfileListView: View {
             .navigationTitle("프로필")
             .navigationBarHidden(true)
             
+            Spacer()
+                .frame(height: 10)
+            
+            if (!profileViewModel.dogProfile.isEmpty) {
+                Text("스와이프해서 수정 또는 삭제할 수 있어요")
+                    .font(.system(size: 13))
+                    .foregroundColor(.secondary)
+            }
+            
             if (profileViewModel.dogProfile.isEmpty) {
                 Spacer()
                 
@@ -52,28 +63,74 @@ struct ProfileListView: View {
             } else {
                 List {
                     ForEach(Array(profileViewModel.dogProfile.enumerated()), id: \.offset) { index, profile in
-                        ProfileCardView(dogProfile: profile)
-                            .listRowSeparator(.hidden)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    // TODO: edit indexing
-                                    selectedIndex = index
-                                    isDeleteModalShowing = true
-                                } label: {
-                                    Label("삭제", systemImage: "trash")
+                        // ProfileCardView(dogProfile: profile, profileViewModel: profileViewModel, index: index)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 30.0)
+                                .fill(Color("Background1"))
+                                .stroke(profileViewModel.selectedProfileIndex == index ? .gray : Color("Stroke1"), lineWidth: 1)
+                                .frame(height: 100)
+                                
+                            HStack(alignment: .center) {
+                                if let imageData = profile.profileImageData {
+                                    if let image = imageData.decodeToImage() {
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 80, height: 80)
+                                            .clipShape(Circle())
+                                    } else {
+                                        Circle()
+                                            .foregroundColor(Color("Stroke1"))
+                                            .frame(width: 80, height: 80)
+                                    }
+                                } else {
+                                    Circle()
+                                        .foregroundColor(Color("Stroke1"))
+                                        .frame(width: 80, height: 80)
                                 }
-                                .tint(.red)
-                            }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                Button {
-                                    // TODO: edit indexing
-                                    selectedIndex = index
-                                    isProfileEditViewPresented = true
-                                } label: {
-                                    Label("편집", systemImage: "pencil")
+                                
+                                Spacer()
+                                    .frame(width: 10)
+                                
+                                VStack(alignment: .leading) {
+                                    Text(profile.dogName)
+                                        .font(.title3)
+                                        .bold()
+                                    
+                                    Text("\(profile.dogBreed)(\(dogSizeString[profile.dogSize.rawValue]))")
+                                    Text("\(String(format: "%.1f", profile.dogWeight))kg")
                                 }
-                                .tint(.gray)
+                                
+                                Spacer()
                             }
+                            .padding(.horizontal, 14)
+                        }
+                        .listRowSeparator(.hidden)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button {
+                                // TODO: edit indexing
+                                selectedIndex = index
+                                isProfileEditViewPresented = true
+                            } label: {
+                                Label("수정", systemImage: "pencil")
+                            }
+                            .tint(.gray)
+                            
+                            Button(role: .destructive) {
+                                // TODO: edit indexing
+                                selectedIndex = index
+                                isDeleteModalShowing = true
+                            } label: {
+                                Label("삭제", systemImage: "trash")
+                            }
+                            .tint(.red)
+                        }
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                profileViewModel.selectedProfileIndex = index
+                            }
+                            print("profileViewModel sIndex: \(index)")
+                        }
                     }
                 }
                 .listStyle(.plain)
@@ -84,25 +141,25 @@ struct ProfileListView: View {
         .sheet(isPresented: $isProfileAddViewPresented, onDismiss: {
             
         }, content: {
-            ProfileAddView(profileViewModel: profileViewModel)
-                .interactiveDismissDisabled(true)
+            ProfileAddView(isPresented: $isProfileAddViewPresented, profileViewModel: profileViewModel)
+                // .interactiveDismissDisabled(true)
         })
         
         // Edit View
         .sheet(isPresented: $isProfileEditViewPresented, onDismiss: {
             selectedIndex = -1
         }, content: {
-            ProfileEditView(profileViewModel: profileViewModel, selectedIndex: $selectedIndex)
-                .interactiveDismissDisabled(true)
+            ProfileEditView(isPresented: $isProfileEditViewPresented, profileViewModel: profileViewModel, selectedIndex: $selectedIndex)
+                // .interactiveDismissDisabled(true)
         })
         
         // 삭제 모달
         // 견종 크기 안내
         .alert("프로필 삭제", isPresented: $isDeleteModalShowing, actions: {
-            Button("알겠어요", role: .cancel) { 
+            Button("취소", role: .cancel) {
                 selectedIndex = -1
             }
-            Button("삭제할게요", role: .destructive) {
+            Button("삭제", role: .destructive) {
                 if selectedIndex >= 0 {
                     profileViewModel.deleteProfile(index: selectedIndex)
                     selectedIndex = -1
@@ -116,61 +173,6 @@ struct ProfileListView: View {
                 ProgressView()
             }
         })
-    }
-    
-    func deleteProfile() {
-        
-    }
-}
-
-struct ProfileCardView: View {
-    
-    @State var dogProfile: DogProfile
-    
-    let dogSizeTextArray = ["소형견", "중형견", "대형견"]
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 30.0)
-                .fill(Color("Background1"))
-                .stroke(Color("Stroke1"), lineWidth: 1)
-                .frame(height: 100)
-                
-            HStack(alignment: .center) {
-                if let imageData = dogProfile.profileImageData {
-                    if let image = imageData.decodeToImage() {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
-                    } else {
-                        Circle()
-                            .foregroundColor(Color("Stroke1"))
-                            .frame(width: 80, height: 80)
-                    }
-                } else {
-                    Circle()
-                        .foregroundColor(Color("Stroke1"))
-                        .frame(width: 80, height: 80)
-                }
-                
-                Spacer()
-                    .frame(width: 10)
-                
-                VStack(alignment: .leading) {
-                    Text(dogProfile.dogName)
-                        .font(.title3)
-                        .bold()
-                    
-                    Text("\(dogProfile.dogBreed)(\(dogSizeTextArray[dogProfile.dogSize.rawValue]))")
-                    Text("\(String(format: "%.1f", dogProfile.dogWeight))kg")
-                }
-                
-                Spacer()
-            }
-            .padding(.horizontal, 14)
-        }
     }
 }
 

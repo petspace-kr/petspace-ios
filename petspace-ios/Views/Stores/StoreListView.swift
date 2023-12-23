@@ -186,7 +186,7 @@ struct StoreListView: View {
                         // 거리 순 정렬
                         else if sortMode == .distance {
                             ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                     .padding(.bottom, 4)
                             }
                         }
@@ -194,7 +194,7 @@ struct StoreListView: View {
                         // 별점 순 정렬
                         else if sortMode == .rating {
                             ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                     .padding(.bottom, 4)
                             }
                         }
@@ -202,7 +202,7 @@ struct StoreListView: View {
                         // 가격 낮은 순
                         else if sortMode == .priceIncrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                     .padding(.bottom, 4)
                             }
                         }
@@ -210,7 +210,7 @@ struct StoreListView: View {
                         // 가격 높은 순
                         else if sortMode == .priceDecrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                     .padding(.bottom, 4)
                             }
                         }
@@ -229,7 +229,7 @@ struct StoreListView: View {
                         // 거리 순 정렬
                         else if sortMode == .distance {
                             ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                     .padding(.bottom, 4)
                             }
                         }
@@ -237,7 +237,7 @@ struct StoreListView: View {
                         // 별점 순 정렬
                         else if sortMode == .rating {
                             ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                     .padding(.bottom, 4)
                             }
                         }
@@ -245,7 +245,7 @@ struct StoreListView: View {
                         // 가격 낮은 순
                         else if sortMode == .priceIncrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                     .padding(.bottom, 4)
                             }
                         }
@@ -253,7 +253,7 @@ struct StoreListView: View {
                         // 가격 높은 순
                         else if sortMode == .priceDecrease {
                             ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                     .padding(.bottom, 4)
                             }
                         }
@@ -549,7 +549,7 @@ struct StoreListViewV2: View {
                             // 거리 순 정렬
                             else if sortMode == .distance {
                                 ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                 }
                             }
@@ -557,7 +557,7 @@ struct StoreListViewV2: View {
                             // 별점 순 정렬
                             else if sortMode == .rating {
                                 ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                 }
                             }
@@ -565,7 +565,7 @@ struct StoreListViewV2: View {
                             // 가격 낮은 순
                             else if sortMode == .priceIncrease {
                                 ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                 }
                             }
@@ -573,7 +573,7 @@ struct StoreListViewV2: View {
                             // 가격 높은 순
                             else if sortMode == .priceDecrease {
                                 ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                 }
                             }
@@ -592,7 +592,7 @@ struct StoreListViewV2: View {
                             // 거리 순 정렬
                             else if sortMode == .distance {
                                 ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                 }
                             }
@@ -600,7 +600,7 @@ struct StoreListViewV2: View {
                             // 별점 순 정렬
                             else if sortMode == .rating {
                                 ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                 }
                             }
@@ -608,7 +608,7 @@ struct StoreListViewV2: View {
                             // 가격 낮은 순
                             else if sortMode == .priceIncrease {
                                 ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                 }
                             }
@@ -616,7 +616,7 @@ struct StoreListViewV2: View {
                             // 가격 높은 순
                             else if sortMode == .priceDecrease {
                                 ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                 }
                             }
@@ -786,7 +786,7 @@ struct StoreListViewV3: View {
                             // 거리 순 정렬
                             else if sortMode == .distance {
                                 ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                         .padding(.horizontal, 10)
                                 }
@@ -795,7 +795,7 @@ struct StoreListViewV3: View {
                             // 별점 순 정렬
                             else if sortMode == .rating {
                                 ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                         .padding(.horizontal, 10)
                                 }
@@ -804,7 +804,7 @@ struct StoreListViewV3: View {
                             // 가격 낮은 순
                             else if sortMode == .priceIncrease {
                                 ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                         .padding(.horizontal, 10)
                                 }
@@ -813,7 +813,7 @@ struct StoreListViewV3: View {
                             // 가격 높은 순
                             else if sortMode == .priceDecrease {
                                 ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                         .padding(.horizontal, 10)
                                 }
@@ -833,7 +833,7 @@ struct StoreListViewV3: View {
                             // 거리 순 정렬
                             else if sortMode == .distance {
                                 ForEach(filteredStoreItems.sorted(by: { calculateDistance(itemCoord: $0.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) < calculateDistance(itemCoord: $1.locationCoordinate, mvCoord: mapViewModel.currentRegion.center) })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                         .padding(.horizontal, 10)
                                 }
@@ -842,7 +842,7 @@ struct StoreListViewV3: View {
                             // 별점 순 정렬
                             else if sortMode == .rating {
                                 ForEach(filteredStoreItems.sorted(by: { $0.rating > $1.rating })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                         .padding(.horizontal, 10)
                                 }
@@ -851,7 +851,7 @@ struct StoreListViewV3: View {
                             // 가격 낮은 순
                             else if sortMode == .priceIncrease {
                                 ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut < $1.pricing.cut })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                         .padding(.horizontal, 10)
                                 }
@@ -860,7 +860,7 @@ struct StoreListViewV3: View {
                             // 가격 높은 순
                             else if sortMode == .priceDecrease {
                                 ForEach(filteredStoreItems.sorted(by: { $0.pricing.cut > $1.pricing.cut })) { storeItem in
-                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeItem: storeItem)
+                                    StoreItemView(mapViewModel: mapViewModel, profileViewModel: profileViewModel, storeViewModel: storeViewModel, storeItem: storeItem)
                                         .padding(.bottom, 4)
                                         .padding(.horizontal, 10)
                                 }
@@ -870,8 +870,9 @@ struct StoreListViewV3: View {
                 })
                 .refreshable {
                     // reload store list
-                    storeViewModel.loadStoreListData()
-                    print("refresh")
+                    storeViewModel.loadStoreListData {
+                        print("refresh")
+                    }
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
