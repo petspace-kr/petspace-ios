@@ -63,6 +63,7 @@ class ProfileViewModel: ObservableObject {
         print("profile load failed. because there is no saved profile data.")
     }
     
+    // 프로필 데이터를 추가 후 저장
     func addProfile(dogName: String, dogBreed: String, dogSize: DogSize, dogWeight: Double, profileImage: UIImage?) {
         print("addProfile()")
         dogProfile.append(DogProfile(dogName: dogName, dogBreed: dogBreed, dogSize: dogSize, dogWeight: dogWeight, profileImage: profileImage))
@@ -77,6 +78,7 @@ class ProfileViewModel: ObservableObject {
         print("new profile data created. now num of profiles: \(dogProfile.count) and index is \(selectedProfileIndex)")
     }
     
+    // 프로필 데이터를 수정
     func updateProfile(index: Int, dogName: String, dogBreed: String, dogSize: DogSize, dogWeight: Double, profileImage: UIImage?) {
         dogProfile[index].dogName = dogName
         dogProfile[index].dogBreed = dogBreed
@@ -92,6 +94,7 @@ class ProfileViewModel: ObservableObject {
         print("profile #\(index) updated. now num of profiles: \(dogProfile.count) and index is \(selectedProfileIndex)")
     }
     
+    // UserDefaults에 프로필 데이터 저장
     func saveProfile() {
         if let encodedProfile = try? JSONEncoder().encode(dogProfile) {
             UserDefaults.standard.setValue(encodedProfile, forKey: "dogProfileData")

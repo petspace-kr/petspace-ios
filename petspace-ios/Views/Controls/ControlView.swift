@@ -397,10 +397,21 @@ struct ControlViewV3: View {
                                     .materialBackground()
                                     .onTapGesture {
                                         isDataLoading = true
-                                        storeViewModel.loadStoreListDataV2(dogBreed: profileViewModel.selectedProfile.dogName, dogWeight: profileViewModel.selectedProfile.dogWeight) {
-                                            sleep(1)
-                                            print("data all loaded")
-                                            isDataLoading = false
+                                        
+                                        // 프로필이 없으면 
+                                        if profileViewModel.dogProfile.isEmpty {
+                                            storeViewModel.loadStoreListDataV2(dogBreed: "except", dogWeight: 1000.0) {
+                                                sleep(1)
+                                                print("data all loaded")
+                                                isDataLoading = false
+                                            }
+                                        }
+                                        else {
+                                            storeViewModel.loadStoreListDataV2(dogBreed: profileViewModel.selectedProfile.dogBreed, dogWeight: profileViewModel.selectedProfile.dogWeight) {
+                                                sleep(1)
+                                                print("data all loaded")
+                                                isDataLoading = false
+                                            }
                                         }
                                     }
                                     
