@@ -35,9 +35,12 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager = CLLocationManager()
-            locationManager!.delegate = self
-            isLocationServiceEnabled = true
-            locationManager!.startUpdatingLocation()
+            
+            if let locationManager = locationManager {
+                locationManager.delegate = self
+                locationManager.startUpdatingLocation()
+                isLocationServiceEnabled = true
+            }
         }
         
         // now allowed
@@ -65,7 +68,10 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
             locationManager.requestWhenInUseAuthorization()
         case .authorizedAlways, .authorizedWhenInUse:
             print("allowed")
-            currentRegion = MKCoordinateRegion(center: locationManager.location!.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07))
+            
+            if let location = locationManager.location {
+                currentRegion = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07))
+            }
             break
         @unknown default:
             break

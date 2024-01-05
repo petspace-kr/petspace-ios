@@ -353,7 +353,7 @@ struct ControlViewV3: View {
                                 // View 방문 이벤트
                                 GATracking.eventScreenView(screenName: GATracking.ScreenNames.welcomeView)
                             }
-                    })
+                    } )
             }
             
             // 첫 접속이 아니라면
