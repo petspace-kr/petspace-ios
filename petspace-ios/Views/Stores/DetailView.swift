@@ -216,7 +216,7 @@ struct DetailView: View {
                                         .padding(.top, 10)
                                         
                                         
-                                        HStack {
+                                        /* HStack {
                                             Text("가위컷")
                                                 .font(.system(size: 15))
                                             
@@ -225,7 +225,7 @@ struct DetailView: View {
                                             Text("\(storeItem.pricing.cut + 10000)")
                                                 .font(.system(size: 15))
                                         }
-                                        .padding(.top, 2)
+                                        .padding(.top, 2) */
                                         
                                     }
                                     .padding(.vertical, 20)
@@ -267,30 +267,32 @@ struct DetailView: View {
 //
 //                        }
                         
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10.0)
-                                .fill(Color("Background1"))
-                                .stroke(Color("Stroke1"), lineWidth: 1)
-                            
-                            Button {
-                                withAnimation(.spring) {
-                                    isPriceTableShowing.toggle()
-                                }
-                                GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_SHOW_PRICE_TABLE, params: nil)
-                            } label: {
-                                HStack {
-                                    Label("가격표 보기", systemImage: "table")
-                                        .foregroundStyle(Color("Foreground1"))
-                                    Spacer()
-                                    Image(systemName: "chevron.down")
-                                        .foregroundStyle(Color("Foreground1"))
-                                        .rotationEffect(.degrees(isPriceTableShowing ? 0 : -90))
-                                }
-                                .foregroundStyle(Color("MainForeground"))
-                                .padding(.horizontal, 10)
+                        if isValidURL(urlString: storeItem.pricingImage) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .fill(Color("Background1"))
+                                    .stroke(Color("Stroke1"), lineWidth: 1)
                                 
+                                Button {
+                                    withAnimation(.spring) {
+                                        isPriceTableShowing.toggle()
+                                    }
+                                    GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_SHOW_PRICE_TABLE, params: nil)
+                                } label: {
+                                    HStack {
+                                        Label("가격표 보기", systemImage: "table")
+                                            .foregroundStyle(Color("Foreground1"))
+                                        Spacer()
+                                        Image(systemName: "chevron.down")
+                                            .foregroundStyle(Color("Foreground1"))
+                                            .rotationEffect(.degrees(isPriceTableShowing ? 0 : -90))
+                                    }
+                                    .foregroundStyle(Color("MainForeground"))
+                                    .padding(.horizontal, 10)
+                                    
+                                }
+                                .frame(height: 48)
                             }
-                            .frame(height: 48)
                         }
                         
                         if isPriceTableShowing {
@@ -425,6 +427,14 @@ struct DetailView: View {
                 
             } // End of VStack
             .padding(0)
+        }
+    }
+    
+    private func isValidURL(urlString: String) -> Bool {
+        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+            return true
+        } else {
+            return false
         }
     }
 }
