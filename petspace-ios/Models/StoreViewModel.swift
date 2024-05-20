@@ -147,7 +147,12 @@ struct ViewModelTestView: View {
     var body: some View {
         Text("count: \(viewModel.store.count)")
         Text(viewModel.store[0].isSaved ?? false ? "TRUE" : "FALSE")
-        Text("Hello World")
+        
+        Button("load detail") {
+            viewModel.loadStoreListDataV2(dogBreed: "푸들", dogWeight: 4.3, completion: {
+                print(viewModel.store[0].pricing.cut)
+            })
+        }
         
         Button("sheet") {
             isPresented = true

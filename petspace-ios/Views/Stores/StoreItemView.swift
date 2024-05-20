@@ -169,11 +169,11 @@ struct StoreItemView: View {
             
             // Detail View
             .sheet(isPresented: $isDetailViewPresented, onDismiss: {
-                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_CLOSE, params: nil)
+                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_CLOSE, params: ["shopID": storeItem.id])
             }, content: {
                 DetailView(storeItem: storeItem, isPresented: $isDetailViewPresented, profileViewModel: profileViewModel, mapViewModel: mapViewModel, storeViewModel: storeViewModel)
                     .onAppear() {
-                        GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_OPEN, params: nil)
+                        GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.STORE_DETAIL_OPEN, params: ["shopID": storeItem.id])
                         // View 방문 이벤트
                         GATracking.eventScreenView(screenName: GATracking.ScreenNames.detailView)
                     }

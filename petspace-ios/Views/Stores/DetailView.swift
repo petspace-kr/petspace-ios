@@ -74,7 +74,7 @@ struct DetailView: View {
                                 print(formattedString)
                                 guard let phoneUrl = URL(string: formattedString) else { return }
                                 UIApplication.shared.open(phoneUrl)
-                                GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_CALL_CLICK, params: nil)
+                                GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_CALL_CLICK, params: ["shopID": storeItem.id])
                             } label: {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10.0)
@@ -277,7 +277,7 @@ struct DetailView: View {
                                     withAnimation(.spring) {
                                         isPriceTableShowing.toggle()
                                     }
-                                    GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_SHOW_PRICE_TABLE, params: nil)
+                                    GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_SHOW_PRICE_TABLE, params: ["shopID": storeItem.id])
                                 } label: {
                                     HStack {
                                         Label("가격표 보기", systemImage: "table")
@@ -335,7 +335,7 @@ struct DetailView: View {
                                 withAnimation(.spring) {
                                     isMapShowing.toggle()
                                 }
-                                GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_SHOW_MINIMAP, params: nil)
+                                GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_SHOW_MINIMAP, params: ["shopID": storeItem.id])
                             } label: {
                                 HStack {
                                     Label("지도에서 위치 보기", systemImage: "mappin.and.ellipse")

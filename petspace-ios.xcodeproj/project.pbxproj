@@ -36,6 +36,7 @@
 		0C3CBCC82AFB865D000862C3 /* CloseKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */; };
 		0C3CBCCA2AFB897D000862C3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */; };
 		0C4993912B107BC600FC60C9 /* StorePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4993902B107BC600FC60C9 /* StorePreviewView.swift */; };
+		0C5979B12BAAF39F00E8156D /* CustomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5979B02BAAF39F00E8156D /* CustomSheetView.swift */; };
 		0C6451C42B1E268600F677EF /* ProfileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6451C32B1E268600F677EF /* ProfileListView.swift */; };
 		0C6451C62B1E2D3100F677EF /* dummyprofile.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C6451C52B1E2D3100F677EF /* dummyprofile.json */; };
 		0C6451C82B1E394A00F677EF /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6451C72B1E394A00F677EF /* ProfileEditView.swift */; };
@@ -148,6 +149,7 @@
 		0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseKeyboardButton.swift; sourceTree = "<group>"; };
 		0C3CBCC92AFB897D000862C3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0C4993902B107BC600FC60C9 /* StorePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePreviewView.swift; sourceTree = "<group>"; };
+		0C5979B02BAAF39F00E8156D /* CustomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetView.swift; sourceTree = "<group>"; };
 		0C6451C32B1E268600F677EF /* ProfileListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileListView.swift; sourceTree = "<group>"; };
 		0C6451C52B1E2D3100F677EF /* dummyprofile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dummyprofile.json; sourceTree = "<group>"; };
 		0C6451C72B1E394A00F677EF /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				0C3CBCC52AFB863D000862C3 /* SearchBar.swift */,
+				0C5979B02BAAF39F00E8156D /* CustomSheetView.swift */,
 				0C3CBCAC2AFB84F5000862C3 /* ImageView.swift */,
 				0C3CBCC72AFB865D000862C3 /* CloseKeyboardButton.swift */,
 				0CE5B5A82AFD266E007BD3BB /* ViewExtensions.swift */,
@@ -586,6 +589,7 @@
 				0C3CBCA52AFB8468000862C3 /* BetaInfoView.swift in Sources */,
 				0CB76C592AFA79AD009D7424 /* petspace_ios.xcdatamodeld in Sources */,
 				0CB76C562AFA79AD009D7424 /* Persistence.swift in Sources */,
+				0C5979B12BAAF39F00E8156D /* CustomSheetView.swift in Sources */,
 				0CB76C792AFA80A4009D7424 /* DogBreedData.swift in Sources */,
 				0C0D3B362AFA9FA400AC4FAC /* ControlView.swift in Sources */,
 				0C3CBCAF2AFB8512000862C3 /* StoreListView.swift in Sources */,
@@ -766,7 +770,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.2;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.leehe228.petspace-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -805,7 +809,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.2;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.leehe228.petspace-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

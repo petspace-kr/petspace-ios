@@ -368,7 +368,7 @@ struct MapViewV2: View {
                                     print(formattedString)
                                     guard let phoneUrl = URL(string: formattedString) else { return }
                                     UIApplication.shared.open(phoneUrl)
-                                    GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_CALL_CLICK, params: nil)
+                                    GATracking.sendLogEvent(eventName: GATracking.DetailViewMessage.DETAIL_PAGE_CALL_CLICK, params: ["shopID": selectedStore.id])
                                 } label: {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10.0)
@@ -1036,7 +1036,7 @@ struct StoreAnnotation: View {
                     if allowExpand && !isExpandedShowing {
                         withAnimation(.spring()) {
                             isExpandedShowing = true
-                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CLICKED, params: nil)
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CLICKED, params: ["shopID": storeItem.id])
                         }
                     }
                 }
@@ -1060,7 +1060,7 @@ struct StoreAnnotation: View {
                         
                         withAnimation(.spring()) {
                             isExpandedShowing = false
-                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CLOSE, params: nil)
+                            GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CLOSE, params: ["shopID": storeItem.id])
                         }
                     } label: {
                         Image(systemName: "xmark.circle")
@@ -1160,7 +1160,7 @@ struct StoreAnnotation: View {
                                 print(formattedString)
                                 guard let phoneUrl = URL(string: formattedString) else { return }
                                 UIApplication.shared.open(phoneUrl)
-                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CALL, params: nil)
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_CALL, params: ["shopID": storeItem.id])
                             } label: {
                                 VStack {
                                     Image(systemName: "phone.circle")
@@ -1198,7 +1198,7 @@ struct StoreAnnotation: View {
                             Button {
                                 print("detail button pressed")
                                 isDetailViewPresented = true
-                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_DETAIL_OPEN, params: nil)
+                                GATracking.sendLogEvent(eventName: GATracking.MainViewMessage.MAP_ANNOTATION_DETAIL_OPEN, params: ["shopID": storeItem.id])
                             } label: {
                                 VStack {
                                     Image(systemName: "info.circle")
